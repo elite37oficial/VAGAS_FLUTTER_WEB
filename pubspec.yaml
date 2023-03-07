@@ -21,6 +21,7 @@ dependencies:
   dio: ^5.0.1
   pretty_dio_logger: ^1.1.1
   flutter_svg: 1.1.6
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:

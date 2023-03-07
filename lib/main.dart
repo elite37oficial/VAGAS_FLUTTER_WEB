@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:vagas_flutter_web/src/shared/utils/app_widget.dart';
+import 'package:vagas_flutter_web/build_app.dart';
+import 'package:vagas_flutter_web/src/shared/utils/environment_congi/environment_config.dart';
 
-void main() => runApp(const AppWidget());
+void main() => buildApp(EnvironmentEnum.dev);
