@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:vagas_flutter_web/src/shared/themes/app_themes.dart';
@@ -16,7 +14,7 @@ class AppWidget extends StatelessWidget {
       routeInformationParser: appRoutesConfig.routeInformationParser,
       debugShowCheckedModeBanner: false,
       scrollBehavior: CustomScrollBehavior(),
-      title: 'App Vagas Demo',
+      title: 'Vagas Elite37 Demo',
       theme: AppThemes.lightTheme(),
       darkTheme: AppThemes.darkTheme(),
       themeMode: ThemeMode.system,
