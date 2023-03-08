@@ -20,12 +20,14 @@ dependencies:
   dio: ^5.0.1
   pretty_dio_logger: ^1.1.1
   equatable: ^2.0.5
+  bloc: ^8.1.1
+  flutter_bloc: ^8.1.2
 
   vagas_design_system:
     # path: ../../VAGAS_FLUTTER_DESIGN_SYSTEM/
     git:
       url: https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM
-      ref: main
+      ref: dev
 
 dev_dependencies:
   flutter_test:
