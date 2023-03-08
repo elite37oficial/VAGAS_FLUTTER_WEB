@@ -7,6 +7,7 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/app_routes_implementat
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerDelegate: appRoutesConfig.routerDelegate,

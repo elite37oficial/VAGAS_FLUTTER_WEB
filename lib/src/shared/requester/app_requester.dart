@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
+
 abstract class AppRequester {
-  Future get({required String url, required Function(dynamic p1) fromJson});
-  Future post(
+  Future<Response>? get(
+      {required String url, required Function(dynamic p1) fromJson});
+  Future<Response>? post(
       {required String url, body, required Function(dynamic p1) fromJson});
-  Future put(
+  Future<Response>? put(
       {required String url, body, required Function(dynamic p1) fromJson});
-  Future delete(
+  Future<Response>? delete(
       {required String url, body, required Function(dynamic p1) fromJson});
 }

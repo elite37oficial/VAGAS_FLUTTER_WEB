@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "2.9.0"
   auto_size_text:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: auto_size_text
       url: "https://pub.dartlang.org"
@@ -189,7 +189,7 @@ packages:
     source: hosted
     version: "2.0.0"
   flutter_svg:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
@@ -205,6 +205,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  font_awesome_flutter:
+    dependency: transitive
+    description:
+      name: font_awesome_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "10.4.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -567,6 +574,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
+  vagas_design_system:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "6a5067c5780f62658261945446fe70504053589d"
+      url: "https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM"
+    source: git
+    version: "0.0.1"
   vector_math:
     dependency: transitive
     description:
