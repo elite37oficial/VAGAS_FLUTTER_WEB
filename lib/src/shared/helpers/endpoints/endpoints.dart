@@ -5,6 +5,8 @@ abstract class Endpoints {
 
   static String login = "$baseURL/api/auth/login";
 
+  static String register = "$baseURL/api/auth/register";
+
   static String fetchJobsById(String jobId) =>
       "$baseURL/api/jobs?jobId=$jobId}";
 }
