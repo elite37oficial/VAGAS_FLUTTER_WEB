@@ -21,8 +21,8 @@ class RegisterUserModel extends RegisterUserEntity {
     return RegisterUserModel(
       userId: map['userId'] ?? '',
       email: map['email'] ?? '',
-      name: '',
-      password: '',
+      name: map['name'] ?? '',
+      password: map['password'] ?? '',
     );
   }
 }
