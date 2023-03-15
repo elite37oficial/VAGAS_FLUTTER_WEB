@@ -17,6 +17,7 @@ class AdminLoginBloc extends Bloc<AdminLoginEvent, AdminLoginState> {
     Emitter<AdminLoginState> emitter,
   ) async {
     emitter(AdminLoginLoadingState());
+
     AdminLoginEntity loginEntity = AdminLoginEntity(
       email: event.email,
       password: event.password,

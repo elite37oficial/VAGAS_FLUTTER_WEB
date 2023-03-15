@@ -1,13 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/entities/admin_user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/events/admin_login_event.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/states/admin_login_state.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/components/admin_login_fields_component.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/components/admin_login_logo_background_component.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/components/admin_login_social_buttons_component.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/components/admin_login_social_buttons_mobile_component.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
@@ -19,8 +22,8 @@ class AdminLoginPage extends StatefulWidget {
 }
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,24 +45,185 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
 
         return ResponsiveLayout(
           mobile: Scaffold(
-            backgroundColor: Colors.amber,
             body: SizedBox(
               height: size.height,
               width: size.width,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () =>
-                        context.read<AdminLoginBloc>().add(LoginEvent(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            )),
-                    child: const ResponsiveTextWidget(
-                      text: "Login",
-                      maxLines: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    height: size.height * 1.1,
+                    width: size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Material(
+                            color: AppColors.greyBlue,
+                            elevation: 5,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(50),
+                                  bottomRight: Radius.circular(50)),
+                            ),
+                            child: SizedBox(
+                              width: size.width,
+                              height: Sizer.calculateVertical(context, 80),
+                              child: Center(
+                                child: SelectionArea(
+                                  child: AutoSizeText.rich(
+                                    maxLines: 1,
+                                    TextSpan(
+                                      text: "Elite ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 37,
+                                          ),
+                                      children: [
+                                        TextSpan(
+                                          text: "Vagas",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge!
+                                              .copyWith(
+                                                color: AppColors.white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 37,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Sizer.calculateHorizontal(context, 250),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ResponsiveTextWidget(
+                                  text: "Olá anunciante!",
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 50,
+                                      ),
+                                  maxLines: 1,
+                                ),
+                                ResponsiveTextWidget(
+                                  text: "anuncie aqui as suas vagas",
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 27,
+                                      ),
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        AdminLoginFieldsComponent(
+                          emailController: emailController,
+                          passwordController: passwordController,
+                          width: 250,
+                        ),
+                        SizedBox(
+                          height: Sizer.calculateVertical(context, 50),
+                          width: Sizer.calculateHorizontal(context, 250),
+                          child: ElevatedButtonTheme(
+                            data: ElevatedButtonThemeData(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: AppColors.greyBlue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () =>
+                                  context.read<AdminLoginBloc>().add(LoginEvent(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                      )),
+                              child: ResponsiveTextWidget(
+                                text: "Login",
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                    ),
+                                hintSemantics: "Login",
+                                tooltipSemantics: "Login",
+                                maxLines: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ResponsiveTextWidget(
+                          text: "OU",
+                          textStyle:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: AppColors.lightGrey,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 27,
+                                  ),
+                          maxLines: 1,
+                        ),
+                        const AdminLoginSocialButtonsMobileComponent(),
+                        Align(
+                          alignment: Alignment.center,
+                          child: SelectionArea(
+                            child: AutoSizeText.rich(
+                              maxLines: 1,
+                              TextSpan(
+                                text: "Ainda não tem conta? ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: AppColors.lightGrey,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 20,
+                                    ),
+                                children: [
+                                  TextSpan(
+                                    text: "Cadastre-se",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -68,70 +232,131 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             body: SizedBox(
               height: size.height,
               width: size.width,
-              child: Column(
+              child: Row(
                 children: [
-                  Semantics(
-                    value: "Acesso ao Admin",
-                    tooltip: "Acesso ao Admin",
-                    tagForChildren: SemanticsTag("Acesso ao Admin"),
-                    hint: "Acesso ao Admin",
-                    label: "Acesso ao Admin",
-                    child: Text(
-                      "Acesso ao Admin",
-                      semanticsLabel: 'Acesso ao Admin',
-                    ),
-                  ),
-                  ResponsiveTextWidget(
-                    text: "Acesso ao Admin",
-                    hintSemantics: "Acesso ao Admin",
-                    tooltipSemantics: "Acesso ao Admin",
-                  ),
-                  AppFieldWidget(
-                    fieldSemantic: "Campo de texto do email.",
-                    hintSemantic: "email",
-                    controller: _emailController,
-                    hint: "Email",
-                    width: Sizer.calculateHorizontal(context, 150),
-                    prefixIcon: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                      child: SvgPicture.asset(
-                        AppImages.emailIcon,
-                        height: Sizer.calculateVertical(context, 50),
-                        width: Sizer.calculateHorizontal(context, 50),
-                        package: "vagas_design_system",
-                      ),
-                    ),
-                  ),
-                  AppFieldWidget(
-                    fieldSemantic: "Campo de texto do senha.",
-                    hintSemantic: "password",
-                    controller: _passwordController,
-                    hint: "Senha",
-                    width: Sizer.calculateHorizontal(context, 150),
-                    isPassword: true,
-                    prefixIcon: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                      child: SvgPicture.asset(
-                        AppImages.lockIcon,
-                        height: Sizer.calculateVertical(context, 50),
-                        width: Sizer.calculateHorizontal(context, 50),
-                        package: "vagas_design_system",
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () =>
-                        context.read<AdminLoginBloc>().add(LoginEvent(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            )),
-                    child: const ResponsiveTextWidget(
-                      text: "Login",
-                      hintSemantics: "Login",
-                      tooltipSemantics: "Login",
-                      maxLines: 1,
+                  AdminLoginLogoBackgroundComponent(size: size),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: Sizer.calculateHorizontal(context, 10)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          width: Sizer.calculateHorizontal(context, 150),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ResponsiveTextWidget(
+                                  text: "Olá anunciante!",
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 50,
+                                      ),
+                                  maxLines: 1,
+                                ),
+                                ResponsiveTextWidget(
+                                  text: "anuncie aqui as suas vagas",
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 27,
+                                      ),
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        AdminLoginFieldsComponent(
+                          emailController: emailController,
+                          passwordController: passwordController,
+                        ),
+                        SizedBox(
+                          height: Sizer.calculateVertical(context, 50),
+                          width: Sizer.calculateHorizontal(context, 150),
+                          child: ElevatedButtonTheme(
+                            data: ElevatedButtonThemeData(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: AppColors.greyBlue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () =>
+                                  context.read<AdminLoginBloc>().add(LoginEvent(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                      )),
+                              child: ResponsiveTextWidget(
+                                text: "Login",
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                    ),
+                                hintSemantics: "Login",
+                                tooltipSemantics: "Login",
+                                maxLines: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ResponsiveTextWidget(
+                          text: "OU",
+                          textStyle:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: AppColors.lightGrey,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 27,
+                                  ),
+                          maxLines: 1,
+                        ),
+                        const AdminLoginSocialButtonsComponent(),
+                        Align(
+                          alignment: Alignment.center,
+                          child: SelectionArea(
+                            child: AutoSizeText.rich(
+                              maxLines: 1,
+                              TextSpan(
+                                text: "Ainda não tem conta? ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: AppColors.lightGrey,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 20,
+                                    ),
+                                children: [
+                                  TextSpan(
+                                    text: "Cadastre-se",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

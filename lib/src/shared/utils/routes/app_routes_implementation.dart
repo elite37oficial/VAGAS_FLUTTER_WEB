@@ -7,6 +7,7 @@ import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/repositorie
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/pages/admin_login_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/presenter/pages/home_page.dart';
+import 'package:vagas_flutter_web/src/shared/requester/app_http_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';

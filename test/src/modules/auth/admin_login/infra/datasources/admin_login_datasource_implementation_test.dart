@@ -7,6 +7,7 @@ import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/models/admi
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/models/admin_user_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
+import 'package:vagas_flutter_web/src/shared/requester/app_http_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester.dart';
 import 'package:vagas_flutter_web/src/shared/utils/environment_congi/environment_config.dart';
 
@@ -35,15 +36,17 @@ main() {
   );
 
   test("Should call the login with correct Method", () async {
-    when(() async => await requester.post(
+    when(() async => await AppHttpRequesterImplementation().post(
           url: Endpoints.loginAdmin,
           body: loginModel.toMap(),
           fromJson: (value) => AdminUserModel.fromMap(value),
-        )).thenAnswer((_) async => Response(
-          data: adminUser.toMap(),
-          statusCode: 200,
-          requestOptions: RequestOptions(data: adminUser.toMap()),
-        ));
+        )).thenAnswer(
+      (_) async => AdminUserModel(
+        userId: "123",
+        email: "teste@email.com",
+        username: "username",
+      ),
+    );
 
     await datasource.login(loginModel);
   });
@@ -53,11 +56,12 @@ main() {
           url: Endpoints.loginAdmin,
           body: loginModel.toMap(),
           fromJson: (value) => AdminUserModel.fromMap(value),
-        )).thenAnswer((_) async => Response(
-          data: adminUser.toMap(),
-          statusCode: 200,
-          requestOptions: RequestOptions(data: adminUser.toMap()),
         ));
+    // .thenAnswer((_) async => Response(
+    //   data: adminUser.toMap(),
+    //   statusCode: 200,
+    //   requestOptions: RequestOptions(data: adminUser.toMap()),
+    // ));
 
     const adminUserModelExpected = AdminUserModel(
       userId: "123",
@@ -79,13 +83,14 @@ main() {
           url: any(named: "url"),
           body: loginModel,
           fromJson: (value) => AdminUserModel.fromMap(value),
-        )).thenAnswer((_) async => Response(
-          data: {"message": message},
-          statusCode: 401,
-          requestOptions: RequestOptions(
-            data: {"message": message},
-          ),
         ));
+    // .thenAnswer((_) async => Response(
+    //   data: {"message": message},
+    //   statusCode: 401,
+    //   requestOptions: RequestOptions(
+    //     data: {"message": message},
+    //   ),
+    // ));
 
     final result = datasource.login(loginModel);
 
@@ -100,13 +105,14 @@ main() {
           url: any(named: "url"),
           body: loginModel,
           fromJson: (value) => AdminUserModel.fromMap(value),
-        )).thenAnswer((_) async => Response(
-          data: {"message": message},
-          statusCode: 400,
-          requestOptions: RequestOptions(
-            data: {"message": message},
-          ),
         ));
+    // .thenAnswer((_) async => Response(
+    //   data: {"message": message},
+    //   statusCode: 400,
+    //   requestOptions: RequestOptions(
+    //     data: {"message": message},
+    //   ),
+    // ));
 
     final result = datasource.login(loginModel);
 
@@ -119,13 +125,14 @@ main() {
           url: any(named: "url"),
           body: loginModel,
           fromJson: (value) => AdminUserModel.fromMap(value),
-        )).thenAnswer((_) async => Response(
-          data: {"message": message},
-          statusCode: 500,
-          requestOptions: RequestOptions(
-            data: {"message": message},
-          ),
         ));
+    // .thenAnswer((_) async => Response(
+    //   data: {"message": message},
+    //   statusCode: 500,
+    //   requestOptions: RequestOptions(
+    //     data: {"message": message},
+    //   ),
+    // ));
 
     final result = datasource.login(loginModel);
 
