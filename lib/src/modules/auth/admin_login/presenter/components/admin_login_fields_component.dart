@@ -6,85 +6,73 @@ class AdminLoginFieldsComponent extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final double width;
+  final bool emailError;
+  final bool passwordError;
+  final GlobalKey<FormState> formKey;
   const AdminLoginFieldsComponent({
     Key? key,
     required this.emailController,
     required this.passwordController,
+    required this.formKey,
+    required this.emailError,
+    required this.passwordError,
     this.width = 150,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double returnHeight() {
+      if (Sizer.calculateVertical(context, 60) > 35) {
+        return Sizer.calculateVertical(context, 60);
+      } else {
+        return 35;
+      }
+    }
+
     return SizedBox(
       width: Sizer.calculateHorizontal(context, width),
-      child: Column(
-        children: [
-          AppFieldWidget(
-            fieldSemantic: "Campo de texto do email.",
-            hintSemantic: "email",
-            controller: emailController,
-            hint: "Email",
-            heigth: Sizer.calculateVertical(context, 60),
-            width: Sizer.calculateHorizontal(context, width),
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(
-                  left: 15, top: 10, bottom: 10, right: 10),
-              child: SvgPicture.asset(
-                AppImages.emailIcon,
-                height: Sizer.calculateVertical(context, 38),
-                width: Sizer.calculateHorizontal(context, 38),
-                package: "vagas_design_system",
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            AppWebFieldWidget(
+              constraints: BoxConstraints(
+                minHeight: 35,
+                maxHeight: Sizer.calculateVertical(context, 100) >= 36
+                    ? Sizer.calculateVertical(context, 100)
+                    : 36,
               ),
+              fieldSemantic: "Campo de texto do email.",
+              hintSemantic: "email",
+              controller: emailController,
+              onError: emailError,
+              hint: "Digite seu email",
+              label: "Email",
+              heigth: returnHeight(),
+              width: Sizer.calculateHorizontal(context, width),
             ),
-          ),
-          AppFieldWidget(
-            fieldSemantic: "Campo de texto do senha.",
-            hintSemantic: "password",
-            controller: passwordController,
-            hint: "Senha",
-            heigth: Sizer.calculateVertical(context, 60),
-            width: Sizer.calculateHorizontal(context, width),
-            isPassword: true,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(
-                  left: 15, top: 10, bottom: 10, right: 10),
-              child: SvgPicture.asset(
-                AppImages.lockIcon,
-                height: Sizer.calculateVertical(context, 38),
-                width: Sizer.calculateHorizontal(context, 38),
-                package: "vagas_design_system",
+            SizedBox(
+              height: Sizer.calculateVertical(context, 30),
+            ),
+            AppWebFieldWidget(
+              constraints: BoxConstraints(
+                minHeight: 35,
+                maxHeight: Sizer.calculateVertical(context, 100) >= 36
+                    ? Sizer.calculateVertical(context, 100)
+                    : 36,
               ),
+              fieldSemantic: "Campo de texto do senha.",
+              hintSemantic: "password",
+              controller: passwordController,
+               onError: passwordError,
+              hint: "Digite sua senha",
+              label: "Senha",
+              heigth: returnHeight(),
+              width: Sizer.calculateHorizontal(context, width),
+              isPassword: true,
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: SelectionArea(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: AutoSizeText.rich(
-                  maxLines: 1,
-                  TextSpan(
-                    text: "Esqueceu a senha? ",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: AppColors.lightGrey,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20,
-                        ),
-                    children: [
-                      TextSpan(
-                        text: "Recuperar",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -13,47 +13,39 @@ class AdminLoginLogoBackgroundComponent extends StatelessWidget {
       color: AppColors.greyBlue,
       height: size.height,
       width: Sizer.calculateHorizontal(context, 240),
-      child: Stack(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppImages.backgroundIcons,
-              fit: BoxFit.scaleDown,
-              height: size.height,
-              package: "vagas_design_system",
+          ResponsiveTextWidget(
+            text: "Bem-vindo anunciante!",
+            textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+            maxLines: 1,
+            maxFontSize: 48,
+            minFontSize: 34,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: Sizer.calculateVertical(context, 20),
+              bottom: Sizer.calculateVertical(context, 80),
+            ),
+            child: ResponsiveTextWidget(
+              text: "Anuncie vagas de Flutter aqui!",
+              textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w400,
+                  ),
+              maxLines: 1,
+              maxFontSize: 32,
+              minFontSize: 24,
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 60, right: 120),
-              child: ResponsiveTextWidget(
-                text: "Elite",
-                maxLines: 1,
-                textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 50,
-                    ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10, left: 120),
-              child: ResponsiveTextWidget(
-                text: "Vagas",
-                maxLines: 1,
-                textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 50,
-                    ),
-              ),
-            ),
-          ),
+          SvgPicture.asset(
+            AppImages.logoVagas,
+            package: "vagas_design_system",
+          )
         ],
       ),
     );
