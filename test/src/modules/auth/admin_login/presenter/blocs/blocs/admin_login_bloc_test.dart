@@ -30,10 +30,11 @@ main() {
     password: "password",
   );
 
-  AdminUserEntity userEntity = const AdminUserEntity(
+  AdminUserEntity userEntity = AdminUserEntity(
     userId: "123",
     email: "teste@email.com",
     username: "teste",
+    createdAt: DateTime(2017, 9, 7),
   );
 
   test("Should return a AdminLoginInitialState from Initial State", () async {

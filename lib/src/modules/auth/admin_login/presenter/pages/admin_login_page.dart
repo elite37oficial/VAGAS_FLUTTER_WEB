@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/entities/admin_user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/compone
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/components/admin_login_logo_background_component.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class AdminLoginPage extends StatefulWidget {
   const AdminLoginPage({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class AdminLoginPage extends StatefulWidget {
 }
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool emailError = false;
@@ -49,9 +52,6 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-    log(ResponsiveLayout.heightBreakpointHelper(context).toString());
 
     double returnHeight() {
       if (size.height >= ResponsiveLayout.desktopHeightBreakpoint) {
@@ -76,6 +76,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           log(user.userId);
           log(user.email);
           log(user.username);
+
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            context.pushReplacement(RouteKeys.homeAdmin);
+          });
         }
 
         return ResponsiveLayout(
@@ -153,7 +157,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                               child: ElevatedButton(
                                 onPressed: () => _validateForm(formKey),
                                 child: ResponsiveTextWidget(
-                                  text: "Login",
+                                  text: "Entrar",
                                   textStyle: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -289,7 +293,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                   child: ElevatedButton(
                                     onPressed: () => _validateForm(formKey),
                                     child: ResponsiveTextWidget(
-                                      text: "Login",
+                                      text: "Entrar",
                                       textStyle: Theme.of(context)
                                           .textTheme
                                           .bodyMedium!

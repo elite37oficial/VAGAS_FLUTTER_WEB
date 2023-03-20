@@ -23,18 +23,19 @@ main() {
     password: "password",
   );
 
-  const AdminUserEntity adminUser = AdminUserEntity(
+  AdminUserEntity adminUser = AdminUserEntity(
     userId: "123",
     username: "teste",
     email: "teste@email.com",
+    createdAt: DateTime(2017, 9, 7),
   );
 
   test("Should get AdminUserEntity from the Repository", () async {
     when(() => repository.login(loginInfo)).thenAnswer(
-        (_) async => const Right<Failure, AdminUserEntity>(adminUser));
+        (_) async =>  Right<Failure, AdminUserEntity>(adminUser));
     final result = await usecase(loginInfo);
 
-    expect(result, const Right(adminUser));
+    expect(result,  Right(adminUser));
 
     verify(() => repository.login(
           const AdminLoginEntity(

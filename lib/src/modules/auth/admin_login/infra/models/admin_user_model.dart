@@ -5,6 +5,7 @@ class AdminUserModel extends AdminUserEntity {
     required super.userId,
     required super.username,
     required super.email,
+    required super.createdAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -12,6 +13,7 @@ class AdminUserModel extends AdminUserEntity {
       'userId': userId,
       'username': username,
       'email': email,
+      'createdAt': createdAt,
     };
   }
 
@@ -20,6 +22,7 @@ class AdminUserModel extends AdminUserEntity {
       userId: map['userId'] ?? '',
       username: map['username'] ?? '',
       email: map['email'] ?? '',
+      createdAt: map['createdAt'] ?? '',
     );
   }
 }

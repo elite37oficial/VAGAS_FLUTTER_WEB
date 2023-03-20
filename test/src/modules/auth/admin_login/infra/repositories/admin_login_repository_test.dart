@@ -20,10 +20,11 @@ main() {
     repository = AdminLoginRepositoryImplementation(datasource: datasource);
   });
 
-  AdminUserModel adminUserModel = const AdminUserModel(
+  AdminUserModel adminUserModel = AdminUserModel(
     userId: "123",
     username: "teste",
     email: "teste@email.com",
+    createdAt: DateTime(2017, 9, 7),
   );
 
   AdminLoginModel adminLoginModel = const AdminLoginModel(

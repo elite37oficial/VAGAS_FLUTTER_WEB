@@ -6,10 +6,11 @@ main() {
   late AdminUserModel userModel;
 
   setUp(() {
-    userModel = const AdminUserModel(
+    userModel = AdminUserModel(
       userId: "123",
       username: "teste",
       email: "teste@email.com",
+      createdAt: DateTime(2017, 9, 7),
     );
   });
 
