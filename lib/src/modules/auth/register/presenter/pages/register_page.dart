@@ -220,6 +220,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           .textTheme
                                           .bodyMedium!
                                           .copyWith(
+                                            color: AppColors.greyBlue,
                                             fontWeight: FontWeight.w700,
                                             fontSize: 20,
                                           ),
@@ -362,6 +363,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                               .textTheme
                                               .bodyMedium!
                                               .copyWith(
+                                                color: AppColors.greyBlue,
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 20,
                                               ),

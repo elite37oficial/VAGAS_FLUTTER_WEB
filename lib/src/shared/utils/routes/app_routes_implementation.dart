@@ -51,21 +51,27 @@ final appRoutesConfig = GoRouter(
   },
   routes: [
     GoRoute(
+        path: RouteKeys.init,
+        name: RouteKeys.init,
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: Scaffold(),
+          );
+        }),
+    GoRoute(
         path: RouteKeys.initial,
         name: RouteKeys.initial.replaceAll("/", ""),
         pageBuilder: (context, state) {
-          return NoTransitionPage(
-            child: Container(),
+          return const NoTransitionPage(
+            child: Scaffold(),
           );
         }),
     GoRoute(
       path: RouteKeys.auth,
       name: RouteKeys.auth.replaceAll("/", ""),
-      pageBuilder: (context, state) {
-        return NoTransitionPage(
-          child: Container(),
-        );
-      },
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: Scaffold(),
+      ),
       routes: [
         GoRoute(
           path: RouteKeys.login.replaceAll("/", ""),
@@ -113,29 +119,29 @@ final appRoutesConfig = GoRouter(
             );
           },
         ),
-      ],
-    ),
-    GoRoute(
-      path: RouteKeys.admin,
-      name: RouteKeys.admin.replaceAll("/", ""),
-      pageBuilder: (context, state) {
-        return NoTransitionPage(
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider<AdminLoginBloc>(
-                create: (context) => AdminLoginBloc(
-                    usecase: AdminLoginUsecase(
-                  repository: AdminLoginRepositoryImplementation(
-                      datasource: AdminLoginDatasourceImplementation(
-                    requester: AppRequesterImplementation(),
-                  )),
-                )),
+        GoRoute(
+          path: RouteKeys.admin.replaceAll("/", ""),
+          name: RouteKeys.admin.replaceAll("/", ""),
+          pageBuilder: (context, state) {
+            return NoTransitionPage(
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<AdminLoginBloc>(
+                    create: (context) => AdminLoginBloc(
+                        usecase: AdminLoginUsecase(
+                      repository: AdminLoginRepositoryImplementation(
+                          datasource: AdminLoginDatasourceImplementation(
+                        requester: AppRequesterImplementation(),
+                      )),
+                    )),
+                  ),
+                ],
+                child: const AdminLoginPage(),
               ),
-            ],
-            child: const AdminLoginPage(),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: RouteKeys.homeAdmin,

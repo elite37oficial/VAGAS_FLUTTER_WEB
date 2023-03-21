@@ -27,24 +27,26 @@ class LoginRegisterButtonComponent extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => context.push("${RouteKeys.auth}${RouteKeys.register}"),
-            child: AutoSizeText.rich(
-              maxFontSize: 16,
-              minFontSize: 12,
-              TextSpan(
-                  text: "Não tem uma conta? ",
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColors.grey,
-                        fontWeight: FontWeight.w700,
-                      ),
-                  children: [
-                    TextSpan(
-                      text: "Cadastre-se aqui",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: AppColors.greyBlue,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    )
-                  ]),
+            child: SelectionArea(
+              child: AutoSizeText.rich(
+                maxFontSize: 16,
+                minFontSize: 12,
+                TextSpan(
+                    text: "Não tem uma conta? ",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: AppColors.grey,
+                          fontWeight: FontWeight.w700,
+                        ),
+                    children: [
+                      TextSpan(
+                        text: "Cadastre-se aqui",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: AppColors.greyBlue,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      )
+                    ]),
+              ),
             ),
           ),
           returnDivider(
