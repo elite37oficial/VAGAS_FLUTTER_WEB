@@ -10,7 +10,7 @@ class EnviromentDEV implements EnvironmentConfig {
   }
 
   @override
-  String baseURL = "http://teste-dev.com";
+  String baseURL = "http://apivagasdev.elite37.com.br";
 }
 
 class EnviromentHMG implements EnvironmentConfig {
@@ -23,7 +23,7 @@ class EnviromentHMG implements EnvironmentConfig {
   }
 
   @override
-  String baseURL = "http://teste-hmg.com";
+  String baseURL = "http://apivagashmg.elite37.com.br";
 }
 
 class EnviromentPROD implements EnvironmentConfig {
@@ -36,5 +36,5 @@ class EnviromentPROD implements EnvironmentConfig {
   }
 
   @override
-  String baseURL = "http://teste-prod.com";
+  String baseURL = "http://apivagas.elite37.com.br";
 }

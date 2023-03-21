@@ -345,6 +345,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   onTap: () => context.pop(),
                                   child: AutoSizeText.rich(
                                     maxLines: 1,
+                                    maxFontSize: 16,
+                                    minFontSize: 12,
                                     TextSpan(
                                       text: "Voltar para o ",
                                       style: Theme.of(context)
@@ -353,7 +355,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                           .copyWith(
                                             color: AppColors.lightGrey,
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 20,
                                           ),
                                       children: [
                                         TextSpan(
@@ -365,7 +366,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                               .copyWith(
                                                 color: AppColors.greyBlue,
                                                 fontWeight: FontWeight.w700,
-                                                fontSize: 20,
                                               ),
                                         ),
                                       ],

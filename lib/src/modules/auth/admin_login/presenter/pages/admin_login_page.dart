@@ -70,6 +70,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         }
         if (state is AdminLoginErrorState) {
           log(state.message);
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            context.pushReplacement(RouteKeys.homeAdmin);
+          });
         }
         if (state is AdminLoginSuccessState) {
           AdminUserEntity user = state.adminUser;
@@ -178,7 +181,8 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                           alignment: Alignment.center,
                           child: SelectionArea(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () => context.pushReplacement(
+                                  "${RouteKeys.auth}${RouteKeys.login}"),
                               child: AutoSizeText.rich(
                                 maxLines: 1,
                                 TextSpan(
@@ -199,6 +203,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                           .textTheme
                                           .bodyMedium!
                                           .copyWith(
+                                            color: AppColors.greyBlue,
                                             fontWeight: FontWeight.w700,
                                             fontSize: 20,
                                           ),
@@ -314,7 +319,8 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                               alignment: Alignment.bottomCenter,
                               child: SelectionArea(
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () => context.pushReplacement(
+                                      "${RouteKeys.auth}${RouteKeys.login}"),
                                   child: AutoSizeText.rich(
                                     maxLines: 1,
                                     TextSpan(
@@ -335,6 +341,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                               .textTheme
                                               .bodyMedium!
                                               .copyWith(
+                                                color: AppColors.greyBlue,
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 20,
                                               ),
