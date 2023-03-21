@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class LoginRegisterButtonComponent extends StatelessWidget {
   final double width;
@@ -24,7 +26,7 @@ class LoginRegisterButtonComponent extends StatelessWidget {
             width: Sizer.calculateHorizontal(context, width),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () => context.push("${RouteKeys.auth}${RouteKeys.register}"),
             child: AutoSizeText.rich(
               maxFontSize: 16,
               minFontSize: 12,

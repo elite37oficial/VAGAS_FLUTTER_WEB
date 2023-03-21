@@ -100,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
         }
 
         return ResponsiveLayout(
-          desktop: Scaffold(
+          mobile: Scaffold(
             body: SizedBox(
               height: size.height,
               width: size.width,
@@ -178,7 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: ElevatedButton(
                                 onPressed: () => _validateRegisterForm(formKey),
                                 child: ResponsiveTextWidget(
-                                  text: "Continuar",
+                                  text: "Cadastrar",
                                   textStyle: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -199,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           child: SelectionArea(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () => context.pop(),
                               child: AutoSizeText.rich(
                                 maxLines: 1,
                                 TextSpan(
@@ -237,7 +237,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-          mobile: Scaffold(
+          desktop: Scaffold(
             body: SizedBox(
               height: size.height,
               width: size.width,
@@ -320,7 +320,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     onPressed: () =>
                                         _validateRegisterForm(formKey),
                                     child: ResponsiveTextWidget(
-                                      text: "Continuar",
+                                      text: "Cadastrar",
                                       textStyle: Theme.of(context)
                                           .textTheme
                                           .bodyMedium!
@@ -341,7 +341,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               alignment: Alignment.bottomCenter,
                               child: SelectionArea(
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () => context.pop(),
                                   child: AutoSizeText.rich(
                                     maxLines: 1,
                                     TextSpan(
