@@ -26,24 +26,32 @@ class _RegisterPageState extends State<RegisterPage> {
   final companyController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final repeatPasswordController = TextEditingController();
+  bool companyError = false;
   bool emailError = false;
   bool passwordError = false;
-  bool companyError = false;
+  bool repeatPasswordError = false;
 
   _validateRegisterForm(GlobalKey<FormState> formKey) {
     String email = emailController.text.replaceAll(" ", "");
     String company = companyController.text.trim();
     setState(() {
+      companyError = company.isEmpty;
+
       emailError = email.isEmpty || email.length < 6 || !email.contains("@");
 
       passwordError =
           passwordController.text.isEmpty || passwordController.text.length < 8;
 
-      companyError = company.isEmpty;
+      repeatPasswordError =
+          repeatPasswordController.text != passwordController.text;
     });
 
     if (formKey.currentState!.validate()) {
-      if (!companyError && !emailError && !passwordError) {
+      if (!companyError &&
+          !emailError &&
+          !passwordError &&
+          !repeatPasswordError) {
         context.read<RegisterBloc>().add(
               RegisterUserEvent(
                 company: companyController.text,
@@ -135,9 +143,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           companyError: companyError,
                           emailError: emailError,
                           passwordError: passwordError,
+                          repeatPasswordError: repeatPasswordError,
                           companyController: companyController,
                           emailController: emailController,
                           passwordController: passwordController,
+                          repeatPasswordController: repeatPasswordController,
                           width: 250,
                         ),
                         ConstrainedBox(
@@ -273,9 +283,12 @@ class _RegisterPageState extends State<RegisterPage> {
                               companyError: companyError,
                               emailError: emailError,
                               passwordError: passwordError,
+                              repeatPasswordError: repeatPasswordError,
                               companyController: companyController,
                               emailController: emailController,
                               passwordController: passwordController,
+                              repeatPasswordController:
+                                  repeatPasswordController,
                             ),
                             ConstrainedBox(
                               constraints: BoxConstraints(
