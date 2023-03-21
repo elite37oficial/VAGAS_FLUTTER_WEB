@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/repositories/register_repository.dart';
 import 'package:vagas_flutter_web/src/modules/auth/register/domain/usecases/register_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/auth/register/infra/datasources/register_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/register/infra/repositories/register_repository_implementation.dart';

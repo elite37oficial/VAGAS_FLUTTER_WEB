@@ -40,11 +40,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
       emailError = email.isEmpty || email.length < 6 || !email.contains("@");
 
-      passwordError =
-          passwordController.text.isEmpty || passwordController.text.length < 8;
+      passwordError = passwordController.text.isEmpty ||
+          passwordController.text.length < 8 ||
+          passwordController.text != repeatPasswordController.text;
 
       repeatPasswordError =
-          repeatPasswordController.text != passwordController.text;
+          repeatPasswordController.text != passwordController.text ||
+              repeatPasswordController.text.isEmpty;
     });
 
     if (formKey.currentState!.validate()) {
