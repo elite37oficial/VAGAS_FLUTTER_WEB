@@ -2,24 +2,24 @@ import 'package:vagas_flutter_web/src/modules/auth/register/domain/entities/regi
 
 class RegisterModel extends RegisterEntity {
   const RegisterModel({
+    required super.company,
     required super.email,
     required super.password,
-    required super.name,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      'company': company,
       'email': email,
       'password': password,
-      'name': name,
     };
   }
 
   factory RegisterModel.fromMap(Map<String, dynamic> map) {
     return RegisterModel(
+      company: map['company'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
-      name: map['name'] ?? '',
     );
   }
 }

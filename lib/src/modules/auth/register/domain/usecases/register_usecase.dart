@@ -5,10 +5,10 @@ import 'package:vagas_flutter_web/src/modules/auth/register/domain/repositories/
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
 
-class RegisterUsecase implements Usecase<RegisterUserEntity, RegisterEntity> {
+class RegisterUseCase implements Usecase<RegisterUserEntity, RegisterEntity> {
   final RegisterRepository repository;
 
-  RegisterUsecase({required this.repository});
+  RegisterUseCase({required this.repository});
 
   @override
   Future<Either<Failure, RegisterUserEntity>> call(

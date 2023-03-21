@@ -10,16 +10,16 @@ import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 class RegisterRepositoryImplementation implements RegisterRepository {
   final RegisterDatasource datasource;
 
-  RegisterRepositoryImplementation(this.datasource);
+  RegisterRepositoryImplementation({required this.datasource});
 
   @override
   Future<Either<Failure, RegisterUserEntity>> register(
       RegisterEntity registerUser) async {
     try {
       RegisterModel registerModel = RegisterModel(
+        company: registerUser.company,
         email: registerUser.email,
         password: registerUser.password,
-        name: registerUser.password,
       );
       final result = await datasource.register(registerModel);
       return Right(result);

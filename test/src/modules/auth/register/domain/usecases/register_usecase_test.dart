@@ -11,34 +11,42 @@ class RegisterRepositoryMock extends Mock implements RegisterRepository {}
 
 main() {
   late RegisterRepository repository;
-  late RegisterUsecase usecase;
+  late RegisterUseCase usecase;
 
   setUp(() {
     repository = RegisterRepositoryMock();
-    usecase = RegisterUsecase(repository: repository);
+    usecase = RegisterUseCase(repository: repository);
   });
 
   const RegisterEntity registerInfo = RegisterEntity(
-    name: "name",
-    email: "teste@gmail.com",
+    company: "company",
+    email: "teste@email.com",
     password: "password",
   );
 
-  const RegisterUserEntity registerUser = RegisterUserEntity(
-    userId: '',
-    name: "name",
-    email: "teste@gmail.com",
-    password: "password",
+  RegisterUserEntity registerUser = RegisterUserEntity(
+    userId: '123',
+    company: "company",
+    username: "teste",
+    email: "teste@email.com",
+    createdAt: DateTime(2020),
   );
 
   test("Should register a user", () async {
     when(() => repository.register(registerInfo)).thenAnswer(
-        (_) async => const Right<Failure, RegisterUserEntity>(registerUser));
+        (_) async => Right<Failure, RegisterUserEntity>(registerUser));
     final result = await usecase(registerInfo);
 
-    expect(result, const Right(registerUser));
+    expect(result, Right(registerUser));
 
-    verify(() => repository.register(registerInfo)).called(1);
+    verify(() => repository.register(
+          const RegisterEntity(
+            company: "company",
+            email: "teste@email.com",
+            password: "password",
+          ),
+        )).called(1);
+
     verifyNoMoreInteractions(repository);
   });
 
@@ -52,7 +60,13 @@ main() {
 
     expect(result, Left(InvalidCredentialsFailure(messageError)));
 
-    verify(() => repository.register(registerInfo)).called(1);
+    verify(() => repository.register(
+          const RegisterEntity(
+            company: "company",
+            email: "teste@email.com",
+            password: "password",
+          ),
+        )).called(1);
   });
 
   test("Should get ServerFailure from the Repository", () async {
@@ -63,7 +77,13 @@ main() {
 
     expect(result, Left(ServerFailure(messageError)));
 
-    verify(() => repository.register(registerInfo)).called(1);
+    verify(() => repository.register(
+          const RegisterEntity(
+            company: "company",
+            email: "teste@email.com",
+            password: "password",
+          ),
+        )).called(1);
   });
 
   test("Should get GeneralFailure from the Repository", () async {
@@ -74,6 +94,12 @@ main() {
 
     expect(result, Left(GeneralFailure(messageError)));
 
-    verify(() => repository.register(registerInfo)).called(1);
+    verify(() => repository.register(
+          const RegisterEntity(
+            company: "company",
+            email: "teste@email.com",
+            password: "password",
+          ),
+        )).called(1);
   });
 }

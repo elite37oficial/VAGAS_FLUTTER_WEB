@@ -7,9 +7,9 @@ main() {
 
   setUp(() {
     registerModel = const RegisterModel(
+      company: 'company',
       email: "teste@email.com",
       password: "password",
-      name: "name",
     );
   });
 
@@ -19,9 +19,9 @@ main() {
 
   test("Should return a valid RegisterModel from a Map", () {
     final Map<String, dynamic> map = {
+      "company": "company",
       "email": "teste@email.com",
       "password": "password",
-      "name": "name",
     };
 
     final result = RegisterModel.fromMap(map);
@@ -31,9 +31,9 @@ main() {
 
   test("Should return Map containing the RegisterModel data", () {
     final expectedMap = {
+      "company": "company",
       "email": "teste@email.com",
       "password": "password",
-      "name": "name",
     };
 
     final result = registerModel.toMap();

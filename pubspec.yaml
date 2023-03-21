@@ -19,9 +19,18 @@ dependencies:
   mocktail: ^0.3.0
   dartz: ^0.10.1
   dio: ^5.0.1
+  http: ^0.13.5
   pretty_dio_logger: ^1.1.1
-  flutter_svg: 1.1.6
   equatable: ^2.0.5
+  bloc: ^8.1.1
+  flutter_bloc: ^8.1.2
+  bloc_test: ^9.1.1
+
+  vagas_design_system:
+    # path: C:/Elite37/VAGAS_FLUTTER_DESIGN_SYSTEM #Para trabalhar com o pacote localmente.
+    git:
+      url: https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM
+      ref: dev
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +41,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/
-    - assets/images/
+  # assets:
+  #   - assets/
+  #   - assets/images/
