@@ -26,10 +26,10 @@ dependencies:
   bloc_test: ^9.1.1
 
   vagas_design_system:
-    path: ../VAGAS_FLUTTER_DESIGN_SYSTEM/
-    # git:
-    #   url: https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM
-    #   ref: feature/login_widgets
+    # path: C:/Elite37/VAGAS_FLUTTER_DESIGN_SYSTEM #Para trabalhar com o pacote localmente.
+    git:
+      url: https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM
+      ref: dev
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +40,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/
-    - assets/images/
+  # assets:
+  #   - assets/
+  #   - assets/images/

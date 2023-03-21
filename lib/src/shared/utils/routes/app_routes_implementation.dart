@@ -16,6 +16,11 @@ import 'package:vagas_flutter_web/src/modules/auth/login/infra/datasources/login
 import 'package:vagas_flutter_web/src/modules/auth/login/infra/repositories/login_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/login/presenter/blocs/blocs/login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/login/presenter/pages/login_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/register/domain/usecases/register_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/register/infra/datasources/register_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/register/infra/repositories/register_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/register/presenter/blocs/blocs/register_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/register/presenter/pages/register_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/presenter/pages/home_page.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
@@ -28,7 +33,7 @@ final appRoutesConfig = GoRouter(
   refreshListenable: authService,
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
-    final isAuthRoute = state.subloc == RouteKeys.auth;
+    final isAuthRoute = state.subloc == RouteKeys.register;
     final isRegisterRoute =
         state.subloc == "${RouteKeys.auth}${RouteKeys.register}";
     final isLoginRoute = state.subloc == "${RouteKeys.auth}${RouteKeys.login}";
@@ -89,7 +94,22 @@ final appRoutesConfig = GoRouter(
           name: RouteKeys.register.replaceAll("/", ""),
           pageBuilder: (context, state) {
             return NoTransitionPage(
-              child: Container(),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<RegisterBloc>(
+                    create: (context) => RegisterBloc(
+                      usecase: RegisterUseCase(
+                        repository: RegisterRepositoryImplementation(
+                          datasource: RegisterDatasourceImplementation(
+                            requester: AppRequesterImplementation(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+                child: const RegisterPage(),
+              ),
             );
           },
         ),
