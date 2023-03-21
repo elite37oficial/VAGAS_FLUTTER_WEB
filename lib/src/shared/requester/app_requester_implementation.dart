@@ -61,7 +61,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future delete(
+  Future<Response> delete(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -75,7 +75,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future get(
+  Future<Response> get(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -89,7 +89,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future post(
+  Future<Response> post(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -103,7 +103,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future put(
+  Future<Response> put(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -116,7 +116,7 @@ class AppRequesterImplementation implements AppRequester {
     );
   }
 
-  Future _invokeRequest({
+  Future<Response> _invokeRequest({
     required String url,
     required Function(dynamic p1) fromJson,
     required Future<Response<dynamic>> Function(Dio) invokeDio,

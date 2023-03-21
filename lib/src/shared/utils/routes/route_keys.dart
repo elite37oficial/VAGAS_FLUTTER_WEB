@@ -1,8 +1,7 @@
-import 'package:dartz/dartz.dart';
-
 abstract class RouteKeys {
   static const String initial = "/initial";
   static const String admin = "/admin";
+  static const String homeAdmin = "/homeAdmin";
   static const String splash = "/splash";
   static const String auth = "/auth";
   static const String login = "/login";

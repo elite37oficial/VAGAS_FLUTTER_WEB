@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     if (isLoading) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         width: size.width,
         child: Column(
           children: [
-            Text("Infos"),
+            const Text("Infos"),
             Text(userEntity?.name ?? ""),
             Text(userEntity?.lastname ?? ""),
             Text(userEntity?.email ?? ""),

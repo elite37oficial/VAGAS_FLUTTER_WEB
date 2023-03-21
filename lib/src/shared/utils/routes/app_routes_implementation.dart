@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/domain/usecases/get_users_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/infra/datasources/get_users_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/infra/repositories/get_users_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/usecases/admin_login_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/datasources/admin_login_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/repositories/admin_login_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/pages/admin_login_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/presenter/pages/home_page.dart';
+import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
 
 final appRoutesConfig = GoRouter(
-  initialLocation: RouteKeys.home,
+  initialLocation: RouteKeys.admin,
   refreshListenable: authService,
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
@@ -70,8 +82,41 @@ final appRoutesConfig = GoRouter(
       name: RouteKeys.admin.replaceAll("/", ""),
       pageBuilder: (context, state) {
         return NoTransitionPage(
-          child: Container(
-            color: Colors.blue,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<AdminLoginBloc>(
+                create: (context) => AdminLoginBloc(
+                    usecase: AdminLoginUsecase(
+                  repository: AdminLoginRepositoryImplementation(
+                      datasource: AdminLoginDatasourceImplementation(
+                    requester: AppRequesterImplementation(),
+                  )),
+                )),
+              ),
+            ],
+            child: const AdminLoginPage(),
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: RouteKeys.homeAdmin,
+      name: RouteKeys.homeAdmin.replaceAll("/", ""),
+      pageBuilder: (context, state) {
+        return NoTransitionPage(
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<GetUsersBloc>(
+                create: (context) => GetUsersBloc(
+                    usecase: GetUsersUsecase(
+                  repository: GetUsersRepositoryImplementation(
+                      datasource: GetUsersDatasourceImplementation(
+                    requester: AppRequesterImplementation(),
+                  )),
+                )),
+              ),
+            ],
+            child: const HomeAdminPanelPage(),
           ),
         );
       },

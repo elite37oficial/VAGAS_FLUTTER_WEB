@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/debug_helper.dart';
 
 import 'package:vagas_flutter_web/src/shared/themes/app_themes.dart';
 import 'package:vagas_flutter_web/src/shared/utils/behaviors/custom_behavior.dart';
@@ -7,8 +8,10 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/app_routes_implementat
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      // showSemanticsDebugger: debugMode,
       routerDelegate: appRoutesConfig.routerDelegate,
       routeInformationProvider: appRoutesConfig.routeInformationProvider,
       routeInformationParser: appRoutesConfig.routeInformationParser,
