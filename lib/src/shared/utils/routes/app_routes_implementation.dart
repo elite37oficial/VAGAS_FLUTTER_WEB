@@ -63,7 +63,7 @@ final appRoutesConfig = GoRouter(
           },
         ),
         GoRoute(
-          path: RouteKeys.register,
+          path: RouteKeys.register.replaceAll("/", ""),
           name: RouteKeys.register.replaceAll("/", ""),
           pageBuilder: (context, state) {
             return NoTransitionPage(
