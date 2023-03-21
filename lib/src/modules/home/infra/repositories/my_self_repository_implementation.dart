@@ -1,7 +1,8 @@
-import 'package:vagas_flutter_web/src/modules/home/domain/entities/user_entity.dart';
+
 import 'package:dartz/dartz.dart';
 import 'package:vagas_flutter_web/src/modules/home/domain/repositories/my_self_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/infra/datasources/my_self_datasource.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 

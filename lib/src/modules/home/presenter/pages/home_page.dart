@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:vagas_flutter_web/src/modules/home/domain/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/domain/usecases/my_self_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/infra/datasources/my_self_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/infra/repositories/my_self_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/themes/app_colors.dart';
@@ -65,10 +65,9 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             const Text("Infos"),
-            Text(userEntity?.name ?? ""),
-            Text(userEntity?.lastname ?? ""),
             Text(userEntity?.email ?? ""),
-            Text(userEntity?.enterprise ?? ""),
+            Text(userEntity?.username ?? ""),
+            Text(userEntity?.userId ?? ""),
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/generics/debug_helper.dart';
 
 import 'package:vagas_flutter_web/src/shared/themes/app_themes.dart';
 import 'package:vagas_flutter_web/src/shared/utils/behaviors/custom_behavior.dart';

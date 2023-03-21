@@ -1,4 +1,6 @@
-import 'package:vagas_flutter_web/src/modules/admin_panel/domain/entities/user_entity.dart';
+
+
+import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 
 abstract class GetUsersStates {}
 

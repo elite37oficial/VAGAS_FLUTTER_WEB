@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/domain/entities/job_entity.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/infra/models/job_model.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/models/job_model.dart';
 
 main() {
   late JobModel jobModel;

@@ -1,21 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/domain/entities/job_entity.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 
 class UserEntity extends Equatable {
-  final String id;
-  final String name;
+  final String userId;
+  final String username;
   final String email;
   final String createdAt;
   final List<JobEntity> listJobs;
 
   const UserEntity({
-    required this.id,
-    required this.name,
+    required this.userId,
+    required this.username,
     required this.email,
     required this.createdAt,
     required this.listJobs,
   });
 
   @override
-  List<Object> get props => [id, name, email, createdAt, listJobs];
+  List<Object> get props => [userId, username, email, createdAt, listJobs];
 }

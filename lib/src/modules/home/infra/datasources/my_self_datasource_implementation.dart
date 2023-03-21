@@ -1,5 +1,5 @@
 import 'package:vagas_flutter_web/src/modules/home/infra/datasources/my_self_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/home/infra/models/user_model.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/models/user_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester.dart';
 

@@ -7,6 +7,7 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/infra/models/get_users
 import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester.dart';
+import 'package:vagas_flutter_web/src/shared/utils/environment_congi/environment_config.dart';
 
 class AppRequesterMock extends Mock implements AppRequester {}
 
@@ -15,6 +16,7 @@ main() {
   late GetUsersDatasource datasource;
 
   setUp(() {
+    environmentConfig = EnvironmentEnum.dev;
 
     requester = AppRequesterMock();
     datasource = GetUsersDatasourceImplementation(requester: requester);

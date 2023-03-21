@@ -11,6 +11,11 @@ import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/datasources
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/repositories/admin_login_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/pages/admin_login_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/login/domain/usecases/login_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/login/infra/datasources/login_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/login/infra/repositories/login_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/login/presenter/blocs/blocs/login_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/login/presenter/pages/login_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/presenter/pages/home_page.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
@@ -19,7 +24,7 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 final authService = AuthService();
 
 final appRoutesConfig = GoRouter(
-  initialLocation: RouteKeys.admin,
+  initialLocation: "${RouteKeys.auth}${RouteKeys.login}",
   refreshListenable: authService,
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
@@ -62,7 +67,20 @@ final appRoutesConfig = GoRouter(
           name: RouteKeys.login.replaceAll("/", ""),
           pageBuilder: (context, state) {
             return NoTransitionPage(
-              child: Container(),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<LoginBloc>(
+                    create: (context) => LoginBloc(
+                        usecase: LoginUsecase(
+                      repository: LoginRepositoryImplementation(
+                          datasource: LoginDatasourceImplementation(
+                        requester: AppRequesterImplementation(),
+                      )),
+                    )),
+                  ),
+                ],
+                child: const LoginPage(),
+              ),
             );
           },
         ),

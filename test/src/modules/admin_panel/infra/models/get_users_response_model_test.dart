@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/models/get_users_response_model.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/models/user_model.dart';
 
 main() {
   late GetUsersResponseModel usersResponseModel;
@@ -8,8 +9,8 @@ main() {
     usersResponseModel = GetUsersResponseModel(
       listUsers: [
         const UserModel(
-          id: "id",
-          name: "name",
+          userId: "id",
+          username: "name",
           email: "email",
           createdAt: "createdAt",
           listJobs: [],
@@ -26,8 +27,8 @@ main() {
     final Map<String, dynamic> map = {
       "listUsers": [
         {
-          "id": "id",
-          "name": "name",
+          "userId": "id",
+          "username": "name",
           "email": "email",
           "createdAt": "createdAt",
           "listJobs": [],
@@ -44,8 +45,8 @@ main() {
     final expectedMap = {
       "listUsers": [
         {
-          "id": "id",
-          "name": "name",
+          "userId": "id",
+          "username": "name",
           "email": "email",
           "createdAt": "createdAt",
           "listJobs": [],

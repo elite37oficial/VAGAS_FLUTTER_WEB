@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/domain/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/domain/repositories/get_users_repository.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/domain/usecases/get_users_usecase.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
 
@@ -20,22 +20,22 @@ main() {
 
   List<UserEntity> listUsers = [
     const UserEntity(
-      id: "0",
-      name: "nome",
+      userId: "0",
+      username: "nome",
       email: "email@email.com",
       createdAt: "2023-2-2",
       listJobs: [],
     ),
     const UserEntity(
-      id: "0",
-      name: "nome",
+      userId: "0",
+      username: "nome",
       email: "email@email.com",
       createdAt: "2023-2-2",
       listJobs: [],
     ),
     const UserEntity(
-      id: "0",
-      name: "nome",
+      userId: "0",
+      username: "nome",
       email: "email@email.com",
       createdAt: "2023-2-2",
       listJobs: [],
