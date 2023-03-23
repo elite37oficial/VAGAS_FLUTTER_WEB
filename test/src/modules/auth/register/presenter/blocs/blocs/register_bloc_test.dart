@@ -2,12 +2,11 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/entities/register_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/entities/register_user_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/usecases/register_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/presenter/blocs/blocs/register_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/presenter/blocs/states/register_state.dart';
-
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_user_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/usecases/register_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/states/register_state.dart';
 class RegisterUsecaseMock extends Mock implements RegisterUseCase {}
 
 main() {

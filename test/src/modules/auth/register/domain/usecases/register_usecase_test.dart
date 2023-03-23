@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/entities/register_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/entities/register_user_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/repositories/register_repository.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/usecases/register_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_user_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/repositories/register_repository.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/usecases/register_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 class RegisterRepositoryMock extends Mock implements RegisterRepository {}

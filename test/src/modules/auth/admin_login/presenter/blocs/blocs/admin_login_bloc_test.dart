@@ -2,12 +2,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/entities/admin_login_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/entities/admin_user_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/usecases/admin_login_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/events/admin_login_event.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/presenter/blocs/states/admin_login_state.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/entities/admin_login_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/entities/admin_user_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/usecases/admin_login_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/presenter/blocs/events/admin_login_event.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/presenter/blocs/states/admin_login_state.dart';
 
 class AdminLoginUsecaseMock extends Mock implements AdminLoginUsecase {}
 

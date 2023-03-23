@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/datasources/admin_login_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/datasources/admin_login_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/models/admin_login_model.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/models/admin_user_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/datasources/admin_login_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/datasources/admin_login_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/models/admin_login_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/models/admin_user_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester.dart';

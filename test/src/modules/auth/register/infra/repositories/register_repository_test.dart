@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/repositories/register_repository.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/infra/datasources/register_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/infra/models/register_model.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/infra/models/register_user_model.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/infra/repositories/register_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/repositories/register_repository.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/datasources/register_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/models/register_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/models/register_user_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/repositories/register_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 

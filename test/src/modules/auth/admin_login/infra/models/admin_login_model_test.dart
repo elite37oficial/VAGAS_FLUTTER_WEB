@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/entities/admin_login_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/models/admin_login_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/entities/admin_login_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/models/admin_login_model.dart';
 
 main() {
   late AdminLoginModel loginModel;
