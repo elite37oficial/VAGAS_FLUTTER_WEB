@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/entities/admin_login_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/entities/admin_user_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/repositories/admin_login_repository.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/usecases/admin_login_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/entities/admin_login_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/entities/admin_user_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/repositories/admin_login_repository.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/usecases/admin_login_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 class AdminrepositoryMock extends Mock implements AdminLoginRepository {}

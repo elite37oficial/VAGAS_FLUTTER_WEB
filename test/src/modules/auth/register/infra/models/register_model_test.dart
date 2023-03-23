@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/domain/entities/register_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/register/infra/models/register_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/models/register_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_entity.dart';
 
 main() {
   late RegisterModel registerModel;

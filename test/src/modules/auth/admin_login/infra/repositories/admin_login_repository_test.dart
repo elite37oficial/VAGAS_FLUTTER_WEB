@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/domain/repositories/admin_login_repository.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/datasources/admin_login_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/models/admin_login_model.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/models/admin_user_model.dart';
-import 'package:vagas_flutter_web/src/modules/auth/admin_login/infra/repositories/admin_login_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/repositories/admin_login_repository.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/datasources/admin_login_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/models/admin_login_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/models/admin_user_model.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/repositories/admin_login_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 

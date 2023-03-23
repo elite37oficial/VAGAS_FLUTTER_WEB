@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/models/user_model.dart';
 
 class GetUsersResponseModel {
@@ -18,3 +19,4 @@ class GetUsersResponseModel {
     );
   }
 }
+
