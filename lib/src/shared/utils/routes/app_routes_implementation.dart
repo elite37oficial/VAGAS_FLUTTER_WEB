@@ -21,6 +21,12 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/datas
 import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/repositories/register_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/usecases/dashboard_recruiter_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/repositories/dashboard_recruiter_repository_implementation_.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/presenter/blocs/blocs/dashboard_recruiter_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_admin/presenter/pages/home_page.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
@@ -169,8 +175,21 @@ final appRoutesConfig = GoRouter(
       path: RouteKeys.home,
       name: RouteKeys.home.replaceAll("/", ""),
       pageBuilder: (context, state) {
-        return const NoTransitionPage(
-          child: HomePage(),
+        return NoTransitionPage(
+          child: MultiBlocProvider(
+            providers: [
+              // BlocProvider<DashboardRecruiterBloc>(
+              //   create: (context) => DashboardRecruiterBloc(
+              //     usecase: DashboardRecruiterUsecase(
+              //       repository: DashboardRecruiterRepositoryImplementation(
+              //         datasource: DashboardMockDataSource(),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+            ],
+            child: const HomePage(),
+          ),
         );
       },
     ),
