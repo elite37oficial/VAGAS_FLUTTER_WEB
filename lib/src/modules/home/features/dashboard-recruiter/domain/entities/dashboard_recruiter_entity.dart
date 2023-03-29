@@ -1,4 +1,6 @@
-class DashboardRecruiterEntity {
+import 'package:equatable/equatable.dart';
+
+class DashboardRecruiterEntity extends Equatable {
   final String imageUrl;
   final String title;
   final String company;
@@ -6,7 +8,7 @@ class DashboardRecruiterEntity {
   final String city;
   final String type;
 
-  DashboardRecruiterEntity({
+  const DashboardRecruiterEntity({
     required this.imageUrl,
     required this.title,
     required this.company,
@@ -15,12 +17,6 @@ class DashboardRecruiterEntity {
     required this.type,
   });
 
-  // construtor vazio adicionado
-  DashboardRecruiterEntity.empty()
-      : imageUrl = '',
-        title = '',
-        company = '',
-        status = '',
-        city = '',
-        type = '';
+  @override
+  List<Object> get props => [imageUrl, title, company, status, city, type];
 }

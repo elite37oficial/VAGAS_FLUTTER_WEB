@@ -4,12 +4,12 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/
 
 class DashboardRecruiterRepositoryImplementation
     implements GetDashboardRecruiterRepository {
-  final GetDashboardRecruiterDatasource datasource;
+  final GetDashboardRecruiterDatasource _getDashboardJobsDatasource;
 
-  DashboardRecruiterRepositoryImplementation({required this.datasource});
+  DashboardRecruiterRepositoryImplementation(this._getDashboardJobsDatasource);
 
   @override
   Future<List<DashboardRecruiterEntity>> call() async {
-    return datasource();
+    return _getDashboardJobsDatasource();
   }
 }
