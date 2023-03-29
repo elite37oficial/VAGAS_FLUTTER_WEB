@@ -1,6 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/models/dashboard_recruiter_model.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/repositories/dashboard_recruiter_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
@@ -35,7 +37,7 @@ void main() {
         .thenAnswer((_) async => (tDashboardRecruiterModel));
 
     final result = await repository.call();
-    expect(result, tDashboardRecruiterModel);
+    expect(result, const Right(tDashboardRecruiterModel));
 
     verify(() => datasource.call()).called(1);
   });
@@ -43,13 +45,14 @@ void main() {
   test(
       'Should return a Server Failure when the call to datasource is unsuccessful',
       () async {
-    var message = "Server Error!";
+    String message = "Server Error!";
+
     when(() => datasource.call())
-        .thenThrow(ServerException(message: message, statusCode: 500));
+        .thenAnswer((_) async => throw ServerException());
 
     final result = await repository.call();
 
-    expect(result, ServerFailure(message));
+    expect(result, Left(ServerFailure(message)));
     verify(() => datasource.call()).called(1);
   });
 }
