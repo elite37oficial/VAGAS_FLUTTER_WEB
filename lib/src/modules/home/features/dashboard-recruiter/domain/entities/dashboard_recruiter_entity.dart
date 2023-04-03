@@ -18,5 +18,12 @@ class DashboardRecruiterEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [imageUrl, title, company, status, city, type];
+  List<Object> get props => [
+        imageUrl,
+        title,
+        company,
+        status,
+        city,
+        type,
+      ];
 }

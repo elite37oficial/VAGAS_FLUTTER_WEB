@@ -15,7 +15,8 @@ void main() {
 
   setUp(() {
     repository = MockDashboardRecruiterRepository();
-    usecase = GetDashboardRecruiterUsecaseImplementation(repository);
+    usecase = GetDashboardRecruiterUsecaseImplementation(
+        getDashboardJobsRepository: repository);
   });
 
   const mockDashboardRecruiter = [
@@ -31,16 +32,16 @@ void main() {
 
   test('Should get a dashboard recruiter entity', () async {
     when(() => repository.call())
-        .thenAnswer((_) async => mockDashboardRecruiter);
+        .thenAnswer((_) async => const Right(mockDashboardRecruiter));
     final result = await usecase();
-    expect(result, mockDashboardRecruiter);
+    expect(result, const Right(mockDashboardRecruiter));
   });
 
   test('Should return a Server Failure when dont succeed', () async {
-    String message = "Error! Invalid Credentials";
+    String message = "Server Error!";
 
-    when(() => repository.call())
-        .thenThrow((_) async => (ServerFailure(message)));
+    when(() => repository.call()).thenAnswer((_) async =>
+        Left<Failure, List<DashboardRecruiterEntity>>(ServerFailure(message)));
     final result = await usecase();
     expect(result, Left(ServerFailure(message)));
   });
