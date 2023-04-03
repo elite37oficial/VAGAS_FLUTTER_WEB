@@ -7,14 +7,15 @@ import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 class DashboardRecruiterRepositoryImplementation
     implements GetDashboardRecruiterRepository {
-  final GetDashboardRecruiterDatasource _getDashboardJobsDatasource;
+  final GetDashboardRecruiterDatasource getDashboardJobsDatasource;
 
-  DashboardRecruiterRepositoryImplementation(this._getDashboardJobsDatasource);
+  DashboardRecruiterRepositoryImplementation(
+      {required this.getDashboardJobsDatasource});
 
   @override
   Future<Either<Failure, List<DashboardRecruiterEntity>>> call() async {
     try {
-      final result = await _getDashboardJobsDatasource();
+      final result = await getDashboardJobsDatasource();
       return Right(result);
     } on ServerException {
       return Left(ServerFailure('Server Error!'));

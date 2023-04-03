@@ -15,7 +15,8 @@ void main() {
 
   setUp(() {
     repository = MockDashboardRecruiterRepository();
-    usecase = GetDashboardRecruiterUsecaseImplementation(repository);
+    usecase = GetDashboardRecruiterUsecaseImplementation(
+        getDashboardJobsRepository: repository);
   });
 
   const mockDashboardRecruiter = [

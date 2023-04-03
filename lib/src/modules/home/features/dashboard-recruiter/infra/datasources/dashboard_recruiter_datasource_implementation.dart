@@ -6,7 +6,7 @@ class DashboardDatasourceImplementation
     implements GetDashboardRecruiterDatasource {
   final AppRequester requester;
 
-  DashboardDatasourceImplementation(this.requester);
+  DashboardDatasourceImplementation({required this.requester});
 
   final dataMock = [
     const DashboardRecruiterModel(
