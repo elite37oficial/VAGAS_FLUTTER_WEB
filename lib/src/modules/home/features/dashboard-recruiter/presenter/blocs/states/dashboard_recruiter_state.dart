@@ -1,18 +1,37 @@
+import 'package:equatable/equatable.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/entities/dashboard_recruiter_entity.dart';
 
-abstract class DashboardRecruiterState {}
+abstract class DashboardRecruiterState extends Equatable {}
 
-class EmptyDashboardRecruiterState implements DashboardRecruiterState {}
-
-class ErrorDashboardRecruiterState implements DashboardRecruiterState {
-  final String? message;
-
-  ErrorDashboardRecruiterState(this.message);
+class DashboardRecruiterInitialState extends DashboardRecruiterState {
+  @override
+  List<Object> get props => [];
 }
 
-class ListJobsDashboardRecruiterState implements DashboardRecruiterState {
+class DashboardRecruiterEmptyState extends DashboardRecruiterState {
+  @override
+  List<Object> get props => [];
+}
+
+class DashboardRecruiterLoadingState extends DashboardRecruiterState {
+  @override
+  List<Object> get props => [];
+}
+
+class DashboardRecruiterErrorState extends DashboardRecruiterState {
+  final String message;
+
+  DashboardRecruiterErrorState({required this.message});
+
+  @override
+  List<Object> get props => [];
+}
+
+class DashboardRecruiterSuccessState extends DashboardRecruiterState {
   final List<DashboardRecruiterEntity> listJobs;
-  ListJobsDashboardRecruiterState({required this.listJobs});
-}
 
-class LoadingDashboardRecruiterState implements DashboardRecruiterState {}
+  DashboardRecruiterSuccessState({required this.listJobs});
+
+  @override
+  List<Object> get props => [listJobs];
+}

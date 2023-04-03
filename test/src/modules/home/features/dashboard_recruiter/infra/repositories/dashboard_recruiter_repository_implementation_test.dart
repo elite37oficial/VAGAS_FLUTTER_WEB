@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/models/dashboard_recruiter_model.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/repositories/dashboard_recruiter_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
@@ -17,7 +16,8 @@ void main() {
 
   setUp(() {
     datasource = MockDashboardRecruiterDatasource();
-    repository = DashboardRecruiterRepositoryImplementation(datasource);
+    repository = DashboardRecruiterRepositoryImplementation(
+        getDashboardJobsDatasource: datasource);
   });
 
   const tDashboardRecruiterModel = [
