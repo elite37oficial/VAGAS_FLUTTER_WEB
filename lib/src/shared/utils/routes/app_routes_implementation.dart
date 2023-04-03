@@ -21,14 +21,11 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/datas
 import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/repositories/register_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/usecases/get_dashboard_recruiter_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/usecases/get_dashboard_recruiter_usecase_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/repositories/dashboard_recruiter_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/presenter/blocs/blocs/dashboard_recruiter_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/presenter/pages/dashboard_recruiter_page.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_admin/presenter/pages/home_page.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
@@ -179,20 +176,22 @@ final appRoutesConfig = GoRouter(
         return NoTransitionPage(
           child: MultiBlocProvider(
             providers: [
-              // BlocProvider<DashboardRecruiterBloc>(
-              //   create: (context) => DashboardRecruiterBloc(
-              //     usecase: DashboardRecruiterUsecaseImp(
-              //       repository: DashboardRecruiterRepositoryImplementation(
-              //         datasource: GetDashboardDataSourceImp(
-              //             // requester: AppRequesterImplementation(),
-              //             ),
-              //       ),
-              //     ),
-              //   ),
-              // )
+              BlocProvider<DashboardRecruiterBloc>(
+                create: (context) => DashboardRecruiterBloc(
+                  getDashboardRecruiterUsecase:
+                      GetDashboardRecruiterUsecaseImplementation(
+                    getDashboardJobsRepository:
+                        DashboardRecruiterRepositoryImplementation(
+                      getDashboardJobsDatasource:
+                          DashboardDatasourceImplementation(
+                        requester: AppRequesterImplementation(),
+                      ),
+                    ),
+                  ),
+                ),
+              )
             ],
-            // child: const DashboardRecruiterPage(),
-            child: const HomePage(),
+            child: const DashboardRecruiterPage(),
           ),
         );
       },
