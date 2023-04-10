@@ -29,7 +29,7 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 final authService = AuthService();
 
 final appRoutesConfig = GoRouter(
-  initialLocation: "${RouteKeys.auth}${RouteKeys.login}",
+  initialLocation: RouteKeys.homeAdmin,
   refreshListenable: authService,
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;

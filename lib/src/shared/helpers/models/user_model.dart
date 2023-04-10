@@ -9,6 +9,11 @@ class UserModel extends UserEntity {
     required super.username,
     required super.createdAt,
     required super.listJobs,
+    required super.listEnterprises,
+    required super.profession,
+    required super.updatedAt,
+    required super.about,
+    required super.status,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,6 +23,11 @@ class UserModel extends UserEntity {
       'username': username,
       'createdAt': createdAt,
       'listJobs': listJobs,
+      'listEnterprises': listEnterprises,
+      'profession': profession,
+      'updatedAt': updatedAt,
+      'about': about,
+      'status': status,
     };
   }
 
@@ -27,8 +37,13 @@ class UserModel extends UserEntity {
       email: map['email'] ?? '',
       username: map['username'] ?? '',
       createdAt: map['createdAt'] ?? '',
+      updatedAt: map['updatedAt'] ?? '',
+      profession: map['profession'] ?? '',
+      about: map['about'] ?? '',
+      status: map['status'] ?? '',
       listJobs:
           List<JobEntity>.from(map["listJobs"].map((x) => JobModel.fromMap(x))),
+      listEnterprises: map['enterprises'] ?? [],
     );
   }
 }

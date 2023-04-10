@@ -6,7 +6,12 @@ class UserEntity extends Equatable {
   final String username;
   final String email;
   final String createdAt;
+  final String? about;
+  final String? profession;
+  final String? updatedAt;
+  final String? status;
   final List<JobEntity> listJobs;
+  final List<String?>? listEnterprises;
 
   const UserEntity({
     required this.userId,
@@ -14,8 +19,24 @@ class UserEntity extends Equatable {
     required this.email,
     required this.createdAt,
     required this.listJobs,
+    this.profession,
+    this.updatedAt,
+    this.listEnterprises,
+    this.about,
+    this.status,
   });
 
   @override
-  List<Object> get props => [userId, username, email, createdAt, listJobs];
+  List<Object?> get props => [
+        userId,
+        username,
+        email,
+        createdAt,
+        listJobs,
+        listEnterprises,
+        updatedAt,
+        profession,
+        about,
+        status,
+      ];
 }
