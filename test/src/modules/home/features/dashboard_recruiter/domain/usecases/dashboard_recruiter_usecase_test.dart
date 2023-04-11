@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/entities/dashboard_recruiter_entity.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/repositories/get_job_repository.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/domain/repositories/get_job_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/usecases/dashboard_recruiter_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';

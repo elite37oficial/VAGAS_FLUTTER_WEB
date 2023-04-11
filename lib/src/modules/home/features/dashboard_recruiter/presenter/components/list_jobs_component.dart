@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/presenter/components/job_tile_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/job_tile_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 
 class ListJobsComponent extends StatelessWidget {
