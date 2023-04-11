@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/domain/entities/dashboard_recruiter_entity.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/models/dashboard_recruiter_model.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/models/get_job_responde_model.dart';
 
 import '../mocks/dashboard_recruiter_mock.dart';
 
@@ -14,6 +14,7 @@ void main() {
     status: "Open",
     city: "New York",
     type: "Home Office",
+    createdAt: "Yesterday",
   );
 
   test('Should be a subclass of DashboardRecruiterEntity', () {
@@ -33,7 +34,8 @@ void main() {
       "company": "Ifood",
       "status": "Open",
       "city": "New York",
-      "type": "Home Office"
+      "type": "Home Office",
+      "createdAt": "Yesterday"
     };
     final result = tDashboardRecruiterModel.toMap();
     expect(result, expectedMap);

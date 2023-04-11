@@ -9,6 +9,7 @@ class JobEntity extends Equatable {
   final String local;
   final String period;
   final String createdAt;
+  final String status;
 
   const JobEntity({
     required this.id,
@@ -19,6 +20,7 @@ class JobEntity extends Equatable {
     required this.local,
     required this.period,
     required this.createdAt,
+    required this.status,
   });
 
   @override
@@ -31,5 +33,6 @@ class JobEntity extends Equatable {
         local,
         period,
         createdAt,
+        status,
       ];
 }

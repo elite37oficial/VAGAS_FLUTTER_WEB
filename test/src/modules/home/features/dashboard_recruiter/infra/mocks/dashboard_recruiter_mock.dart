@@ -4,5 +4,6 @@ const dashboardRecruiterMock = """{
     "company": "Ifood",
     "status": "Open",
     "city": "New York",
-    "type": "Home Office"
+    "type": "Home Office",
+    "createdAt": "Yesterday"
 }""";

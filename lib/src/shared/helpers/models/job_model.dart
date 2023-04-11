@@ -10,6 +10,7 @@ class JobModel extends JobEntity {
     required super.local,
     required super.period,
     required super.createdAt,
+    required super.status,
   });
   Map<String, dynamic> toMap() {
     return {
@@ -21,6 +22,7 @@ class JobModel extends JobEntity {
       'local': local,
       'period': period,
       'createdAt': createdAt,
+      'status': status,
     };
   }
 
@@ -34,6 +36,7 @@ class JobModel extends JobEntity {
       local: map["local"] ?? "",
       period: map["period"] ?? "",
       createdAt: map["createdAt"] ?? "",
+      status: map["status"] ?? "",
     );
   }
 }

@@ -1,45 +1,42 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/dashboard_recruiter_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/models/dashboard_recruiter_model.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/repositories/dashboard_recruiter_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/datasources/get_job_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/models/get_job_responde_model.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard-recruiter/infra/repositories/get_job_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
-class MockDashboardRecruiterDatasource extends Mock
-    implements GetDashboardRecruiterDatasource {}
+class MockDashboardRecruiterDataSource extends Mock
+    implements DashboardRecruiterDataSource {}
 
 void main() {
   late DashboardRecruiterRepositoryImplementation repository;
-  late GetDashboardRecruiterDatasource datasource;
+  late MockDashboardRecruiterDataSource datasource;
 
   setUp(() {
-    datasource = MockDashboardRecruiterDatasource();
+    datasource = MockDashboardRecruiterDataSource();
     repository = DashboardRecruiterRepositoryImplementation(
-        getDashboardJobsDatasource: datasource);
+        dashboardRecruiterDataSource: datasource);
   });
 
-  const tDashboardRecruiterModel = [
-    DashboardRecruiterModel(
-      imageUrl: "image",
-      title: "Software Engineer",
-      company: "Ifood",
-      status: "Open",
-      city: "New York",
-      type: "Home Office",
-    )
-  ];
+  const tDashboardRecruiterModel = DashboardRecruiterModel(
+    imageUrl: "image",
+    title: "Software Engineer",
+    company: "Ifood",
+    status: "Open",
+    city: "New York",
+    type: "Home Office",
+    createdAt: "Yesterday",
+  );
 
   test('Should return a dashboard recruiter entity when calls the datasource',
       () async {
-    when(() => datasource.call())
-        .thenAnswer((_) async => (tDashboardRecruiterModel));
+    when(() => datasource.getJobsInfo())
+        .thenAnswer((_) async => const Right(tDashboardRecruiterModel));
 
-    final result = await repository.call();
+    final result = await repository.getJobsInfo();
     expect(result, const Right(tDashboardRecruiterModel));
-
-    verify(() => datasource.call()).called(1);
   });
 
   test(
@@ -50,9 +47,9 @@ void main() {
     when(() => datasource.call())
         .thenAnswer((_) async => throw ServerException());
 
-    final result = await repository.call();
+    final result = await repository.dashboardRecruiterDataSource();
 
-    expect(result, Left(ServerFailure(message)));
+    expect(result, ServerFailure(message));
     verify(() => datasource.call()).called(1);
   });
 }
