@@ -3,86 +3,89 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/events/get_users_event.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/states/get_users_states.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/header_filter_component.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/list_users_component.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/page_buttons_component.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/top_buttons_component.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/blocs/get_job_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/events/get_job_event.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/states/get_job_states.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/header_filter_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/list_jobs_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/page_buttons_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/top_buttons_component.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
-class HomeAdminPanelPage extends StatefulWidget {
-  const HomeAdminPanelPage({Key? key}) : super(key: key);
+class HomeRecruiterPage extends StatefulWidget {
+  const HomeRecruiterPage({Key? key}) : super(key: key);
 
   @override
-  State<HomeAdminPanelPage> createState() => _HomeAdminPanelPageState();
+  State<HomeRecruiterPage> createState() => _HomeRecruiterPageState();
 }
 
-class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
-  List<UserEntity> listUsers = [
-    UserEntity(
-      userId: "0",
-      isAdmin: false,
-      username: "username",
-      email: "user@email.com",
-      createdAt: "27/03/2023",
-      listJobs: [],
-      about: "Lorem Ipslum",
-      profession: "Recrutador",
-      status: "Em Aberto",
-      listEnterprises: [],
-      updatedAt: "27/04/2023",
-    ),
-    UserEntity(
-      userId: "0",
-      isAdmin: false,
-      username: "username",
-      email: "user@email.com",
-      createdAt: "27/03/2023",
-      listJobs: [],
-      about: "Lorem Ipslum",
-      profession: "Recrutador",
-      status: "Fechada",
-      listEnterprises: [],
-      updatedAt: "27/04/2023",
-    ),
-    UserEntity(
-      userId: "0",
-      isAdmin: false,
-      username: "username",
-      email: "user@email.com",
-      createdAt: "27/03/2023",
-      listJobs: [],
-      about:
-          "Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem IpslumLorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem Ipslum ",
-      profession: "Recrutador",
-      status: "Cancelada",
-      listEnterprises: [],
-      updatedAt: "27/04/2023",
-    ),
+class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
+  List<JobEntity> listJobs = [
+    const JobEntity(
+        id: 'id',
+        title: 'Software Engineer',
+        enterprise: 'Ifood',
+        link: 'link',
+        imageLogo:
+            'https://static.ifood.com.br/webapp/images/logo-smile-512x512.png',
+        local: 'São Paulo - Remoto',
+        period: 'Tempo Integral - Jr/Pleno  ',
+        createdAt: '29/12/2022',
+        status: 'Em Aberto'),
+    const JobEntity(
+        id: 'id',
+        title: 'Web Developer',
+        enterprise: 'Facebook',
+        link: 'link',
+        imageLogo:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Facebook_logo_36x36.svg/800px-Facebook_logo_36x36.svg.png?20150724010035',
+        local: 'Nova Iorque - Remoto',
+        period: 'Tempo Integral - Pleno  ',
+        createdAt: '08/01/2023',
+        status: 'Cancelada'),
+    const JobEntity(
+        id: 'id',
+        title: 'Data Analytics',
+        enterprise: 'Linkedin',
+        link: 'link',
+        imageLogo: 'https://cdn-icons-png.flaticon.com/512/174/174857.png',
+        local: 'São Paulo - Hibrido',
+        period: 'Tempo Integral - Senior  ',
+        createdAt: '12/07/2022',
+        status: 'Fechada'),
+    const JobEntity(
+        id: 'id',
+        title: 'Software Engineer',
+        enterprise: 'Google',
+        link: 'link',
+        imageLogo:
+            'https://static.vecteezy.com/ti/vetor-gratis/p3/10353285-colorido-google-logo-on-white-background-gratis-vetor.jpg',
+        local: 'Vancouver - Hibrido',
+        period: 'Tempo Integral - Pleno  ',
+        createdAt: '24/11/2022',
+        status: 'Fechada'),
   ];
   @override
   void initState() {
-    context.read<GetUsersBloc>().add(GetEvent());
+    context.read<GetJobBloc>().add(GetJobListEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocBuilder<GetUsersBloc, GetUsersStates>(builder: (context, state) {
-      if (state is GetUsersLoadingState) {
+    return BlocBuilder<GetJobBloc, GetJobStates>(builder: (context, state) {
+      if (state is GetJobLoadingState) {
         return const LoadingPage();
       }
-      if (state is GetUsersErrorState) {
+      if (state is GetJobErrorState) {
         log(state.message);
       }
-      if (state is GetUsersSuccessState) {
-        listUsers = state.listUsers;
-        log(listUsers.length.toString());
+      if (state is GetJobSuccessState) {
+        listJobs = state.listJobs;
+        log(listJobs.length.toString());
       }
       return ResponsiveLayout(
         mobile: Scaffold(
@@ -107,13 +110,13 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 40, top: 60),
                             child: ResponsiveTextWidget(
-                              text: "Usuários",
+                              text: "Vagas publicadas",
                               textStyle: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(fontWeight: FontWeight.w700),
-                              hintSemantics: "usuários",
-                              tooltipSemantics: "usuários",
+                              hintSemantics: "vagas",
+                              tooltipSemantics: "vagas",
                               maxLines: 1,
                               maxFontSize: 32,
                               minFontSize: 27,
@@ -133,8 +136,8 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
                                 children: [
                                   HeaderFilterComponent(size: size),
                                   Expanded(
-                                    child: ListUsersComponent(
-                                        listUsers: listUsers),
+                                    child:
+                                        ListJobsComponent(listJobs: listJobs),
                                   ),
                                   const PageButtonsComponent(),
                                 ],
@@ -171,13 +174,13 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 40, top: 60),
                             child: ResponsiveTextWidget(
-                              text: "Usuários",
+                              text: "Vagas publicadas",
                               textStyle: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(fontWeight: FontWeight.w700),
-                              hintSemantics: "usuários",
-                              tooltipSemantics: "usuários",
+                              hintSemantics: "vagas",
+                              tooltipSemantics: "vagas",
                               maxLines: 1,
                               maxFontSize: 32,
                               minFontSize: 27,
@@ -197,8 +200,8 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
                                 children: [
                                   HeaderFilterComponent(size: size),
                                   Expanded(
-                                    child: ListUsersComponent(
-                                        listUsers: listUsers),
+                                    child:
+                                        ListJobsComponent(listJobs: listJobs),
                                   ),
                                   const PageButtonsComponent(),
                                 ],

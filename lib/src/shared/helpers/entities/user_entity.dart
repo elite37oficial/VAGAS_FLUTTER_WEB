@@ -3,6 +3,7 @@ import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 
 class UserEntity extends Equatable {
   final String userId;
+  final bool isAdmin;
   final String username;
   final String email;
   final String createdAt;
@@ -15,6 +16,7 @@ class UserEntity extends Equatable {
 
   const UserEntity({
     required this.userId,
+    required this.isAdmin,
     required this.username,
     required this.email,
     required this.createdAt,
@@ -38,5 +40,6 @@ class UserEntity extends Equatable {
         profession,
         about,
         status,
+        isAdmin,
       ];
 }

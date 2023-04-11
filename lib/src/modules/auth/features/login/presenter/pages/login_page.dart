@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/events/login_event.dart';
@@ -9,9 +10,9 @@ import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/bloc
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/components/login_fields_component.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/components/login_logo_background_component.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/components/login_register_button_component.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -71,12 +72,15 @@ class _LoginPageState extends State<LoginPage> {
           log(state.message);
         }
         if (state is LoginSuccessState) {
-          UserEntity user = state.user;
-          log(user.userId);
-          log(user.email);
-          log(user.username);
-
-          WidgetsBinding.instance.addPostFrameCallback((_) async {});
+          if (state.user.isAdmin) {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              context.push(RouteKeys.homeAdmin);
+            });
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              context.push(RouteKeys.home);
+            });
+          }
         }
 
         return ResponsiveLayout(

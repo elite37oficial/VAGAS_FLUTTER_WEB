@@ -5,6 +5,7 @@ import 'package:vagas_flutter_web/src/shared/helpers/models/job_model.dart';
 class UserModel extends UserEntity {
   const UserModel({
     required super.userId,
+    required super.isAdmin,
     required super.email,
     required super.username,
     required super.createdAt,
@@ -19,6 +20,7 @@ class UserModel extends UserEntity {
   Map<String, dynamic> toMap() {
     return {
       'userId': userId,
+      'isAdmin': isAdmin,
       'email': email,
       'username': username,
       'createdAt': createdAt,
@@ -34,6 +36,7 @@ class UserModel extends UserEntity {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       userId: map['userId'] ?? '',
+      isAdmin: map['isAdmin'] ?? false,
       email: map['email'] ?? '',
       username: map['username'] ?? '',
       createdAt: map['createdAt'] ?? '',

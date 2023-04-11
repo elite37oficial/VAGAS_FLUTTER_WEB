@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/domain/usecases/get_users_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/datasources/get_users_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/repositories/get_users_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/usecases/admin_login_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/datasources/admin_login_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/repositories/admin_login_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/presenter/pages/admin_login_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/login_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/datasources/login_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/repositories/login_repository_implementation.dart';
@@ -21,16 +17,30 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/datas
 import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/repositories/register_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_admin/presenter/pages/home_page.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/domain/usecases/get_job_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/datasources/get_job_datasouce_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/repositories/get_job_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/blocs/get_job_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
 
+const String home = "${RouteKeys.auth}${RouteKeys.login}";
+
+goToHome(BuildContext context) async {
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    context.push(home);
+  });
+}
+
 final appRoutesConfig = GoRouter(
-  initialLocation: RouteKeys.homeAdmin,
+  initialLocation: home,
   refreshListenable: authService,
+  errorPageBuilder: (context, state) =>
+      const NoTransitionPage(child: ErrorPage(goToHome: goToHome)),
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
     final isAuthRoute = state.subloc == RouteKeys.register;
@@ -119,28 +129,6 @@ final appRoutesConfig = GoRouter(
             );
           },
         ),
-        GoRoute(
-          path: RouteKeys.admin.replaceAll("/", ""),
-          name: RouteKeys.admin.replaceAll("/", ""),
-          pageBuilder: (context, state) {
-            return NoTransitionPage(
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<AdminLoginBloc>(
-                    create: (context) => AdminLoginBloc(
-                        usecase: AdminLoginUsecase(
-                      repository: AdminLoginRepositoryImplementation(
-                          datasource: AdminLoginDatasourceImplementation(
-                        requester: AppRequesterImplementation(),
-                      )),
-                    )),
-                  ),
-                ],
-                child: const AdminLoginPage(),
-              ),
-            );
-          },
-        ),
       ],
     ),
     GoRoute(
@@ -169,8 +157,23 @@ final appRoutesConfig = GoRouter(
       path: RouteKeys.home,
       name: RouteKeys.home.replaceAll("/", ""),
       pageBuilder: (context, state) {
-        return const NoTransitionPage(
-          child: HomePage(),
+        return NoTransitionPage(
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<GetJobBloc>(
+                create: (context) => GetJobBloc(
+                  usecase: GetJobUsecase(
+                    repository: GetJobRepositoryImplementation(
+                      datasource: GetJobDatasourceImplementation(
+                        requester: AppRequesterImplementation(),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+            child: const HomeRecruiterPage(),
+          ),
         );
       },
     ),
