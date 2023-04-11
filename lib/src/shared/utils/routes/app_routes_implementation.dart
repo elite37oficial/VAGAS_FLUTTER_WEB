@@ -6,11 +6,6 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/infra/datasources/get_
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/repositories/get_users_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/domain/usecases/admin_login_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/datasources/admin_login_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/infra/repositories/admin_login_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/presenter/blocs/blocs/admin_login_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/admin_login/presenter/pages/admin_login_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/login_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/datasources/login_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/repositories/login_repository_implementation.dart';
@@ -33,7 +28,7 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 final authService = AuthService();
 
 final appRoutesConfig = GoRouter(
-  initialLocation: RouteKeys.home,
+  initialLocation: "${RouteKeys.auth}${RouteKeys.login}",
   refreshListenable: authService,
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
@@ -119,28 +114,6 @@ final appRoutesConfig = GoRouter(
                   ),
                 ],
                 child: const RegisterPage(),
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: RouteKeys.admin.replaceAll("/", ""),
-          name: RouteKeys.admin.replaceAll("/", ""),
-          pageBuilder: (context, state) {
-            return NoTransitionPage(
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<AdminLoginBloc>(
-                    create: (context) => AdminLoginBloc(
-                        usecase: AdminLoginUsecase(
-                      repository: AdminLoginRepositoryImplementation(
-                          datasource: AdminLoginDatasourceImplementation(
-                        requester: AppRequesterImplementation(),
-                      )),
-                    )),
-                  ),
-                ],
-                child: const AdminLoginPage(),
               ),
             );
           },
