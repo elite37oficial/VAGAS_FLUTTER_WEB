@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/domain/usecases/get_users_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/datasources/get_users_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/repositories/get_users_repository_implementation.dart';
@@ -27,9 +28,19 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
 
+const String home = "${RouteKeys.auth}${RouteKeys.login}";
+
+goToHome(BuildContext context) async {
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    context.push(home);
+  });
+}
+
 final appRoutesConfig = GoRouter(
-  initialLocation: "${RouteKeys.auth}${RouteKeys.login}",
+  initialLocation: home,
   refreshListenable: authService,
+  errorPageBuilder: (context, state) =>
+      const NoTransitionPage(child: ErrorPage(goToHome: goToHome)),
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
     final isAuthRoute = state.subloc == RouteKeys.register;

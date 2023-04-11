@@ -16,7 +16,7 @@ class AppWidget extends StatelessWidget {
       routeInformationParser: appRoutesConfig.routeInformationParser,
       debugShowCheckedModeBanner: false,
       scrollBehavior: CustomScrollBehavior(),
-      title: 'Vagas Elite37 Demo',
+      title: 'Vagas Elite37',
       theme: AppThemes.lightTheme(),
       darkTheme: AppThemes.darkTheme(),
       themeMode: ThemeMode.system,
