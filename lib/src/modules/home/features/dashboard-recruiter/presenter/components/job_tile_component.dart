@@ -108,27 +108,23 @@ class JobTileComponent extends StatelessWidget {
             flex: 12,
             child: SizedBox(
               width: size.width * 0.7,
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ResponsiveTextWidget(
-                        text: jobTileData.local,
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                        hintSemantics: "local",
-                        tooltipSemantics: "local",
-                      ),
-                      ResponsiveTextWidget(
-                        text: jobTileData.period,
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                        hintSemantics: "periodo",
-                        tooltipSemantics: "periodo",
-                      ),
-                    ],
+                  ResponsiveTextWidget(
+                    text: jobTileData.local,
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    maxLines: 1,
+                    hintSemantics: "local",
+                    tooltipSemantics: "local",
+                  ),
+                  ResponsiveTextWidget(
+                    text: jobTileData.period,
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    maxLines: 1,
+                    hintSemantics: "periodo",
+                    tooltipSemantics: "periodo",
                   ),
                 ],
               ),
