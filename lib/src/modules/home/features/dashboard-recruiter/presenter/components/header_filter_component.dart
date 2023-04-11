@@ -80,22 +80,16 @@ class HeaderFilterComponent extends StatelessWidget {
             ),
             Flexible(
               flex: 12,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: Sizer.calculateHorizontal(context, 10) > 35
-                        ? 35
-                        : Sizer.calculateHorizontal(context, 10)),
-                child: SizedBox(
-                  width: size.width * 0.7,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: ResponsiveTextWidget(
-                      text: "Sobre",
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                      maxLines: 1,
-                      hintSemantics: "sobre",
-                      tooltipSemantics: "sobre",
-                    ),
+              child: SizedBox(
+                width: size.width * 0.7,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: ResponsiveTextWidget(
+                    text: "Sobre",
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    maxLines: 1,
+                    hintSemantics: "sobre",
+                    tooltipSemantics: "sobre",
                   ),
                 ),
               ),

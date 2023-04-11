@@ -110,31 +110,25 @@ class JobTileComponent extends StatelessWidget {
               width: size.width * 0.7,
               child: Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: Sizer.calculateHorizontal(context, 10) > 35
-                            ? 35
-                            : Sizer.calculateHorizontal(context, 10)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ResponsiveTextWidget(
-                          text: jobTileData.local,
-                          textStyle: Theme.of(context).textTheme.bodyMedium,
-                          maxLines: 1,
-                          hintSemantics: "local",
-                          tooltipSemantics: "local",
-                        ),
-                        ResponsiveTextWidget(
-                          text: jobTileData.period,
-                          textStyle: Theme.of(context).textTheme.bodyMedium,
-                          maxLines: 1,
-                          hintSemantics: "periodo",
-                          tooltipSemantics: "periodo",
-                        ),
-                      ],
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ResponsiveTextWidget(
+                        text: jobTileData.local,
+                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 1,
+                        hintSemantics: "local",
+                        tooltipSemantics: "local",
+                      ),
+                      ResponsiveTextWidget(
+                        text: jobTileData.period,
+                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 1,
+                        hintSemantics: "periodo",
+                        tooltipSemantics: "periodo",
+                      ),
+                    ],
                   ),
                 ],
               ),
