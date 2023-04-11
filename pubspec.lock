@@ -656,7 +656,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: f4d548c253198290c19aec8983810c72b1f555c9
+      resolved-ref: cc9ec974d52c025a6c69adafc7ebe73c84fd3a5f
       url: "https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM"
     source: git
     version: "0.0.1"

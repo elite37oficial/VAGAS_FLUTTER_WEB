@@ -25,6 +25,7 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
   List<UserEntity> listUsers = [
     UserEntity(
       userId: "0",
+      isAdmin: false,
       username: "username",
       email: "user@email.com",
       createdAt: "27/03/2023",
@@ -37,6 +38,7 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
     ),
     UserEntity(
       userId: "0",
+      isAdmin: false,
       username: "username",
       email: "user@email.com",
       createdAt: "27/03/2023",
@@ -49,6 +51,7 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
     ),
     UserEntity(
       userId: "0",
+      isAdmin: false,
       username: "username",
       email: "user@email.com",
       createdAt: "27/03/2023",
