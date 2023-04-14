@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/components/company_tile_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/company/dashboard_companies/presenter/components/company_tile_component.dart';
 
 class ListCompaniesComponent extends StatelessWidget {
   final List<CompanyEntity> listCompanies;
