@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
+import 'create_company_pop_up_component.dart';
+
 class CompanyTopButtonsComponent extends StatelessWidget {
   const CompanyTopButtonsComponent({Key? key}) : super(key: key);
 
@@ -54,7 +56,9 @@ class CompanyTopButtonsComponent extends StatelessWidget {
                     : Sizer.calculateVertical(context, 40),
                 width: 100,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    CreateCompanyPopUp.show(context);
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.greyBlue,
                       elevation: 5,

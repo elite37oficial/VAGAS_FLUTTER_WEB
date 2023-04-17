@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/company/dashboard_companies/domain/usecases/get_company_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/company/dashboard_companies/presenter/bloc/events/get_company_event.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/company/dashboard_companies/presenter/bloc/states/get_company_states.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/domain/usecases/get_company_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/events/get_company_event.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/states/get_company_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
