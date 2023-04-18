@@ -11,18 +11,19 @@ class RegisterModel extends RegisterEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      "profileID": profileID,
+      "profile_id": profileID,
       "name": name,
       "phone": phone,
       "email": email,
       "password": password,
+      "status": "",
     };
   }
 
   factory RegisterModel.fromMap(Map<String, dynamic> map) {
     return RegisterModel(
       name: map['name'] ?? '',
-      profileID: map['profileID'] ?? '',
+      profileID: map['profile_id'] ?? '',
       phone: map['phone'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
