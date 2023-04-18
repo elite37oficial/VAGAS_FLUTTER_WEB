@@ -126,12 +126,13 @@ class _CreateCompanyPopUpState extends State<CreateCompanyPopUp> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Expanded(
+                    Expanded(
                       child: TextField(
                         enabled: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Escolha a imagem da sua empresa',
+                          hintText:
+                              imageName ?? 'Escolha a imagem da sua empresa',
                         ),
                         maxLines: 1,
                       ),
