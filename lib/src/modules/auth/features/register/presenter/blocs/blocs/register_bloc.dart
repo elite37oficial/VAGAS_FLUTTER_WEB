@@ -20,7 +20,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     emitter(RegisterLoadingState());
 
     RegisterEntity registerEntity = RegisterEntity(
-      company: event.company,
+      name: event.name,
+      profileID: event.profileID,
+      phone: event.phone,
       email: event.email,
       password: event.password,
     );

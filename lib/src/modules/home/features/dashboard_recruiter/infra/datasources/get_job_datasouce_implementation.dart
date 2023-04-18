@@ -11,7 +11,7 @@ class GetJobDatasourceImplementation implements GetJobDatasource {
   @override
   Future getJob() async {
     return await requester.get(
-        url: Endpoints.dashboardGetJobs,
+        url: Endpoints.jobs,
         fromJson: (value) => GetJobResponseModel.fromMap(value));
   }
 }

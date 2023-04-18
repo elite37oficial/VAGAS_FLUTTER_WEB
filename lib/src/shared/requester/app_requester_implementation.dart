@@ -125,22 +125,8 @@ class AppRequesterImplementation implements AppRequester {
     await _addToken(dio);
 
     late Response<dynamic> response;
-    try {
-      response = await invokeDio(dio);
-    } catch (e) {
-      if (e is DioError) {
-        if (e.type == DioErrorType.badResponse) {
-          if (e.response?.data != null && e.response?.data is Map) {
-            throw DioError(
-              response: e.response,
-              error: e,
-              type: DioErrorType.badResponse,
-              requestOptions: e.requestOptions,
-            );
-          }
-        }
-      }
-    }
+
+    response = await invokeDio(dio);
 
     return fromJson(response.data);
   }

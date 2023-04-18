@@ -2,30 +2,33 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/enti
 
 class RegisterUserModel extends RegisterUserEntity {
   const RegisterUserModel({
-    required super.userId,
-    required super.company,
-    required super.username,
+    required super.id,
+    required super.profileID,
+    required super.name,
+    required super.phone,
     required super.email,
-    required super.createdAt,
+    required super.status,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'userId': userId,
-      'company': company,
-      'username': username,
+      'id': id,
+      'profileID': profileID,
+      'name': name,
+      'phone': phone,
       'email': email,
-      'createdAt': createdAt,
+      'status': status,
     };
   }
 
   factory RegisterUserModel.fromMap(Map<String, dynamic> map) {
     return RegisterUserModel(
-      userId: map['userId'] ?? '',
-      company: map['company'] ?? '',
-      username: map['username'] ?? '',
+      id: map['id'] ?? '',
+      profileID: map['profileID'] ?? '',
+      name: map['name'] ?? '',
+      phone: map['phone'] ?? '',
       email: map['email'] ?? '',
-      createdAt: map['createdAt'] ?? '',
+      status: map['status'] ?? '',
     );
   }
 }

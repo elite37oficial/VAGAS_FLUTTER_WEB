@@ -3,14 +3,14 @@ import 'package:vagas_flutter_web/src/shared/utils/environment_congi/environment
 abstract class Endpoints {
   static String baseURL = EnvironmentFactory().getEnvironment().baseURL;
 
-  static String login = "$baseURL/api/auth/login";
-  static String loginAdmin = "$baseURL/api/admin/login";
-  static String adminGetUsers = "$baseURL/api/admin/getUsers";
+  static String login = "$baseURL/login";
 
-  static String register = "$baseURL/api/auth/register";
+  static String users = "$baseURL/users";
+  static String jobs = "$baseURL/jobs";
+  static String companies = "$baseURL/companies";
 
-  static String dashboardGetJobs = "$baseURL/jobs";
-
-  static String fetchJobsById(String jobId) =>
-      "$baseURL/api/jobs?jobId=$jobId}";
+  static String getJobById(String jobId) => "$baseURL/jobs/id/$jobId}";
+  static String getUserById(String userId) => "$baseURL/users/id/$userId}";
+  static String getCompanyImageById(String companyId) =>
+      "$baseURL/companies-image/id/$companyId}";
 }

@@ -11,7 +11,7 @@ class GetUsersDatasourceImplementation implements GetUsersDatasource {
   @override
   Future getUsers() async {
     return await requester.get(
-      url: Endpoints.adminGetUsers,
+      url: Endpoints.users,
       fromJson: (value) => GetUsersResponseModel.fromMap(value),
     );
   }

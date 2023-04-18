@@ -12,7 +12,7 @@ class AdminLoginDatasourceImplementation implements AdminLoginDatasource {
   @override
   Future login(AdminLoginModel adminLogin) async {
     return await requester.post(
-      url: Endpoints.loginAdmin,
+      url: Endpoints.login,
       body: adminLogin.toMap(),
       fromJson: (value) => AdminUserModel.fromMap(value),
     );

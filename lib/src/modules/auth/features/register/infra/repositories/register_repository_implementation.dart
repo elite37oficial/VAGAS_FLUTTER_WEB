@@ -1,5 +1,6 @@
-
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/repositories/register_repository.dart';
@@ -18,16 +19,24 @@ class RegisterRepositoryImplementation implements RegisterRepository {
       RegisterEntity registerUser) async {
     try {
       RegisterModel registerModel = RegisterModel(
-        company: registerUser.company,
+        name: registerUser.name,
+        phone: registerUser.phone,
+        profileID: registerUser.profileID,
         email: registerUser.email,
         password: registerUser.password,
       );
-      final result = await datasource.register(registerModel);
+      var result = await datasource.register(registerModel);
       return Right(result);
-    } on InvalidCredentialsException catch (e) {
-      return Left(InvalidCredentialsFailure(e.message.toString()));
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message.toString()));
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 500) {
+        return Left(ServerFailure(e.response!.data["reason"].toString()));
+      } else if (e.response!.statusCode == 400) {
+        return Left(BadRequestFailure(e.response!.data["reason"].toString()));
+      } else if (e.response!.statusCode == 403) {
+        return Left(InvalidCredentialsFailure(e.toString()));
+      } else {
+        return Left(GeneralFailure(e.toString()));
+      }
     } catch (e) {
       return Left(GeneralFailure(e.toString()));
     }

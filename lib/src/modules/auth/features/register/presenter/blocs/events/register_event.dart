@@ -5,16 +5,20 @@ abstract class RegisterEvent extends Equatable {
 }
 
 class RegisterUserEvent extends RegisterEvent {
-  final String company;
+  final String name;
+  final String phone;
+  final String profileID;
   final String email;
   final String password;
 
   const RegisterUserEvent({
-    required this.company,
+    required this.name,
+    required this.phone,
+    required this.profileID,
     required this.email,
     required this.password,
   });
 
   @override
-  List<Object> get props => [company, email, password];
+  List<Object> get props => [name, phone, profileID, email, password];
 }
