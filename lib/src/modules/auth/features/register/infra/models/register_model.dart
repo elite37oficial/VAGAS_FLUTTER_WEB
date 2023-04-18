@@ -16,7 +16,6 @@ class RegisterModel extends RegisterEntity {
       "phone": phone,
       "email": email,
       "password": password,
-      "status": "",
     };
   }
 
