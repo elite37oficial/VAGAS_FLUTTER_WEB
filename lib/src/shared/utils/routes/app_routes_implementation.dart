@@ -17,6 +17,15 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/datas
 import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/repositories/register_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/domain/usecases/create_company_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/domain/usecases/get_company_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/infra/datasources/create_company_datarouce_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/infra/datasources/get_company_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/infra/repositories/create_company_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/infra/repositories/get_company_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/bloc/create_company_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/bloc/get_company_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/pages/dashboard_companies_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/domain/usecases/get_job_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/datasources/get_job_datasouce_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/repositories/get_job_repository_implementation.dart';
@@ -28,7 +37,8 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
 
-const String home = "${RouteKeys.auth}${RouteKeys.login}";
+const String home = RouteKeys.companies;
+// const String home = "${RouteKeys.auth}${RouteKeys.login}";
 
 goToHome(BuildContext context) async {
   WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -173,6 +183,41 @@ final appRoutesConfig = GoRouter(
               )
             ],
             child: const HomeRecruiterPage(),
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: RouteKeys.companies,
+      name: RouteKeys.companies.replaceAll("/", ""),
+      pageBuilder: (context, state) {
+        return NoTransitionPage(
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => CreateCompanyBloc(
+                  usecase: CreateCompanyUsecase(
+                    repository: CreateCompanyRepositoryImplementation(
+                      datasource: CreateCompanyDatasourceImplementation(
+                        requester: AppRequesterImplementation(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              BlocProvider<GetCompanyBloc>(
+                create: (context) => GetCompanyBloc(
+                  usecase: GetCompanyUsecase(
+                    repository: GetCompanyRepositoryImplementation(
+                      datasource: GetCompanyDatasourceImplementation(
+                        requester: AppRequesterImplementation(),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+            child: const HomeCompaniesPage(),
           ),
         );
       },

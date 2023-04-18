@@ -25,6 +25,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   bloc_test: ^9.1.1
   mask_text_input_formatter: ^2.4.0
+  image_picker: ^0.8.7+3
 
   vagas_design_system:
     # path: ../VAGAS_FLUTTER_DESIGN_SYSTEM #Para trabalhar com o pacote localmente.
