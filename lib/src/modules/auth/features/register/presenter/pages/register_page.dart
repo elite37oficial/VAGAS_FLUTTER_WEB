@@ -9,6 +9,7 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/b
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/states/register_state.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_fields_component.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_logo_background_component.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/profile_id_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
@@ -23,20 +24,24 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final companyController = TextEditingController();
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final repeatPasswordController = TextEditingController();
-  bool companyError = false;
+  bool nameError = false;
+  bool phoneError = false;
   bool emailError = false;
   bool passwordError = false;
   bool repeatPasswordError = false;
 
   _validateRegisterForm(GlobalKey<FormState> formKey) {
     String email = emailController.text.replaceAll(" ", "");
-    String company = companyController.text.trim();
+    String name = nameController.text.trim();
     setState(() {
-      companyError = company.isEmpty;
+      nameError = name.isEmpty;
+
+      phoneError = phoneController.text.isEmpty;
 
       emailError = email.isEmpty || email.length < 6 || !email.contains("@");
 
@@ -50,13 +55,16 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     if (formKey.currentState!.validate()) {
-      if (!companyError &&
+      if (!nameError &&
+          !phoneError &&
           !emailError &&
           !passwordError &&
           !repeatPasswordError) {
         context.read<RegisterBloc>().add(
               RegisterUserEvent(
-                company: companyController.text,
+                name: nameController.text,
+                phone: phoneController.text,
+                profileID: ProfileId.recrutador.name,
                 email: emailController.text,
                 password: passwordController.text,
               ),
@@ -88,14 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
           log(state.message);
         }
         if (state is RegisterSuccessState) {
-          RegisterUserEntity user = state.registerUser;
-          log(user.userId);
-          log(user.company);
-          log(user.email);
-          log(user.username);
-
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            context.pushReplacement(RouteKeys.home);
+            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}");
           });
         }
 
@@ -142,11 +144,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         RegisterFieldsComponent(
                           formKey: formKey,
-                          companyError: companyError,
+                          nameError: nameError,
+                          phoneError: phoneError,
                           emailError: emailError,
                           passwordError: passwordError,
                           repeatPasswordError: repeatPasswordError,
-                          companyController: companyController,
+                          nameController: nameController,
+                          phoneController: phoneController,
                           emailController: emailController,
                           passwordController: passwordController,
                           repeatPasswordController: repeatPasswordController,
@@ -283,11 +287,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             RegisterFieldsComponent(
                               formKey: formKey,
-                              companyError: companyError,
+                              nameError: nameError,
+                              phoneError: phoneError,
                               emailError: emailError,
                               passwordError: passwordError,
                               repeatPasswordError: repeatPasswordError,
-                              companyController: companyController,
+                              nameController: nameController,
+                              phoneController: phoneController,
                               emailController: emailController,
                               passwordController: passwordController,
                               repeatPasswordController:

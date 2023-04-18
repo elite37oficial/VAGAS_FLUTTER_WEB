@@ -40,7 +40,7 @@ final appRoutesConfig = GoRouter(
   initialLocation: home,
   refreshListenable: authService,
   errorPageBuilder: (context, state) =>
-      const NoTransitionPage(child: ErrorPage(goToHome: goToHome)),
+      const NoTransitionPage(child: ErrorPage()),
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
     final isAuthRoute = state.subloc == RouteKeys.register;
