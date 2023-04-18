@@ -57,7 +57,12 @@ class CompanyTopButtonsComponent extends StatelessWidget {
                 width: 100,
                 child: ElevatedButton(
                   onPressed: () {
-                    CreateCompanyPopUp.show(context);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const CreateCompanyPopUp();
+                      },
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.greyBlue,

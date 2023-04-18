@@ -9,7 +9,12 @@ abstract class Endpoints {
 
   static String register = "$baseURL/api/auth/register";
 
-  static String dashboardGetJobs = "$baseURL/jobs";
+  static String dashboardGetJobs = "$baseURL/api/jobs/get_jobs";
+
+  static String dashboardGetCompanies = "$baseURL/api/companies/get_companies";
+
+  static String dashboardCreateCompanies =
+      "$baseURL/api/companies/post_companies";
 
   static String fetchJobsById(String jobId) =>
       "$baseURL/api/jobs?jobId=$jobId}";
