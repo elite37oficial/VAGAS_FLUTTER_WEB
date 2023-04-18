@@ -96,16 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
           log(state.message);
         }
         if (state is RegisterSuccessState) {
-          RegisterUserEntity user = state.registerUser;
-          log(user.id);
-          log(user.profileID);
-          log(user.name);
-          log(user.email);
-          log(user.phone);
-          log(user.status);
-
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            context.pushReplacement(RouteKeys.home);
+            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}");
           });
         }
 

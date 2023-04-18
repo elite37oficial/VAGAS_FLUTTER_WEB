@@ -16,7 +16,7 @@ class RegisterDatasourceImplementation implements RegisterDatasource {
     return await requester.post(
       url: Endpoints.users,
       body: registerModel.toMap(),
-      fromJson: (value) {},
+      fromJson: (_) {},
     );
   }
 }

@@ -26,3 +26,4 @@ abstract class InputMasksHelper {
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 }
+

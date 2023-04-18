@@ -32,8 +32,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     result.fold(
       (Failure failure) =>
           emitter(RegisterErrorState(message: failure.props.first.toString())),
-      (RegisterUserEntity success) =>
-          emitter(RegisterSuccessState(registerUser: success)),
+      (bool success) =>
+          emitter(RegisterSuccessState()),
     );
   }
 }

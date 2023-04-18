@@ -61,7 +61,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response> delete(
+  Future<Response?> delete(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -75,7 +75,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response> get(
+  Future<Response?> get(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -89,7 +89,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response> post(
+  Future<Response?> post(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -103,7 +103,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response> put(
+  Future<Response?> put(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -116,19 +116,19 @@ class AppRequesterImplementation implements AppRequester {
     );
   }
 
-  Future<Response> _invokeRequest({
+  Future<Response?> _invokeRequest({
     required String url,
     required Function(dynamic p1) fromJson,
-    required Future<Response<dynamic>> Function(Dio) invokeDio,
+    required Future<Response<dynamic>?> Function(Dio) invokeDio,
   }) async {
     var dio = _setOptions(url);
     await _addToken(dio);
 
-    late Response<dynamic> response;
+    late Response<dynamic>? response;
 
     response = await invokeDio(dio);
 
-    return fromJson(response.data);
+    return fromJson(response?.data);
   }
 
   static String handleErrorAndGetMessage(Object e, {String? message}) {
