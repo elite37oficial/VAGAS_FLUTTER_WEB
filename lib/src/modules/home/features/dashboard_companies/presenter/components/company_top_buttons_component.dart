@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/domain/usecases/create_company_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/infra/datasources/create_company_datarouce_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/infra/repositories/create_company_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/bloc/create_company_bloc.dart';
+import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 import 'create_company_pop_up_component.dart';
@@ -60,7 +66,24 @@ class CompanyTopButtonsComponent extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return const CreateCompanyPopUp();
+                        return MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) => CreateCompanyBloc(
+                                usecase: CreateCompanyUsecase(
+                                  repository:
+                                      CreateCompanyRepositoryImplementation(
+                                    datasource:
+                                        CreateCompanyDatasourceImplementation(
+                                      requester: AppRequesterImplementation(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                          child: const CreateCompanyPopUp(),
+                        );
                       },
                     );
                   },
