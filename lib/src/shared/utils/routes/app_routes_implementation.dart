@@ -100,6 +100,8 @@ final appRoutesConfig = GoRouter(
           path: RouteKeys.login.replaceAll("/", ""),
           name: RouteKeys.login.replaceAll("/", ""),
           pageBuilder: (context, state) {
+            List<String> loginArgs =
+                state.extra == null ? <String>[] : state.extra as List<String>;
             return NoTransitionPage(
               child: MultiBlocProvider(
                 providers: [
@@ -118,7 +120,7 @@ final appRoutesConfig = GoRouter(
                         )),
                   ),
                 ],
-                child: const LoginPage(),
+                child: LoginPage(args: loginArgs),
               ),
             );
           },

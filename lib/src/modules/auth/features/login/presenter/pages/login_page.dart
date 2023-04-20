@@ -15,7 +15,8 @@ import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final List<String> args;
+  const LoginPage({Key? key, required this.args}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -27,6 +28,21 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   bool emailError = false;
   bool passwordError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fillControllers();
+  }
+
+  _fillControllers() async {
+    if (widget.args.isNotEmpty) {
+      emailController.text = widget.args[0];
+      passwordController.text = widget.args[1];
+      await Future.delayed(const Duration(milliseconds: 300));
+      _validateForm(formKey);
+    }
+  }
 
   _validateForm(GlobalKey<FormState> formKey) {
     String email = emailController.text.replaceAll(" ", "");

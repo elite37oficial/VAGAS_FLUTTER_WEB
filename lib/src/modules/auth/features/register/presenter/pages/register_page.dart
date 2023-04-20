@@ -97,7 +97,11 @@ class _RegisterPageState extends State<RegisterPage> {
         }
         if (state is RegisterSuccessState) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}");
+            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}",
+                extra: <String>[
+                  emailController.text,
+                  passwordController.text,
+                ]);
           });
         }
 
