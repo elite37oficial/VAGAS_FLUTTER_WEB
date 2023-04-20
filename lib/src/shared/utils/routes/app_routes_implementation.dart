@@ -7,8 +7,11 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/infra/datasources/get_
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/repositories/get_users_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/get_my_self_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/login_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/datasources/get_my_self_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/datasources/login_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/repositories/get_my_self_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/repositories/login_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/pages/login_page.dart';
@@ -102,12 +105,17 @@ final appRoutesConfig = GoRouter(
                 providers: [
                   BlocProvider<LoginBloc>(
                     create: (context) => LoginBloc(
-                        usecase: LoginUsecase(
-                      repository: LoginRepositoryImplementation(
-                          datasource: LoginDatasourceImplementation(
-                        requester: AppRequesterImplementation(),
-                      )),
-                    )),
+                        getMySelfUsecase: GetMySelfUsecase(
+                            repository: GetMySelfRepositoryImplementation(
+                                datasource: GetMySelfDatasourceImplementation(
+                          requester: AppRequesterImplementation(),
+                        ))),
+                        loginUsecase: LoginUsecase(
+                          repository: LoginRepositoryImplementation(
+                              datasource: LoginDatasourceImplementation(
+                            requester: AppRequesterImplementation(),
+                          )),
+                        )),
                   ),
                 ],
                 child: const LoginPage(),

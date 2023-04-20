@@ -16,3 +16,14 @@ class DoLoginEvent extends LoginEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+class GetMySelfEvent extends LoginEvent {
+  final String userId;
+
+  const GetMySelfEvent({
+    required this.userId,
+  });
+
+  @override
+  List<Object> get props => [userId];
+}

@@ -93,6 +93,7 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    
                     isMobile: true,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
