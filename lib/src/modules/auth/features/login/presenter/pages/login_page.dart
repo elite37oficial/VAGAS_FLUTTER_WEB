@@ -2,10 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/get_my_self_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/login_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/events/get_my_self_event.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/events/login_event.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/states/login_state.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/components/login_fields_component.dart';
@@ -13,11 +12,11 @@ import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/comp
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/components/login_register_button_component.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
-import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
-import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final List<String> args;
+  const LoginPage({Key? key, required this.args}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -29,6 +28,41 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   bool emailError = false;
   bool passwordError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fillControllers();
+  }
+
+  _showErrorAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return ErrorPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+        );
+      },
+    );
+  }
+
+  _fillControllers() async {
+    if (widget.args.isNotEmpty) {
+      emailController.text = widget.args[0];
+      passwordController.text = widget.args[1];
+      await Future.delayed(const Duration(milliseconds: 300));
+      _validateForm(formKey);
+    }
+  }
 
   _validateForm(GlobalKey<FormState> formKey) {
     String email = emailController.text.replaceAll(" ", "");
@@ -51,21 +85,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  _getMySelf() async {
-    String token =
-        await SecureStorageManager.readData(StorageKeys.accessToken) ?? "";
-    _getMySelfBloc(token);
-  }
-
-  _getMySelfBloc(String token) {
-    context.read<GetMySelfBloc>().add(
-          DoGetMySelfEvent(
-            email: emailController.text,
-            token: token,
-          ),
-        );
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -86,28 +105,23 @@ class _LoginPageState extends State<LoginPage> {
       }
       if (state is LoginErrorState) {
         log(state.message);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          _showErrorAlert(state.message);
+        });
+        context
+            .read<LoginBloc>()
+            .add(CleanStateEvent(state: LoginInitialState()));
       }
       if (state is LoginSuccessState) {
-        _getMySelf();
-        // BlocBuilder<GetMySelfBloc, GetMySelfStates>(
-        //   builder: (context, state) {
-        //     if (state is GetMySelfLoadingState) {
-        //       return const LoadingPage();
-        //     }
-        //     if (state is LoginErrorState) {
-        //       log(state.toString());
-        //     }
-        //     if (state is GetMySelfSuccessState) {
-        //       _getMySelf();
-        //       // if (state.user.isAdmin) {
-        //       //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-        //       //     context.push(RouteKeys.homeAdmin);
-        //       //   });
-        //       // } else {
-        //       //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-        //       //     context.push(RouteKeys.home);
-        //       //   });
-        //       // }
+        if (state.userRole == UserRole.admin) {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            context.push(RouteKeys.homeAdmin);
+          });
+        } else {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            context.push(RouteKeys.home);
+          });
+        }
       }
 
       return ResponsiveLayout(

@@ -16,9 +16,7 @@ class LoginDatasourceImplementation implements LoginDatasource {
     return await requester.post(
       url: Endpoints.login,
       body: adminLogin.toMap(),
-      fromJson: (value) {
-        return TokenModel.fromMap(value);
-      },
+      fromJson: (value) => TokenModel.fromMap(value),
     );
   }
 }

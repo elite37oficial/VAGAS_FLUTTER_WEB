@@ -274,7 +274,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.5.5"
+    version: "6.5.7"
   google_fonts:
     dependency: transitive
     description:
@@ -352,6 +352,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  jwt_decode:
+    dependency: "direct main"
+    description:
+      name: jwt_decode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1"
   lints:
     dependency: transitive
     description:
@@ -463,7 +470,7 @@ packages:
       name: path_provider_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.24"
+    version: "2.0.25"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -561,7 +568,7 @@ packages:
       name: shared_preferences_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.2"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -712,10 +719,10 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: cc9ec974d52c025a6c69adafc7ebe73c84fd3a5f
+      resolved-ref: "247f19ce38f13c5e2d430498036095773ea5c3da"
       url: "https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM"
     source: git
-    version: "0.0.1"
+    version: "0.3.0"
   vector_math:
     dependency: transitive
     description:

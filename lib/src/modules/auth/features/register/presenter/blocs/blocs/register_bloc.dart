@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/usecases/register_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/states/register_state.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
@@ -12,6 +11,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final RegisterUseCase usecase;
   RegisterBloc({required this.usecase}) : super(RegisterInitialState()) {
     on<RegisterUserEvent>((register));
+    on<CleanStateEvent>(cleanState);
   }
   void register(
     RegisterUserEvent event,
@@ -32,8 +32,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     result.fold(
       (Failure failure) =>
           emitter(RegisterErrorState(message: failure.props.first.toString())),
-      (bool success) =>
-          emitter(RegisterSuccessState()),
+      (bool success) => emitter(RegisterSuccessState()),
     );
   }
+
+  Future<void> cleanState(
+    CleanStateEvent event,
+    Emitter<RegisterState> emitter,
+  ) async =>
+      emitter(RegisterInitialState());
 }

@@ -13,6 +13,8 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
+import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
 
 class HomeRecruiterPage extends StatefulWidget {
   const HomeRecruiterPage({Key? key}) : super(key: key);
@@ -22,6 +24,12 @@ class HomeRecruiterPage extends StatefulWidget {
 }
 
 class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
+  String username = "";
+
+  _setUsername() async {
+    username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+  }
+
   List<JobEntity> listJobs = [
     const JobEntity(
         id: 'id',
@@ -70,6 +78,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
   @override
   void initState() {
     context.read<GetJobBloc>().add(GetJobListEvent());
+    _setUsername();
     super.initState();
   }
 
@@ -96,6 +105,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    username: username,
                     isMobile: true,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
@@ -161,6 +171,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    username: username,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
                         : Sizer.calculateVertical(context, 70),

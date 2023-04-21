@@ -11,7 +11,7 @@ class TokenModel extends TokenEntity {
 
   factory TokenModel.fromMap(Map<String, dynamic> map) {
     return TokenModel(
-      token: map['token'] ?? '',
+      token: map["token"] ?? '',
     );
   }
 }

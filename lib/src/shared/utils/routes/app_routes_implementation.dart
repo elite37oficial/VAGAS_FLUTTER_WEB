@@ -7,8 +7,11 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/infra/datasources/get_
 import 'package:vagas_flutter_web/src/modules/admin_panel/infra/repositories/get_users_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/get_my_self_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/login_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/datasources/get_my_self_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/datasources/login_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/repositories/get_my_self_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/repositories/login_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/pages/login_page.dart';
@@ -37,8 +40,8 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
 
-const String home = RouteKeys.companies;
-// const String home = "${RouteKeys.auth}${RouteKeys.login}";
+// const String home = RouteKeys.companies;
+const String home = "${RouteKeys.auth}${RouteKeys.login}";
 
 goToHome(BuildContext context) async {
   WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -49,8 +52,7 @@ goToHome(BuildContext context) async {
 final appRoutesConfig = GoRouter(
   initialLocation: home,
   refreshListenable: authService,
-  errorPageBuilder: (context, state) =>
-      const NoTransitionPage(child: ErrorPage()),
+  errorPageBuilder: (context, state) => const NoTransitionPage(child: ErrorPage()),
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
     final isAuthRoute = state.subloc == RouteKeys.register;
@@ -97,20 +99,27 @@ final appRoutesConfig = GoRouter(
           path: RouteKeys.login.replaceAll("/", ""),
           name: RouteKeys.login.replaceAll("/", ""),
           pageBuilder: (context, state) {
+            List<String> loginArgs =
+                state.extra == null ? <String>[] : state.extra as List<String>;
             return NoTransitionPage(
               child: MultiBlocProvider(
                 providers: [
                   BlocProvider<LoginBloc>(
                     create: (context) => LoginBloc(
-                        usecase: LoginUsecase(
-                      repository: LoginRepositoryImplementation(
-                          datasource: LoginDatasourceImplementation(
-                        requester: AppRequesterImplementation(),
-                      )),
-                    )),
+                        getMySelfUsecase: GetMySelfUsecase(
+                            repository: GetMySelfRepositoryImplementation(
+                                datasource: GetMySelfDatasourceImplementation(
+                          requester: AppRequesterImplementation(),
+                        ))),
+                        loginUsecase: LoginUsecase(
+                          repository: LoginRepositoryImplementation(
+                              datasource: LoginDatasourceImplementation(
+                            requester: AppRequesterImplementation(),
+                          )),
+                        )),
                   ),
                 ],
-                child: const LoginPage(),
+                child: LoginPage(args: loginArgs),
               ),
             );
           },

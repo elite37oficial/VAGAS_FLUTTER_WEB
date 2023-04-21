@@ -13,6 +13,8 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
+import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
 
 class HomeCompaniesPage extends StatefulWidget {
   const HomeCompaniesPage({Key? key}) : super(key: key);
@@ -22,6 +24,12 @@ class HomeCompaniesPage extends StatefulWidget {
 }
 
 class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
+  String username = "";
+
+  _setUsername() async {
+    username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+  }
+
   List<CompanyEntity> listCompanies = [
     const CompanyEntity(
         id: 'id',
@@ -55,6 +63,7 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
   @override
   void initState() {
     context.read<GetCompanyBloc>().add(GetCompanyListEvent());
+    _setUsername();
     super.initState();
   }
 
@@ -82,6 +91,7 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    username: username,
                     isMobile: true,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
@@ -147,6 +157,7 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    username: username,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
                         : Sizer.calculateVertical(context, 70),

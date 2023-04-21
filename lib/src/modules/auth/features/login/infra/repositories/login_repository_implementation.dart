@@ -7,6 +7,7 @@ import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/datasour
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/models/login_model.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/infra/models/token_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
 
 class LoginRepositoryImplementation implements LoginRepository {
   final LoginDatasource datasource;
@@ -24,9 +25,12 @@ class LoginRepositoryImplementation implements LoginRepository {
       return Right(result);
     } on DioError catch (e) {
       if (e.response!.statusCode == 500) {
-        return Left(ServerFailure(e.response!.data["reason"].toString()));
+        return Left(ServerFailure(MessagesHelper.serverMessage));
+      } else if (e.response!.statusCode == 403) {
+        return Left(InvalidCredentialsFailure(
+            MessagesHelper.invalidCredentialsMessage));
       } else if (e.response!.statusCode == 400) {
-        return Left(BadRequestFailure(e.response!.data["reason"].toString()));
+        return Left(BadRequestFailure(MessagesHelper.badRequestMessage));
       } else {
         return Left(GeneralFailure(e.toString()));
       }
