@@ -22,3 +22,14 @@ class RegisterUserEvent extends RegisterEvent {
   @override
   List<Object> get props => [name, phone, profileID, email, password];
 }
+
+class CleanStateEvent extends RegisterEvent {
+  final RegisterState state;
+
+  const CleanStateEvent({
+    required this.state,
+  });
+
+  @override
+  List<RegisterState> get props => [state];
+}

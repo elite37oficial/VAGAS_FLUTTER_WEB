@@ -11,6 +11,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final RegisterUseCase usecase;
   RegisterBloc({required this.usecase}) : super(RegisterInitialState()) {
     on<RegisterUserEvent>((register));
+    on<CleanStateEvent>(cleanState);
   }
   void register(
     RegisterUserEvent event,
@@ -31,8 +32,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     result.fold(
       (Failure failure) =>
           emitter(RegisterErrorState(message: failure.props.first.toString())),
-      (bool success) =>
-          emitter(RegisterSuccessState()),
+      (bool success) => emitter(RegisterSuccessState()),
     );
   }
+
+  Future<void> cleanState(
+    CleanStateEvent event,
+    Emitter<RegisterState> emitter,
+  ) async =>
+      emitter(RegisterInitialState());
 }

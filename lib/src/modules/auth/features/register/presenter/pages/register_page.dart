@@ -9,6 +9,7 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/b
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/states/register_state.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_fields_component.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_logo_background_component.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/profile_id_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
@@ -34,6 +35,54 @@ class _RegisterPageState extends State<RegisterPage> {
   bool emailError = false;
   bool passwordError = false;
   bool repeatPasswordError = false;
+
+  _showErrorAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return ErrorPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+        );
+      },
+    );
+  }
+
+  _showSuccessAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return SuccessPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+          function: () {
+            Navigator.pop(context);
+            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}",
+                extra: <String>[
+                  emailController.text,
+                  passwordController.text,
+                ]);
+          },
+        );
+      },
+    );
+  }
 
   _validateRegisterForm(GlobalKey<FormState> formKey) {
     String email = emailController.text.replaceAll(" ", "");
@@ -94,14 +143,16 @@ class _RegisterPageState extends State<RegisterPage> {
         }
         if (state is RegisterErrorState) {
           log(state.message);
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            _showErrorAlert(state.message);
+          });
+          context
+              .read<RegisterBloc>()
+              .add(CleanStateEvent(state: RegisterInitialState()));
         }
         if (state is RegisterSuccessState) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}",
-                extra: <String>[
-                  emailController.text,
-                  passwordController.text,
-                ]);
+            _showSuccessAlert(MessagesHelper.successRegisterMessage);
           });
         }
 

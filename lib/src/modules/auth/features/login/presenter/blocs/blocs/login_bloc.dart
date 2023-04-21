@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/decode_token_entity.dart';
@@ -18,6 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required this.loginUsecase, required this.getMySelfUsecase})
       : super(LoginInitialState()) {
     on<DoLoginEvent>(login);
+    on<CleanStateEvent>(cleanState);
   }
 
   Future<void> login(
@@ -36,8 +40,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     result.fold(
       (Failure failure) =>
           emitter(LoginErrorState(message: failure.props.first.toString())),
-      (TokenEntity success) {
+      (TokenEntity success) async {
         SecureStorageManager.saveData(StorageKeys.accessToken, success.token);
+        await Future.delayed(const Duration(milliseconds: 300));
 
         DecodedTokenEntity decodedToken =
             DecodedTokenEntity.fromMap(Jwt.parseJwt(success.token));
@@ -53,7 +58,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emitter,
   ) async {
     emitter(LoginLoadingState());
-
     String userId =
         await SecureStorageManager.readData(StorageKeys.userId) ?? "";
 
@@ -74,4 +78,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       },
     );
   }
+
+  Future<void> cleanState(
+    CleanStateEvent event,
+    Emitter<LoginState> emitter,
+  ) async =>
+      emitter(LoginInitialState());
 }

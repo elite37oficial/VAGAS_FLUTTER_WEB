@@ -35,6 +35,26 @@ class _LoginPageState extends State<LoginPage> {
     _fillControllers();
   }
 
+  _showErrorAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return ErrorPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+        );
+      },
+    );
+  }
+
   _fillControllers() async {
     if (widget.args.isNotEmpty) {
       emailController.text = widget.args[0];
@@ -85,6 +105,12 @@ class _LoginPageState extends State<LoginPage> {
       }
       if (state is LoginErrorState) {
         log(state.message);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          _showErrorAlert(state.message);
+        });
+        context
+            .read<LoginBloc>()
+            .add(CleanStateEvent(state: LoginInitialState()));
       }
       if (state is LoginSuccessState) {
         if (state.userRole == UserRole.admin) {

@@ -40,8 +40,8 @@ import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
 
-const String home = RouteKeys.companies;
-// const String home = "${RouteKeys.auth}${RouteKeys.login}";
+// const String home = RouteKeys.companies;
+const String home = "${RouteKeys.auth}${RouteKeys.login}";
 
 goToHome(BuildContext context) async {
   WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -52,8 +52,7 @@ goToHome(BuildContext context) async {
 final appRoutesConfig = GoRouter(
   initialLocation: home,
   refreshListenable: authService,
-  errorPageBuilder: (context, state) =>
-      const NoTransitionPage(child: ErrorPage()),
+  errorPageBuilder: (context, state) => const NoTransitionPage(child: ErrorPage()),
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
     final isAuthRoute = state.subloc == RouteKeys.register;

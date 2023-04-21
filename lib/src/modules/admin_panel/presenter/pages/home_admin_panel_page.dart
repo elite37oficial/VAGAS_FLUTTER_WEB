@@ -13,6 +13,8 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/t
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
+import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
 
 class HomeAdminPanelPage extends StatefulWidget {
   const HomeAdminPanelPage({Key? key}) : super(key: key);
@@ -22,6 +24,12 @@ class HomeAdminPanelPage extends StatefulWidget {
 }
 
 class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
+  String username = "";
+
+  _setUsername() async {
+    username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+  }
+
   List<UserEntity> listUsers = [
     UserEntity(
       userId: "0",
@@ -67,6 +75,7 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
   @override
   void initState() {
     context.read<GetUsersBloc>().add(GetEvent());
+    _setUsername();
     super.initState();
   }
 
@@ -93,7 +102,7 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
-                    
+                    username: username,
                     isMobile: true,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
@@ -159,6 +168,7 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    username: username,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
                         : Sizer.calculateVertical(context, 70),
