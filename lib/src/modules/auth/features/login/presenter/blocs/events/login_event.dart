@@ -17,17 +17,6 @@ class DoLoginEvent extends LoginEvent {
   List<Object> get props => [email, password];
 }
 
-class DoGetMySelfEvent extends LoginEvent {
-  final String userId;
-
-  const DoGetMySelfEvent({
-    required this.userId,
-  });
-
-  @override
-  List<String> get props => [userId];
-}
-
 class CleanStateEvent extends LoginEvent {
   final LoginState state;
 

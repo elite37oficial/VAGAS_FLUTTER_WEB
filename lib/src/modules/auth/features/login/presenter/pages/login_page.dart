@@ -128,20 +128,18 @@ class _LoginPageState extends State<LoginPage> {
                 !loaded
                     ? context
                         .read<GetMySelfBloc>()
-                        .add(DoGetMySelfEvent(userId: state.userId ?? ""))
+                        .add(DoGetMySelfEvent(userId: state.userId))
                     : null;
                 loaded = true;
               }
             }),
-        BlocListener<GetMySelfBloc, LoginState>(
+        BlocListener<GetMySelfBloc, GetMySelfState>(
           bloc: getMySelfBloc,
           listener: (context, getState) {
-            print(getState.runtimeType);
             if (getState is GetMySelfStateLoadingState) {
               const LoadingPage();
             }
             if (getState is GetMySelfStateSuccessState) {
-              print("aqui");
               if (getState.role == UserRole.admin) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
                   Navigator.pushNamed(context, RouteKeys.homeAdmin);
@@ -158,9 +156,8 @@ class _LoginPageState extends State<LoginPage> {
               WidgetsBinding.instance.addPostFrameCallback((_) async {
                 _showErrorAlert(getState.message);
               });
-              context
-                  .read<GetMySelfBloc>()
-                  .add(CleanStateEvent(state: GetMySelfStateInitialState()));
+              context.read<GetMySelfBloc>().add(CleanStateGetMySelfEvent(
+                  state: GetMySelfStateInitialState()));
             }
           },
         ),
