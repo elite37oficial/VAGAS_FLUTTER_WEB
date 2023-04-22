@@ -11,10 +11,9 @@ class GetJobResponseModel {
     };
   }
 
-  factory GetJobResponseModel.fromMap(Map<String, dynamic> map) {
+  factory GetJobResponseModel.fromMap(List<dynamic> list) {
     return GetJobResponseModel(
-      listJobs:
-          List<JobModel>.from(map['listJobs']?.map((x) => JobModel.fromMap(x))),
+      listJobs: List<JobModel>.from(list.map((x) => JobModel.fromMap(x))),
     );
   }
 }

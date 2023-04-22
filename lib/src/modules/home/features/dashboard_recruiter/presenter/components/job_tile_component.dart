@@ -44,9 +44,9 @@ class JobTileComponent extends StatelessWidget {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        jobTileData.imageLogo,
-                      ),
+                      // child: Image.network(
+                      //   jobTileData.imageLogo,
+                      // ),
                     ),
                   ),
                   Expanded(
@@ -62,7 +62,7 @@ class JobTileComponent extends StatelessWidget {
                           tooltipSemantics: "titulo",
                         ),
                         ResponsiveTextWidget(
-                          text: jobTileData.enterprise,
+                          text: jobTileData.companyId,
                           textStyle:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: AppColors.lightGrey,
@@ -85,7 +85,7 @@ class JobTileComponent extends StatelessWidget {
               child: Center(
                   child: Align(
                 alignment: Alignment.centerLeft,
-                child: StatusComponent(status: jobTileData.status),
+                child: StatusComponent(status: "jobTileData.status"),
               )),
             ),
           ),
@@ -95,7 +95,7 @@ class JobTileComponent extends StatelessWidget {
               width: size.width * 0.7,
               child: Center(
                 child: ResponsiveTextWidget(
-                  text: jobTileData.createdAt,
+                  text: "jobTileData.createdAt",
                   textStyle: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 1,
                   hintSemantics: "data de criação",
@@ -113,7 +113,7 @@ class JobTileComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ResponsiveTextWidget(
-                    text: jobTileData.local,
+                    text: "${jobTileData.city} - ${jobTileData.state}",
                     textStyle: Theme.of(context).textTheme.bodyMedium,
                     maxLines: 1,
                     hintSemantics: "local",

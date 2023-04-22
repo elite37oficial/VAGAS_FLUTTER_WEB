@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of '../blocs/get_job_bloc.dart';
 
 abstract class GetJobEvent extends Equatable {
   const GetJobEvent();

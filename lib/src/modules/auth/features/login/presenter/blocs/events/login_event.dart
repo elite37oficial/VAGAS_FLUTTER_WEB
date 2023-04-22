@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/states/login_state.dart';
+part of '../blocs/login_bloc.dart';
 
 abstract class LoginEvent extends Equatable {
   const LoginEvent();
@@ -18,15 +17,15 @@ class DoLoginEvent extends LoginEvent {
   List<Object> get props => [email, password];
 }
 
-class GetMySelfEvent extends LoginEvent {
+class DoGetMySelfEvent extends LoginEvent {
   final String userId;
 
-  const GetMySelfEvent({
+  const DoGetMySelfEvent({
     required this.userId,
   });
 
   @override
-  List<Object> get props => [userId];
+  List<String> get props => [userId];
 }
 
 class CleanStateEvent extends LoginEvent {

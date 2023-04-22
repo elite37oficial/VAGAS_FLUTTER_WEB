@@ -35,6 +35,7 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/blocs/get_job_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
+import 'package:vagas_flutter_web/src/shared/service_locator/service_locator.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
@@ -52,7 +53,8 @@ goToHome(BuildContext context) async {
 final appRoutesConfig = GoRouter(
   initialLocation: home,
   refreshListenable: authService,
-  errorPageBuilder: (context, state) => const NoTransitionPage(child: ErrorPage()),
+  errorPageBuilder: (context, state) =>
+      const NoTransitionPage(child: ErrorPage()),
   redirect: (context, state) {
     final isAuthenticated = authService.isAuthenticated;
     final isAuthRoute = state.subloc == RouteKeys.register;
@@ -102,25 +104,7 @@ final appRoutesConfig = GoRouter(
             List<String> loginArgs =
                 state.extra == null ? <String>[] : state.extra as List<String>;
             return NoTransitionPage(
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<LoginBloc>(
-                    create: (context) => LoginBloc(
-                        getMySelfUsecase: GetMySelfUsecase(
-                            repository: GetMySelfRepositoryImplementation(
-                                datasource: GetMySelfDatasourceImplementation(
-                          requester: AppRequesterImplementation(),
-                        ))),
-                        loginUsecase: LoginUsecase(
-                          repository: LoginRepositoryImplementation(
-                              datasource: LoginDatasourceImplementation(
-                            requester: AppRequesterImplementation(),
-                          )),
-                        )),
-                  ),
-                ],
-                child: LoginPage(args: loginArgs),
-              ),
+              child: LoginPage(args: loginArgs),
             );
           },
         ),
@@ -128,23 +112,8 @@ final appRoutesConfig = GoRouter(
           path: RouteKeys.register.replaceAll("/", ""),
           name: RouteKeys.register.replaceAll("/", ""),
           pageBuilder: (context, state) {
-            return NoTransitionPage(
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<RegisterBloc>(
-                    create: (context) => RegisterBloc(
-                      usecase: RegisterUseCase(
-                        repository: RegisterRepositoryImplementation(
-                          datasource: RegisterDatasourceImplementation(
-                            requester: AppRequesterImplementation(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-                child: const RegisterPage(),
-              ),
+            return const NoTransitionPage(
+              child: RegisterPage(),
             );
           },
         ),
@@ -154,21 +123,8 @@ final appRoutesConfig = GoRouter(
       path: RouteKeys.homeAdmin,
       name: RouteKeys.homeAdmin.replaceAll("/", ""),
       pageBuilder: (context, state) {
-        return NoTransitionPage(
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider<GetUsersBloc>(
-                create: (context) => GetUsersBloc(
-                    usecase: GetUsersUsecase(
-                  repository: GetUsersRepositoryImplementation(
-                      datasource: GetUsersDatasourceImplementation(
-                    requester: AppRequesterImplementation(),
-                  )),
-                )),
-              ),
-            ],
-            child: const HomeAdminPanelPage(),
-          ),
+        return const NoTransitionPage(
+          child: HomeAdminPanelPage(),
         );
       },
     ),
@@ -176,23 +132,8 @@ final appRoutesConfig = GoRouter(
       path: RouteKeys.home,
       name: RouteKeys.home.replaceAll("/", ""),
       pageBuilder: (context, state) {
-        return NoTransitionPage(
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider<GetJobBloc>(
-                create: (context) => GetJobBloc(
-                  usecase: GetJobUsecase(
-                    repository: GetJobRepositoryImplementation(
-                      datasource: GetJobDatasourceImplementation(
-                        requester: AppRequesterImplementation(),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-            child: const HomeRecruiterPage(),
-          ),
+        return const NoTransitionPage(
+          child: HomeRecruiterPage(),
         );
       },
     ),
@@ -200,34 +141,8 @@ final appRoutesConfig = GoRouter(
       path: RouteKeys.companies,
       name: RouteKeys.companies.replaceAll("/", ""),
       pageBuilder: (context, state) {
-        return NoTransitionPage(
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => CreateCompanyBloc(
-                  usecase: CreateCompanyUsecase(
-                    repository: CreateCompanyRepositoryImplementation(
-                      datasource: CreateCompanyDatasourceImplementation(
-                        requester: AppRequesterImplementation(),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              BlocProvider<GetCompanyBloc>(
-                create: (context) => GetCompanyBloc(
-                  usecase: GetCompanyUsecase(
-                    repository: GetCompanyRepositoryImplementation(
-                      datasource: GetCompanyDatasourceImplementation(
-                        requester: AppRequesterImplementation(),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-            child: const HomeCompaniesPage(),
-          ),
+        return const NoTransitionPage(
+          child: HomeCompaniesPage(),
         );
       },
     ),

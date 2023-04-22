@@ -3,36 +3,54 @@ import 'package:equatable/equatable.dart';
 class JobEntity extends Equatable {
   final String id;
   final String title;
-  final String enterprise;
-  final String link;
-  final String imageLogo;
-  final String local;
+  final String description;
+  final String companyId;
+  final String companyDescription;
+  final String state;
+  final String city;
+  final String modality;
+  final String regime;
+  final String salary;
+  final String seniority;
   final String period;
-  final String createdAt;
-  final String status;
+  final String link;
+  final String whatsapp;
+  final String email;
 
   const JobEntity({
     required this.id,
     required this.title,
-    required this.enterprise,
+    required this.companyId,
+    required this.companyDescription,
     required this.link,
-    required this.imageLogo,
-    required this.local,
+    required this.whatsapp,
+    required this.email,
     required this.period,
-    required this.createdAt,
-    required this.status,
+    required this.state,
+    required this.city,
+    required this.description,
+    required this.modality,
+    required this.regime,
+    required this.salary,
+    required this.seniority,
   });
 
   @override
   List<Object> get props => [
         id,
         title,
-        enterprise,
+        companyId,
+        companyDescription,
         link,
-        imageLogo,
-        local,
+        whatsapp,
+        email,
         period,
-        createdAt,
-        status,
+        state,
+        city,
+        description,
+        modality,
+        regime,
+        salary,
+        seniority,
       ];
 }

@@ -1,4 +1,4 @@
-import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
+part of '../blocs/get_job_bloc.dart';
 
 abstract class GetJobStates {}
 

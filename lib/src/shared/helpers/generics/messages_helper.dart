@@ -1,4 +1,6 @@
 abstract class MessagesHelper {
+  static const String credentialsErrorMessage =
+      "Erro! Credenciais inválidas.";
   static const String invalidCredentialsMessage =
       "Email e/ou senha inseridos estão incorretos. Tente novamente!";
   static const String badRequestMessage =
