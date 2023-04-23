@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/blocs/get_job_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/header_filter_component.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/list_jobs_component.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/page_buttons_component.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/components/top_buttons_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/pages/create_job_page.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/blocs/blocs/get_job_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/header_filter_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/list_jobs_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/page_buttons_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/top_buttons_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
@@ -26,6 +27,37 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
   bool isLoaded = false;
   List<JobEntity> listJobs = [];
   late GetJobBloc getjobBloc;
+
+  _showCreateJobPopup() async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          scrollable: true,
+          content: Container(
+            height: Sizer.calculateVertical(context, 600) >= 550
+                ? Sizer.calculateVertical(context, 600)
+                : 550,
+            width: Sizer.calculateHorizontal(context, 120) >= 300
+                ? Sizer.calculateHorizontal(context, 120)
+                : 300,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.white,
+            ),
+            child: const CreatejobPage(),
+          ),
+        );
+      },
+    );
+  }
 
   _setUsername() async {
     getjobBloc = BlocProvider.of<GetJobBloc>(context);
@@ -83,7 +115,8 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                           ),
                         ),
                       ),
-                      const TopButtonsComponent(),
+                      TopButtonsComponent(
+                          showCreatejobPopup: () => _showCreateJobPopup()),
                       Padding(
                         padding: const EdgeInsets.only(top: 80, bottom: 50),
                         child: SizedBox(
@@ -167,7 +200,8 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                           ),
                         ),
                       ),
-                      const TopButtonsComponent(),
+                      TopButtonsComponent(
+                          showCreatejobPopup: () => _showCreateJobPopup()),
                       Padding(
                         padding: const EdgeInsets.only(top: 80, bottom: 50),
                         child: SizedBox(

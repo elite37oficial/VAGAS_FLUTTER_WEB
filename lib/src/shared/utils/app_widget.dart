@@ -15,7 +15,7 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/infra/repositories/get_company_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/bloc/create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/bloc/get_company_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/blocs/get_job_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/blocs/blocs/get_job_bloc.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator.dart';
 

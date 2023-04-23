@@ -3,7 +3,9 @@ import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class TopButtonsComponent extends StatelessWidget {
-  const TopButtonsComponent({Key? key}) : super(key: key);
+  final Function showCreatejobPopup;
+  const TopButtonsComponent({Key? key, required this.showCreatejobPopup})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class TopButtonsComponent extends StatelessWidget {
                     : Sizer.calculateVertical(context, 40),
                 width: 100,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => showCreatejobPopup(),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.greyBlue,
                       elevation: 5,

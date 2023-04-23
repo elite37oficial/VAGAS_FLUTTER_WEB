@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/domain/usecases/get_job_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/domain/usecases/get_job_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';

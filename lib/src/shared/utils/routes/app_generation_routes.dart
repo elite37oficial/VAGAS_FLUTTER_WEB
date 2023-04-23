@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/pages/login_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/pages/dashboard_recruiter_page.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/redirect_page_route.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 

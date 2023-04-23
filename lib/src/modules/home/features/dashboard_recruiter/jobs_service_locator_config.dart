@@ -1,15 +1,15 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/domain/repositories/get_job_repository.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/domain/usecases/get_job_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/datasources/get_job_datasouce_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/datasources/get_job_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/repositories/get_job_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/presenter/blocs/blocs/get_job_bloc.dart';
+
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/domain/repositories/get_job_repository.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/domain/usecases/get_job_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/datasources/get_job_datasouce_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/datasources/get_job_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/repositories/get_job_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/blocs/blocs/get_job_bloc.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator_config.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator_wrapper.dart';
 
-class DashboardServiceLocatorConfig
+class JobsServiceLocatorConfig
     implements ServiceLocatorConfigInternals, ServiceLocatorConfig {
   @override
   Future<void> configure(ServiceLocatorWrapper sl) async {

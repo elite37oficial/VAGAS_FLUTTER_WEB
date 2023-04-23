@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/domain/repositories/get_job_repository.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/datasources/get_job_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/infra/models/get_job_responde_model.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/domain/repositories/get_job_repository.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/datasources/get_job_datasource.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/models/get_job_responde_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
