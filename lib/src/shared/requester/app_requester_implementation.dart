@@ -28,6 +28,7 @@ class AppRequesterImplementation implements AppRequester {
   AppRequesterImplementation._internal();
 
   Future<void> _addToken(Dio dio) async {
+    
     final accessToken =
         await SecureStorageManager.readData(StorageKeys.accessToken);
 

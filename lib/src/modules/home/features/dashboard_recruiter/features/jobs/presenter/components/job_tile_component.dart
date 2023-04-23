@@ -62,7 +62,7 @@ class JobTileComponent extends StatelessWidget {
                           tooltipSemantics: "titulo",
                         ),
                         ResponsiveTextWidget(
-                          text: jobTileData.companyId,
+                          text: jobTileData.companyName,
                           textStyle:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: AppColors.lightGrey,
@@ -120,7 +120,7 @@ class JobTileComponent extends StatelessWidget {
                     tooltipSemantics: "local",
                   ),
                   ResponsiveTextWidget(
-                    text: jobTileData.period,
+                    text: "${jobTileData.modality} - ${jobTileData.regime}",
                     textStyle: Theme.of(context).textTheme.bodyMedium,
                     maxLines: 1,
                     hintSemantics: "periodo",

@@ -5,6 +5,7 @@ class JobEntity extends Equatable {
   final String title;
   final String description;
   final String companyId;
+  final String companyName;
   final String companyDescription;
   final String state;
   final String city;
@@ -21,6 +22,7 @@ class JobEntity extends Equatable {
     required this.id,
     required this.title,
     required this.companyId,
+    required this.companyName,
     required this.companyDescription,
     required this.link,
     required this.whatsapp,
@@ -40,6 +42,7 @@ class JobEntity extends Equatable {
         id,
         title,
         companyId,
+        companyName,
         companyDescription,
         link,
         whatsapp,

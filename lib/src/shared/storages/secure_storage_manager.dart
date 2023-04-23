@@ -5,9 +5,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class SecureStorageManager {
   static const prefs = FlutterSecureStorage();
 
-  static void saveData(String key, dynamic value) async {
+  static Future<bool> saveData(String key, dynamic value) async {
     if (value is String) {
       await prefs.write(key: key, value: value);
+      return true;
     } else {
       log("Invalid Type");
       throw TypeError();

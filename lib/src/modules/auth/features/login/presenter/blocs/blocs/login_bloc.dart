@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/decode_token_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/login_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/my_self_entity.dart';
@@ -40,12 +44,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       (TokenEntity success) {
         var res = JWT.decode(success.token);
 
-        SecureStorageManager.saveData(StorageKeys.accessToken, success.token);
-
         DecodedTokenEntity decodedToken =
             DecodedTokenEntity.fromMap(res.payload);
 
-        return emitter(LoginSuccessState(userId: decodedToken.userID));
+  
+        return emitter(LoginSuccessState(userId: decodedToken.userID, token: success.token));
       },
     );
   }

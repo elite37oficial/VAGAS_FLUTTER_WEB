@@ -10,6 +10,8 @@ import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/comp
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/components/login_register_button_component.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
+import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,9 +33,10 @@ class _LoginPageState extends State<LoginPage> {
 
   bool loaded = false;
 
-  _getBloc(BuildContext context) {
+  _getBloc(BuildContext context) async {
     loginBloc = BlocProvider.of<LoginBloc>(context);
     getMySelfBloc = BlocProvider.of<GetMySelfBloc>(context);
+
     setState(() {});
   }
 
@@ -41,6 +44,13 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _fillControllers();
+  }
+
+  _verifyLoaded(String userId) {
+    !loaded
+        ? context.read<GetMySelfBloc>().add(DoGetMySelfEvent(userId: userId))
+        : null;
+    loaded = true;
   }
 
   _showErrorAlert(String message) async {
@@ -113,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
       listeners: [
         BlocListener<LoginBloc, LoginState>(
             bloc: loginBloc,
-            listener: (context, state) {
+            listener: (context, state) async {
               if (state is LoginLoadingState) {
                 const LoadingPage();
               }
@@ -125,12 +135,10 @@ class _LoginPageState extends State<LoginPage> {
                 loginBloc.add(CleanStateEvent(state: LoginInitialState()));
               }
               if (state is LoginSuccessState) {
-                !loaded
-                    ? context
-                        .read<GetMySelfBloc>()
-                        .add(DoGetMySelfEvent(userId: state.userId))
-                    : null;
-                loaded = true;
+                await SecureStorageManager.saveData(
+                    StorageKeys.accessToken, state.token);
+
+                _verifyLoaded(state.userId);
               }
             }),
         BlocListener<GetMySelfBloc, GetMySelfState>(
