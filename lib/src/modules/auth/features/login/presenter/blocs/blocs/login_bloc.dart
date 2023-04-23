@@ -2,18 +2,12 @@ import 'dart:async';
 
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/decode_token_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/login_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/my_self_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/token_entity.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/get_my_self_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/login_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
-import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
-import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
 
 part '../events/login_event.dart';
 part '../states/login_state.dart';

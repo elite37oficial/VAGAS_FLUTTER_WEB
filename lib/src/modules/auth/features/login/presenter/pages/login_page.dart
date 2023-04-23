@@ -124,29 +124,24 @@ class _LoginPageState extends State<LoginPage> {
         BlocListener<LoginBloc, LoginState>(
             bloc: loginBloc,
             listener: (context, state) async {
-              if (state is LoginLoadingState) {
-                const LoadingPage();
-              }
               if (state is LoginErrorState) {
                 log(state.message);
+                loginBloc.add(CleanStateEvent(state: LoginInitialState()));
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
                   _showErrorAlert(state.message);
                 });
-                loginBloc.add(CleanStateEvent(state: LoginInitialState()));
               }
               if (state is LoginSuccessState) {
                 await SecureStorageManager.saveData(
                     StorageKeys.accessToken, state.token);
 
                 _verifyLoaded(state.userId);
+                loginBloc.add(CleanStateEvent(state: LoginInitialState()));
               }
             }),
         BlocListener<GetMySelfBloc, GetMySelfState>(
           bloc: getMySelfBloc,
           listener: (context, getState) {
-            if (getState is GetMySelfStateLoadingState) {
-              const LoadingPage();
-            }
             if (getState is GetMySelfStateSuccessState) {
               if (getState.role == UserRole.admin) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -157,6 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushNamed(context, RouteKeys.home);
                 });
               }
+              getMySelfBloc.add(CleanStateGetMySelfEvent(
+                  state: GetMySelfStateInitialState()));
             }
 
             if (getState is GetMySelfStateErrorState) {
@@ -164,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
               WidgetsBinding.instance.addPostFrameCallback((_) async {
                 _showErrorAlert(getState.message);
               });
-              context.read<GetMySelfBloc>().add(CleanStateGetMySelfEvent(
+              getMySelfBloc.add(CleanStateGetMySelfEvent(
                   state: GetMySelfStateInitialState()));
             }
           },

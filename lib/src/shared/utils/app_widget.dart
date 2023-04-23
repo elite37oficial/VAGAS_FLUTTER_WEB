@@ -52,9 +52,7 @@ class AppWidget extends StatelessWidget {
             ),
           ),
         ),
-        BlocProvider<GetJobBloc>(
-          create: (_) => sl<GetJobBloc>(),
-        ),
+        BlocProvider<GetJobBloc>(create: (_) => sl<GetJobBloc>()),
         BlocProvider<GetUsersBloc>(
           create: (_) => GetUsersBloc(
             usecase: GetUsersUsecase(
@@ -66,15 +64,9 @@ class AppWidget extends StatelessWidget {
             ),
           ),
         ),
-        BlocProvider<RegisterBloc>(
-          create: (_) => sl<RegisterBloc>(),
-        ),
-        BlocProvider<LoginBloc>(
-          create: (_) => sl<LoginBloc>(),
-        ),
-        BlocProvider<GetMySelfBloc>(
-          create: (_) => sl<GetMySelfBloc>(),
-        ),
+        BlocProvider<RegisterBloc>(create: (_) => sl<RegisterBloc>()),
+        BlocProvider<LoginBloc>(create: (_) => sl<LoginBloc>()),
+        BlocProvider<GetMySelfBloc>(create: (_) => sl<GetMySelfBloc>()),
       ],
       child: MaterialApp(
         // showSemanticsDebugger: debugMode,
