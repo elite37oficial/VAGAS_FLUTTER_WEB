@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 
 class RedirectPageRoute extends StatefulWidget {
@@ -24,8 +25,7 @@ class _RedirectPageRouteState extends State<RedirectPageRoute> {
 
   _route(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Navigator.pushReplacementNamed(context, widget.redirectRoute,
-          arguments: widget.args);
+      await context.push(widget.redirectRoute, extra: widget.args);
     });
   }
 

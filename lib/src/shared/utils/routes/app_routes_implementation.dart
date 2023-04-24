@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
@@ -8,12 +7,12 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/p
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/pages/dashboard_companies_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/redirect_page_route.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
 
-// const String home = RouteKeys.companies;
-const String home = "${RouteKeys.auth}${RouteKeys.login}";
+const String home = RouteKeys.init;
 
 goToHome(BuildContext context) async {
   WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -48,24 +47,36 @@ final appRoutesConfig = GoRouter(
     GoRoute(
         path: RouteKeys.init,
         name: RouteKeys.init,
+        redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
         pageBuilder: (context, state) {
           return const NoTransitionPage(
-            child: Scaffold(),
+            child: RedirectPageRoute(
+              duration: Duration(milliseconds: 0),
+              redirectRoute: "${RouteKeys.auth}${RouteKeys.login}",
+            ),
           );
         }),
     GoRoute(
         path: RouteKeys.initial,
         name: RouteKeys.initial.replaceAll("/", ""),
+        redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
         pageBuilder: (context, state) {
           return const NoTransitionPage(
-            child: Scaffold(),
+            child: RedirectPageRoute(
+              duration: Duration(milliseconds: 0),
+              redirectRoute: "${RouteKeys.auth}${RouteKeys.login}",
+            ),
           );
         }),
     GoRoute(
       path: RouteKeys.auth,
       name: RouteKeys.auth.replaceAll("/", ""),
+      redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
       pageBuilder: (context, state) => const NoTransitionPage(
-        child: Scaffold(),
+        child: RedirectPageRoute(
+          duration: Duration(milliseconds: 0),
+          redirectRoute: "${RouteKeys.auth}${RouteKeys.login}",
+        ),
       ),
       routes: [
         GoRoute(

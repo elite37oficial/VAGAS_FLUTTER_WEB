@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/get_my_self_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/login_bloc.dart';
@@ -145,11 +146,11 @@ class _LoginPageState extends State<LoginPage> {
             if (getState is GetMySelfStateSuccessState) {
               if (getState.role == UserRole.admin) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  Navigator.pushNamed(context, RouteKeys.homeAdmin);
+                  context.pushReplacement(RouteKeys.homeAdmin);
                 });
               } else {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  Navigator.pushNamed(context, RouteKeys.home);
+                  context.pushReplacement(RouteKeys.home);
                 });
               }
               getMySelfBloc.add(CleanStateGetMySelfEvent(

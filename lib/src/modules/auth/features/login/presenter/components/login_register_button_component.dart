@@ -27,7 +27,7 @@ class LoginRegisterButtonComponent extends StatelessWidget {
           ),
           SelectionArea(
             child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, RouteKeys.register),
+              onTap: () => context.push(RouteKeys.register),
               child: AutoSizeText.rich(
                 maxFontSize: 16,
                 minFontSize: 12,

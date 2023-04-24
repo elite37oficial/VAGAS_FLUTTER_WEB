@@ -42,8 +42,8 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
           elevation: 0,
           scrollable: true,
           content: Container(
-            height: Sizer.calculateVertical(context, 600) >= 550
-                ? Sizer.calculateVertical(context, 600)
+            height: Sizer.calculateVertical(context, 800) >= 550
+                ? Sizer.calculateVertical(context, 800)
                 : 550,
             width: Sizer.calculateHorizontal(context, 120) >= 300
                 ? Sizer.calculateHorizontal(context, 120)

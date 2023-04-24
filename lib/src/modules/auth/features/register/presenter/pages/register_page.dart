@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_fields_component.dart';
@@ -71,10 +72,9 @@ class _RegisterPageState extends State<RegisterPage> {
           message: message,
           function: () {
             Navigator.pop(context);
-            Navigator.pushReplacementNamed(
-              context,
+            context.pushReplacement(
               RouteKeys.login,
-              arguments: <String>[
+              extra: <String>[
                 emailController.text,
                 passwordController.text,
               ],

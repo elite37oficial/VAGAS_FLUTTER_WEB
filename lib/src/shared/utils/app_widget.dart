@@ -21,7 +21,7 @@ import 'package:vagas_flutter_web/src/shared/service_locator/service_locator.dar
 
 import 'package:vagas_flutter_web/src/shared/themes/app_themes.dart';
 import 'package:vagas_flutter_web/src/shared/utils/behaviors/custom_behavior.dart';
-import 'package:vagas_flutter_web/src/shared/utils/routes/app_generation_routes.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/app_routes_implementation.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -68,10 +68,11 @@ class AppWidget extends StatelessWidget {
         BlocProvider<LoginBloc>(create: (_) => sl<LoginBloc>()),
         BlocProvider<GetMySelfBloc>(create: (_) => sl<GetMySelfBloc>()),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         // showSemanticsDebugger: debugMode,
-        onGenerateRoute: (routeSettings) =>
-            AppGenerationRoutesImplementation().onGenerateRoute(routeSettings),
+        routeInformationParser: appRoutesConfig.routeInformationParser,
+        routeInformationProvider: appRoutesConfig.routeInformationProvider,
+        routerDelegate: appRoutesConfig.routerDelegate,
         debugShowCheckedModeBanner: false,
         scrollBehavior: CustomScrollBehavior(),
         title: 'Vagas Elite37',
