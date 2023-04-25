@@ -30,10 +30,10 @@ dependencies:
   get_it: ^7.2.0
 
   vagas_design_system:
-    path: ../VAGAS_FLUTTER_DESIGN_SYSTEM #Para trabalhar com o pacote localmente.
-    # git:
-    #   url: https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM
-    #   ref: dev
+    # path: ../VAGAS_FLUTTER_DESIGN_SYSTEM #Para trabalhar com o pacote localmente.
+    git:
+      url: https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM
+      ref: dev
 
 dev_dependencies:
   flutter_test:
