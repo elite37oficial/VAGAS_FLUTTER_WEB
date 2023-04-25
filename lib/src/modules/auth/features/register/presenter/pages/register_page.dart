@@ -73,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
           function: () {
             Navigator.pop(context);
             context.pushReplacement(
-              RouteKeys.login,
+              "${RouteKeys.auth}${RouteKeys.login}",
               extra: <String>[
                 emailController.text,
                 passwordController.text,

@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/status_component.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
+import 'package:vagas_flutter_web/src/shared/requester/interceptors/header_interceptor.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class JobTileComponent extends StatelessWidget {
   final int index;
   final JobEntity jobTileData;
+  final String token;
   const JobTileComponent(
-      {Key? key, required this.index, required this.jobTileData})
+      {Key? key,
+      required this.index,
+      required this.jobTileData,
+      required this.token})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    DateTime date =
+        DateTime.fromMillisecondsSinceEpoch(jobTileData.createdDate);
+    String datePaserd =
+        "${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}/${date.year}";
     Size size = MediaQuery.of(context).size;
     return Container(
       height: Sizer.calculateVertical(context, 55) <= 40
@@ -44,9 +54,23 @@ class JobTileComponent extends StatelessWidget {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      // child: Image.network(
-                      //   jobTileData.imageLogo,
-                      // ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: SizedBox(
+                      height: Sizer.calculateVertical(context, 30),
+                      width: Sizer.calculateVertical(context, 30),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "",
+                        placeholderErrorBuilder: (context, error, stackTrace) =>
+                            Container(),
+                        image: Endpoints.getCompanyImageById(
+                            jobTileData.companyId),
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Container();
+                        },
+                      ),
                     ),
                   ),
                   Expanded(
@@ -95,7 +119,7 @@ class JobTileComponent extends StatelessWidget {
               width: size.width * 0.7,
               child: Center(
                 child: ResponsiveTextWidget(
-                  text: "jobTileData.createdAt",
+                  text: datePaserd,
                   textStyle: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 1,
                   hintSemantics: "data de criação",

@@ -9,8 +9,10 @@ abstract class Endpoints {
   static String jobs = "$baseURL/jobs";
   static String companies = "$baseURL/companies";
 
+  static String getJobsByRecruiterId(String userId) => "$baseURL/jobs?created_by=$userId";
+
   static String getJobById(String jobId) => "$baseURL/jobs/id/$jobId";
   static String getUserById(String userId) => "$baseURL/users/id/$userId";
   static String getCompanyImageById(String companyId) =>
-      "$baseURL/companies-image/id/$companyId}";
+      "$baseURL/companies-image/id/$companyId";
 }

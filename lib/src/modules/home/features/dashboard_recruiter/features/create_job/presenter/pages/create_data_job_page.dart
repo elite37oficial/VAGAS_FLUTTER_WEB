@@ -181,7 +181,7 @@ class _CreateDataJobPageState extends State<CreateDataJobPage> {
                         }),
                         hint: "Cargo para qual você está contratando",
                         label: "Título",
-                        heigth: returnHeight(),
+                        height: returnHeight(),
                         width: Sizer.calculateHorizontal(context, size.width),
                       ),
                     ),

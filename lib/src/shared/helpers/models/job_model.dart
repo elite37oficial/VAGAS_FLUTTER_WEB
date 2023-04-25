@@ -18,6 +18,7 @@ class JobModel extends JobEntity {
     required super.regime,
     required super.salary,
     required super.seniority,
+    required super.createdDate,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +39,7 @@ class JobModel extends JobEntity {
       'link': link,
       'whatsapp': whatsapp,
       'email': email,
+      'createdDate': createdDate,
     };
   }
 
@@ -59,6 +61,7 @@ class JobModel extends JobEntity {
       link: map['link'] ?? '',
       whatsapp: map['whatsapp'] ?? '',
       email: map['email'] ?? '',
+      createdDate: map['createdDate'] ?? 0,
     );
   }
 }

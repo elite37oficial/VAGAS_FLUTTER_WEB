@@ -5,7 +5,8 @@ import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 
 class ListJobsComponent extends StatelessWidget {
   final List<JobEntity> listJobs;
-  const ListJobsComponent({Key? key, required this.listJobs}) : super(key: key);
+  final String token;
+  const ListJobsComponent({Key? key, required this.listJobs, required this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class ListJobsComponent extends StatelessWidget {
               itemCount: listJobs.length,
               itemBuilder: (context, index) {
                 return JobTileComponent(
+                  token: token,
                   index: index,
                   jobTileData: listJobs[index],
                 );

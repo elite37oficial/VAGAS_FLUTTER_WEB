@@ -17,6 +17,7 @@ class JobEntity extends Equatable {
   final String link;
   final String whatsapp;
   final String email;
+  final int createdDate;
 
   const JobEntity({
     required this.id,
@@ -35,6 +36,7 @@ class JobEntity extends Equatable {
     required this.regime,
     required this.salary,
     required this.seniority,
+    required this.createdDate,
   });
 
   @override
@@ -55,5 +57,6 @@ class JobEntity extends Equatable {
         regime,
         salary,
         seniority,
+        createdDate,
       ];
 }

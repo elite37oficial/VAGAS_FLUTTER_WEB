@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/pages/create_job_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/blocs/blocs/get_job_bloc.dart';
@@ -10,10 +11,12 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/page_buttons_component.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/top_buttons_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/logout_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
 import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class HomeRecruiterPage extends StatefulWidget {
   const HomeRecruiterPage({Key? key}) : super(key: key);
@@ -24,6 +27,7 @@ class HomeRecruiterPage extends StatefulWidget {
 
 class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
   String username = "";
+  String token = "";
   bool isLoaded = false;
   List<JobEntity> listJobs = [];
   late GetJobBloc getjobBloc;
@@ -62,7 +66,8 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
   _setUsername() async {
     getjobBloc = BlocProvider.of<GetJobBloc>(context);
     context.read<GetJobBloc>().add(GetJobListEvent());
-    // username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+    username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+    token = await SecureStorageManager.readData(StorageKeys.accessToken) ?? "";
 
     setState(() {});
   }
@@ -88,6 +93,11 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
               children: [
                 TopBarWebWidget(
                   username: username,
+                  enterprisesFunction: () {},
+                  jobsFunction: () => context.push(RouteKeys.home),
+                  logout: () async => await LogoutHelper.logout()
+                      ? context.pushReplacement(RouteKeys.auth)
+                      : null,
                   isMobile: true,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
@@ -147,7 +157,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                         log(listJobs.length.toString());
                                       }
                                       return ListJobsComponent(
-                                          listJobs: listJobs);
+                                          token: token, listJobs: listJobs);
                                     },
                                   ),
                                 ),
@@ -174,6 +184,11 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
               children: [
                 TopBarWebWidget(
                   username: username,
+                  enterprisesFunction: () {},
+                  jobsFunction: () => context.push(RouteKeys.home),
+                  logout: () async => await LogoutHelper.logout()
+                      ? context.pushReplacement(RouteKeys.auth)
+                      : null,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
                       : Sizer.calculateVertical(context, 70),
@@ -232,7 +247,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                         log(listJobs.length.toString());
                                       }
                                       return ListJobsComponent(
-                                          listJobs: listJobs);
+                                          token: token, listJobs: listJobs);
                                     },
                                   ),
                                 ),
