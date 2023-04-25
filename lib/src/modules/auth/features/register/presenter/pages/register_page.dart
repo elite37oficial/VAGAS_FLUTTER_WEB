@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/states/register_state.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_fields_component.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_logo_background_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
@@ -23,6 +21,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  late RegisterBloc registerBloc;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
@@ -73,11 +72,13 @@ class _RegisterPageState extends State<RegisterPage> {
           message: message,
           function: () {
             Navigator.pop(context);
-            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}",
-                extra: <String>[
-                  emailController.text,
-                  passwordController.text,
-                ]);
+            context.pushReplacement(
+              "${RouteKeys.auth}${RouteKeys.login}",
+              extra: <String>[
+                emailController.text,
+                passwordController.text,
+              ],
+            );
           },
         );
       },
@@ -123,7 +124,14 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    registerBloc = BlocProvider.of<RegisterBloc>(context);
+
     Size size = MediaQuery.of(context).size;
 
     double returnHeight() {
@@ -137,6 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     return BlocBuilder<RegisterBloc, RegisterState>(
+      bloc: registerBloc,
       builder: (context, state) {
         if (state is RegisterLoadingState) {
           return const LoadingPage();
@@ -258,7 +267,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           child: SelectionArea(
                             child: GestureDetector(
-                              onTap: () => context.pop(),
+                              onTap: () => Navigator.pop(context),
                               child: AutoSizeText.rich(
                                 maxLines: 1,
                                 TextSpan(
@@ -403,7 +412,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               alignment: Alignment.bottomCenter,
                               child: SelectionArea(
                                 child: GestureDetector(
-                                  onTap: () => context.pop(),
+                                  onTap: () => Navigator.pop(context),
                                   child: AutoSizeText.rich(
                                     maxLines: 1,
                                     maxFontSize: 16,

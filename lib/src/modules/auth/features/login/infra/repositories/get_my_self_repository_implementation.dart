@@ -21,8 +21,8 @@ class GetMySelfRepositoryImplementation implements GetMySelfRepository {
       if (e.response!.statusCode == 500) {
         return Left(ServerFailure(MessagesHelper.serverMessage));
       } else if (e.response!.statusCode == 403) {
-        return Left(InvalidCredentialsFailure(
-            MessagesHelper.invalidCredentialsMessage));
+        return Left(
+            InvalidCredentialsFailure(MessagesHelper.credentialsErrorMessage));
       } else if (e.response!.statusCode == 400) {
         return Left(BadRequestFailure(MessagesHelper.badRequestMessage));
       } else {

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/bloc/get_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/bloc/events/get_company_event.dart';
@@ -11,10 +12,12 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/components/list_companies_component.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/components/company_page_buttons_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/logout_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
 import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class HomeCompaniesPage extends StatefulWidget {
   const HomeCompaniesPage({Key? key}) : super(key: key);
@@ -91,6 +94,11 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    enterprisesFunction: () {},
+                    jobsFunction: () => context.push(RouteKeys.home),
+                    logout: () async => await LogoutHelper.logout()
+                        ? context.pushReplacement(RouteKeys.auth)
+                        : null,
                     username: username,
                     isMobile: true,
                     height: Sizer.calculateVertical(context, 70) <= 35
@@ -157,6 +165,11 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    enterprisesFunction: () {},
+                    jobsFunction: () => context.push(RouteKeys.home),
+                    logout: () async => await LogoutHelper.logout()
+                        ? context.pushReplacement(RouteKeys.auth)
+                        : null,
                     username: username,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
