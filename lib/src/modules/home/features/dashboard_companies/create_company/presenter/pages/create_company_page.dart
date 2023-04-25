@@ -33,6 +33,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   TextEditingController nameController = TextEditingController();
   EstadosMunicipiosController stateController = EstadosMunicipiosController();
   TextEditingController stateTextController = TextEditingController();
+  TextEditingController cityTextController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
   Future<void> _getImage() async {
@@ -48,20 +49,52 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
     }
   }
 
-  List<Estado> _estados = [];
-  List<Municipio> _municipios = [];
+  List<DropdownMenuItem<String>> _estadoItens = [];
+  List<DropdownMenuItem<String>> _municipioItens = [];
 
-  Estado? _estadoSelecionado;
-  Municipio? _municipioSelecionado;
+  String _estadoSelecionado = "";
+  String _municipioSelecionado = "";
 
   @override
   void initState() {
     super.initState();
+    _loadEstados();
+  }
 
-    stateController.buscaTodosEstados().then((estados) {
-      setState(() {
-        _estados = estados;
-      });
+  Future<void> _loadEstados() async {
+    List<Estado> estados = await stateController.buscaTodosEstados();
+    setState(() {
+      _estadoItens = estados
+          .map((estado) =>
+              DropdownMenuItem(value: estado.sigla, child: Text(estado.sigla!)))
+          .toList();
+    });
+  }
+
+  Future<void> _loadMunicipios(String estado) async {
+    List<Municipio> municipios =
+        await stateController.buscaMunicipiosPorEstado(estado);
+    setState(() {
+      _municipioItens = municipios
+          .map((municipio) => DropdownMenuItem(
+              value: municipio.nome, child: Text(municipio.nome!)))
+          .toList();
+    });
+  }
+
+  void _onEstadoChange(String? newValue) {
+    setState(() {
+      _estadoSelecionado = newValue ?? "";
+      _municipioSelecionado = "";
+      _loadMunicipios(_estadoSelecionado);
+      stateTextController.text = newValue ?? "";
+    });
+  }
+
+  void _onMunicipioChange(String? newValue) {
+    setState(() {
+      _municipioSelecionado = newValue ?? "";
+      cityTextController.text = newValue ?? "";
     });
   }
 
@@ -74,16 +107,17 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
 
     if (formKey.currentState!.validate()) {
       if (!nameError && !descriptionError) {
-        context.read<CreateCompanyBloc>().add(
-              DoCreateCompanyEvent(
-                createCompanyData: CreateCompanyEntity(
-                  name: nameController.text,
-                  description: descriptionController.text,
-                  location: "",
-                  status: "",
-                ),
-              ),
-            );
+        // context.read<CreateCompanyBloc>().add(
+        //       DoCreateCompanyEvent(
+        //         createCompanyData: CreateCompanyEntity(
+        //           name: nameController.text,
+        //           description: descriptionController.text,
+        //           location: "",
+        //           status: "",
+        //         ),
+        //       ),
+        // );
+        context.pop();
       }
     }
   }
@@ -91,6 +125,14 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double returnHeight() {
+      if (Sizer.calculateVertical(context, 60) > 35) {
+        return Sizer.calculateVertical(context, 60);
+      } else {
+        return 35;
+      }
+    }
+
     return BlocBuilder<CreateCompanyBloc, CreateCompanyStates>(
       builder: (context, state) {
         if (state is CreateCompanyLoadingState) {
@@ -108,369 +150,307 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          content: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: size.width * 0.5),
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.3,
-                          height: Sizer.calculateVertical(context, 40) <= 35
-                              ? 35
-                              : Sizer.calculateVertical(context, 40),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: ResponsiveTextWidget(
-                              text: "Cadastre sua empresa",
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.black,
-                                  ),
-                              maxLines: 1,
-                              hintSemantics: "cadastre",
-                              tooltipSemantics: "cadastre",
-                              minFontSize: 24,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25,
-                          width: 25,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(50),
-                            onTap: () => Navigator.pop(context),
-                            child: const Center(
-                              child: Icon(
-                                Icons.close_rounded,
-                                size: 27,
-                                color: AppColors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: size.width * 0.7,
-                      height: Sizer.calculateVertical(context, 40) <= 35
-                          ? 35
-                          : Sizer.calculateVertical(context, 40),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: ResponsiveTextWidget(
-                          text: "Imagem",
-                          textStyle:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.black,
-                                  ),
-                          maxLines: 1,
-                          hintSemantics: "imagem",
-                          tooltipSemantics: "imagem",
-                          minFontSize: 8,
-                          maxFontSize: 14,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
+          contentPadding: EdgeInsets.zero,
+          content: StatefulBuilder(builder: (context, state) {
+            return SizedBox(
+              height: 550,
+              width: 550,
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: size.width * 0.5),
+                  child: Form(
+                    key: formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 40),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          const SizedBox(width: 5),
-                          ElevatedButton(
-                            onPressed: _getImage,
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.grey),
-                            child: const Text(
-                              'Selecionar imagem',
-                              style: TextStyle(
-                                color: AppColors.black,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: size.width * 0.3,
+                                height:
+                                    Sizer.calculateVertical(context, 40) <= 35
+                                        ? 35
+                                        : Sizer.calculateVertical(context, 40),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ResponsiveTextWidget(
+                                    text: "Cadastre sua empresa",
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.black,
+                                        ),
+                                    maxLines: 1,
+                                    hintSemantics: "cadastre",
+                                    tooltipSemantics: "cadastre",
+                                    minFontSize: 24,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 25,
+                                width: 25,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(50),
+                                  onTap: () => Navigator.pop(context),
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.close_rounded,
+                                      size: 27,
+                                      color: AppColors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            width: size.width * 0.7,
+                            height: Sizer.calculateVertical(context, 40) <= 35
+                                ? 35
+                                : Sizer.calculateVertical(context, 40),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: ResponsiveTextWidget(
+                                text: "Imagem",
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.black,
+                                    ),
+                                maxLines: 1,
+                                hintSemantics: "imagem",
+                                tooltipSemantics: "imagem",
+                                minFontSize: 8,
+                                maxFontSize: 14,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: imageName ??
-                                    'Escolha a imagem da sua empresa',
-                              ),
-                              maxLines: 1,
+                          Container(
+                            width: size.width,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
                             ),
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 5),
+                                ElevatedButton(
+                                  onPressed: _getImage,
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.grey),
+                                  child: const Text(
+                                    'Selecionar imagem',
+                                    style: TextStyle(
+                                      color: AppColors.black,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: TextField(
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: imageName ??
+                                          'Escolha a imagem da sua empresa',
+                                    ),
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: StaticWebFieldWidget(
+                              maxLength: 50,
+                              constraints: const BoxConstraints(
+                                minHeight: 35,
+                                maxHeight: 55,
+                              ),
+                              fieldSemantic: "Campo de texto do nome.",
+                              hintSemantic: "nome",
+                              controller: nameController,
+                              onError: nameError,
+                              onChanged: (_) => setState(() {
+                                nameError = nameController.text.isEmpty ||
+                                    nameController.text.length < 4;
+                              }),
+                              hint: "Nome da empresa",
+                              label: "Nome",
+                              heigth: 55,
+                              width: Sizer.calculateHorizontal(
+                                  context, size.width),
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          SizedBox(
+                            width: size.width * 0.5,
+                            height: 80,
+                            child: AppMenuDropDownWidget(
+                              height: Sizer.calculateVertical(context, 55) >= 50
+                                  ? Sizer.calculateVertical(context, 55)
+                                  : 50,
+                              semantics: "Selecione um estado",
+                              controller: stateTextController,
+                              hint: "Selecione um estado",
+                              label: "Estado",
+                              listItens: _estadoItens,
+                              onChanged: _onEstadoChange,
+                              error: false,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          SizedBox(
+                            width: size.width * 0.5,
+                            height: 80,
+                            child: AppMenuDropDownWidget(
+                              height: Sizer.calculateVertical(context, 55) >= 50
+                                  ? Sizer.calculateVertical(context, 55)
+                                  : 50,
+                              semantics: "Selecione um municipio",
+                              controller: cityTextController,
+                              hint: "Selecione um municipio",
+                              label: "Municipio",
+                              listItens: _municipioItens,
+                              onChanged: _onMunicipioChange,
+                              error: false,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          SizedBox(
+                            width: size.width * 0.7,
+                            height: Sizer.calculateVertical(context, 40) <= 35
+                                ? 35
+                                : Sizer.calculateVertical(context, 40),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: ResponsiveTextWidget(
+                                text: "Sobre*",
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.black,
+                                    ),
+                                maxLines: 1,
+                                hintSemantics: "sobre",
+                                tooltipSemantics: "sobre",
+                                minFontSize: 16,
+                                maxFontSize: 24,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: size.width * 0.7,
+                            height: Sizer.calculateVertical(context, 200) <= 35
+                                ? 35
+                                : Sizer.calculateVertical(context, 200),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.grey,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: TextField(
+                              controller: descriptionController,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Escreva sobre a empresa',
+                              ),
+                              maxLines: 10,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: SizedBox(
+                              width: size.width * 0.5,
+                              child: const Divider(
+                                thickness: 1.5,
+                                color: AppColors.grey,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              OutlinedButtonWidget(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                height:
+                                    Sizer.calculateVertical(context, 55) <= 20
+                                        ? 20
+                                        : Sizer.calculateVertical(context, 55),
+                                width: size.width * 0.12,
+                                tooltip: "cancelar",
+                                hintSemantics: "cancelar",
+                                child: ResponsiveTextWidget(
+                                  text: "Cancelar",
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.greyBlue,
+                                      ),
+                                  hintSemantics: "cancelar",
+                                  tooltipSemantics: "cancelar",
+                                  maxLines: 1,
+                                  minFontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              FilledButtonWidget(
+                                onPressed: () => _validateForm(formKey),
+                                height:
+                                    Sizer.calculateVertical(context, 55) <= 20
+                                        ? 20
+                                        : Sizer.calculateVertical(context, 55),
+                                width: size.width * 0.12,
+                                tooltip: "salvar",
+                                hintSemantics: "salvar",
+                                child: ResponsiveTextWidget(
+                                  text: "Salvar alterações",
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        color: AppColors.white,
+                                      ),
+                                  hintSemantics: "salvar",
+                                  tooltipSemantics: "salvar",
+                                  maxLines: 1,
+                                  minFontSize: 14,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
-                    SizedBox(
-                      width: size.width * 0.7,
-                      height: Sizer.calculateVertical(context, 40) <= 35
-                          ? 35
-                          : Sizer.calculateVertical(context, 40),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: ResponsiveTextWidget(
-                          text: "Nome",
-                          textStyle:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.black,
-                                  ),
-                          maxLines: 1,
-                          hintSemantics: "nome",
-                          tooltipSemantics: "nome",
-                          minFontSize: 8,
-                          maxFontSize: 14,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.grey,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: const TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Nome da empresa',
-                        ),
-                        maxLines: 1,
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    SizedBox(
-                      width: size.width * 0.7,
-                      height: Sizer.calculateVertical(context, 40) <= 35
-                          ? 35
-                          : Sizer.calculateVertical(context, 40),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: ResponsiveTextWidget(
-                          text: "Localização",
-                          textStyle:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.black,
-                                  ),
-                          maxLines: 1,
-                          hintSemantics: "localização",
-                          tooltipSemantics: "localização",
-                          minFontSize: 8,
-                          maxFontSize: 14,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: size.width * 0.7,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.grey,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: DropdownButton(
-                        hint: const Text('Selecione um estado'),
-                        value: _estadoSelecionado,
-                        items: _estados.map((estado) {
-                          return DropdownMenuItem(
-                            value: estado,
-                            child: Text(estado.sigla!),
-                          );
-                        }).toList(),
-                        onChanged: (value) => setState(() {
-                          _estadoSelecionado = value;
-                          if (_estadoSelecionado == null) {
-                            _municipios.clear();
-                          } else {
-                            stateController
-                                .buscaMunicipiosPorEstado(
-                                    _estadoSelecionado!.sigla!)
-                                .then((municipios) {
-                              setState(() {
-                                _municipios = municipios;
-                                if (_municipios.isEmpty ||
-                                    !_municipios
-                                        .contains(_municipioSelecionado)) {
-                                  _municipioSelecionado = null;
-                                }
-                              });
-                            });
-                          }
-                        }),
-                      ),
-                    ),
-                    // AppMenuDropDownWidget(
-                    //   height: ,
-                    //   semantics: ,
-                    //   controller: ,
-                    //   hint: ,
-                    //   label: ,
-                    //   listItens: ,
-                    //   onChanged: ,
-                    //   error: ,
-                    // ),
-                    const SizedBox(height: 15),
-                    Container(
-                      width: size.width * 0.7,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.grey,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: DropdownButton(
-                        hint: const Text('Selecione um municipio'),
-                        value: _municipioSelecionado,
-                        items: _municipios.map((municipio) {
-                          return DropdownMenuItem(
-                            value: municipio,
-                            child: Text(municipio.nome!),
-                          );
-                        }).toList(),
-                        onChanged: (value) => setState(() {
-                          _municipioSelecionado = value;
-                        }),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    SizedBox(
-                      width: size.width * 0.7,
-                      height: Sizer.calculateVertical(context, 40) <= 35
-                          ? 35
-                          : Sizer.calculateVertical(context, 40),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: ResponsiveTextWidget(
-                          text: "Sobre*",
-                          textStyle:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.black,
-                                  ),
-                          maxLines: 1,
-                          hintSemantics: "sobre",
-                          tooltipSemantics: "sobre",
-                          minFontSize: 16,
-                          maxFontSize: 24,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: size.width * 0.7,
-                      height: Sizer.calculateVertical(context, 200) <= 35
-                          ? 35
-                          : Sizer.calculateVertical(context, 200),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.grey,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: const TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Escreva sobre a empresa',
-                        ),
-                        maxLines: 10,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: SizedBox(
-                        width: size.width * 0.5,
-                        child: const Divider(
-                          thickness: 1.5,
-                          color: AppColors.grey,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        OutlinedButtonWidget(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          height: Sizer.calculateVertical(context, 55) <= 20
-                              ? 20
-                              : Sizer.calculateVertical(context, 55),
-                          width: size.width * 0.12,
-                          tooltip: "cancelar",
-                          hintSemantics: "cancelar",
-                          child: ResponsiveTextWidget(
-                            text: "Cancelar",
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.greyBlue,
-                                ),
-                            hintSemantics: "cancelar",
-                            tooltipSemantics: "cancelar",
-                            maxLines: 1,
-                            minFontSize: 14,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        FilledButtonWidget(
-                          onPressed: () => _validateForm(formKey),
-                          height: Sizer.calculateVertical(context, 55) <= 20
-                              ? 20
-                              : Sizer.calculateVertical(context, 55),
-                          width: size.width * 0.12,
-                          tooltip: "salvar",
-                          hintSemantics: "salvar",
-                          child: ResponsiveTextWidget(
-                            text: "Salvar alterações",
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: AppColors.white,
-                                ),
-                            hintSemantics: "salvar",
-                            tooltipSemantics: "salvar",
-                            maxLines: 1,
-                            minFontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          }),
         );
       },
     );

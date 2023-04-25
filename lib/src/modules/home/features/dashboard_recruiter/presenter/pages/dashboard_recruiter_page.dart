@@ -110,6 +110,9 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
                         : Sizer.calculateVertical(context, 70),
+                    jobsFunction: () {},
+                    enterprisesFunction: () {},
+                    logout: () {},
                   ),
                   SizedBox(
                     width: size.width * 0.7,
@@ -171,6 +174,9 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    jobsFunction: () {},
+                    enterprisesFunction: () {},
+                    logout: () {},
                     username: username,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35

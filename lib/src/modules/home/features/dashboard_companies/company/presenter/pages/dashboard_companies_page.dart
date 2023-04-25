@@ -66,6 +66,9 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    jobsFunction: () {},
+                    enterprisesFunction: () {},
+                    logout: () {},
                     username: username,
                     isMobile: true,
                     height: Sizer.calculateVertical(context, 70) <= 35
@@ -132,6 +135,9 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    jobsFunction: () {},
+                    enterprisesFunction: () {},
+                    logout: () {},
                     username: username,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35
