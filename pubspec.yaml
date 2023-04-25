@@ -28,6 +28,8 @@ dependencies:
   image_picker: ^0.8.7+3
   dart_jsonwebtoken: ^2.7.1
   get_it: ^7.2.0
+  jwt_decode: 0.3.1
+  estados_municipios: ^2.0.1+1
 
   vagas_design_system:
     # path: ../VAGAS_FLUTTER_DESIGN_SYSTEM #Para trabalhar com o pacote localmente.

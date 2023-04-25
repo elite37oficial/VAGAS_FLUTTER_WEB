@@ -169,6 +169,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  estados_municipios:
+    dependency: "direct main"
+    description:
+      name: estados_municipios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1+1"
   fake_async:
     dependency: transitive
     description:
@@ -443,6 +450,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  jwt_decode:
+    dependency: "direct main"
+    description:
+      name: jwt_decode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1"
   lints:
     dependency: transitive
     description:
@@ -831,7 +845,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: b96cdf3b61d2d3a5f8e614b439e2890e0abd333c
+      resolved-ref: da85ea086b8ba1fef952e991516a64534e6f9931
       url: "https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM"
     source: git
     version: "0.3.0"

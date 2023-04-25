@@ -4,7 +4,7 @@ import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/pages/login_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/presenter/pages/dashboard_companies_page.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/presenter/pages/dashboard_companies_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/redirect_page_route.dart';

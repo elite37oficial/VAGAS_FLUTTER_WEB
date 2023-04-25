@@ -105,7 +105,8 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
-                    enterprisesFunction: () {},
+                    enterprisesFunction: () =>
+                        context.push(RouteKeys.companies),
                     jobsFunction: () => context.push(RouteKeys.home),
                     logout: () async => await LogoutHelper.logout()
                         ? context.pushReplacement(RouteKeys.auth)
@@ -176,7 +177,8 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
-                    enterprisesFunction: () {},
+                    enterprisesFunction: () =>
+                        context.push(RouteKeys.companies),
                     jobsFunction: () => context.push(RouteKeys.home),
                     logout: () async => await LogoutHelper.logout()
                         ? context.pushReplacement(RouteKeys.auth)
