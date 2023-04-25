@@ -3,7 +3,6 @@ import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/pages/create_contact_job_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/pages/create_data_job_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/pages/create_description_job_page.dart';
-import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class CreatejobPage extends StatefulWidget {
   const CreatejobPage({Key? key}) : super(key: key);
@@ -13,6 +12,17 @@ class CreatejobPage extends StatefulWidget {
 }
 
 class _CreatejobPageState extends State<CreatejobPage> {
+  TextEditingController enterpriseController = TextEditingController();
+  TextEditingController localController = TextEditingController();
+  TextEditingController typeJobController = TextEditingController();
+  TextEditingController levelController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController linkController = TextEditingController();
+
+  TextEditingController descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -41,9 +51,24 @@ class _CreatejobPageState extends State<CreatejobPage> {
             physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (value) {},
             children: [
-              CreateDataJobPage(changePage: changePage),
-              CreateContactjobPage(changePage: changePage),
-              CreateDescriptionjobPage(changePage: changePage)
+              CreateDataJobPage(
+                changePage: changePage,
+                enterpriseController: enterpriseController,
+                levelController: levelController,
+                localController: localController,
+                titleController: titleController,
+                typeJobController: typeJobController,
+              ),
+              CreateContactjobPage(
+                changePage: changePage,
+                phoneController: phoneController,
+                emailController: emailController,
+                linkController: linkController,
+              ),
+              CreateDescriptionjobPage(
+                changePage: changePage,
+                descriptionController: descriptionController,
+              )
             ],
           ),
         ),

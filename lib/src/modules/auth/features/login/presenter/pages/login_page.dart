@@ -136,6 +136,9 @@ class _LoginPageState extends State<LoginPage> {
                 await SecureStorageManager.saveData(
                     StorageKeys.accessToken, state.token);
 
+                await Future.delayed(const Duration(milliseconds: 100))
+                    .then((VALUE) => print(VALUE));
+
                 _verifyLoaded(state.userId);
                 loginBloc.add(CleanStateEvent(state: LoginInitialState()));
               }

@@ -62,7 +62,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
   _setUsername() async {
     getjobBloc = BlocProvider.of<GetJobBloc>(context);
     context.read<GetJobBloc>().add(GetJobListEvent());
-    username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+    // username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
 
     setState(() {});
   }

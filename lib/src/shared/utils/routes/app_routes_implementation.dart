@@ -71,7 +71,7 @@ final appRoutesConfig = GoRouter(
     GoRoute(
       path: RouteKeys.auth,
       name: RouteKeys.auth.replaceAll("/", ""),
-      redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
+      // redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
       pageBuilder: (context, state) => const NoTransitionPage(
         child: RedirectPageRoute(
           duration: Duration(milliseconds: 0),
