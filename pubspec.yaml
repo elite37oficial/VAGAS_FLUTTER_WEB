@@ -27,12 +27,13 @@ dependencies:
   mask_text_input_formatter: ^2.4.0
   image_picker: ^0.8.7+3
   jwt_decode: 0.3.1
+  estados_municipios: ^2.0.1+1
 
   vagas_design_system:
     # path: ../VAGAS_FLUTTER_DESIGN_SYSTEM #Para trabalhar com o pacote localmente.
     git:
       url: https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM
-      ref: dev
+      ref: feature/create_job_widgets
 
 dev_dependencies:
   flutter_test:
