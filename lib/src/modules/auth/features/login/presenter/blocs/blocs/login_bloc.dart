@@ -1,18 +1,25 @@
+import 'dart:async';
+
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/decode_token_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/login_entity.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/entities/token_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/domain/usecases/login_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/events/login_event.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/states/login_state.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
+part '../events/login_event.dart';
+part '../states/login_state.dart';
+
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginUsecase usecase;
-  LoginBloc({required this.usecase}) : super(LoginInitialState()) {
+  final LoginUsecase loginUsecase;
+  LoginBloc({required this.loginUsecase}) : super(LoginInitialState()) {
     on<DoLoginEvent>(login);
+    on<CleanStateEvent>(cleanState);
   }
 
-  void login(
+  Future<void> login(
     DoLoginEvent event,
     Emitter<LoginState> emitter,
   ) async {
@@ -23,12 +30,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       password: event.password,
     );
 
-    var result = await usecase(loginEntity);
+    var result = await loginUsecase(loginEntity);
 
     result.fold(
       (Failure failure) =>
           emitter(LoginErrorState(message: failure.props.first.toString())),
-      (UserEntity success) => emitter(LoginSuccessState(user: success)),
+      (TokenEntity success) {
+        var res = JWT.decode(success.token);
+
+        DecodedTokenEntity decodedToken =
+            DecodedTokenEntity.fromMap(res.payload);
+
+  
+        return emitter(LoginSuccessState(userId: decodedToken.userID, token: success.token));
+      },
     );
   }
+
+  Future<void> cleanState(
+    CleanStateEvent event,
+    Emitter<LoginState> emitter,
+  ) async =>
+      emitter(event.state);
 }

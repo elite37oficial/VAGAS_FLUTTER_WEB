@@ -1,4 +1,5 @@
 import 'dart:convert' as convert;
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -28,6 +29,7 @@ class AppRequesterImplementation implements AppRequester {
   AppRequesterImplementation._internal();
 
   Future<void> _addToken(Dio dio) async {
+    
     final accessToken =
         await SecureStorageManager.readData(StorageKeys.accessToken);
 
@@ -38,7 +40,7 @@ class AppRequesterImplementation implements AppRequester {
 
   Dio _setOptions(String url) {
     var dio = Dio();
-
+    _addToken(dio);
     dio.interceptors.addAll(_customIntecerptors);
 
     dio.interceptors.add(HeaderInterceptor());
@@ -61,7 +63,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response?> delete(
+  Future delete(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -75,7 +77,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response?> get(
+  Future get(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -89,7 +91,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response?> post(
+  Future post(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -103,7 +105,7 @@ class AppRequesterImplementation implements AppRequester {
   }
 
   @override
-  Future<Response?> put(
+  Future put(
       {required String url,
       body,
       required Function(dynamic p1) fromJson}) async {
@@ -116,7 +118,7 @@ class AppRequesterImplementation implements AppRequester {
     );
   }
 
-  Future<Response?> _invokeRequest({
+  Future _invokeRequest({
     required String url,
     required Function(dynamic p1) fromJson,
     required Future<Response<dynamic>?> Function(Dio) invokeDio,

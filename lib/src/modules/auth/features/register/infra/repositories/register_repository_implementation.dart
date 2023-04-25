@@ -6,6 +6,7 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/repo
 import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/datasources/register_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/models/register_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
 
 class RegisterRepositoryImplementation implements RegisterRepository {
   final RegisterDatasource datasource;
@@ -13,8 +14,7 @@ class RegisterRepositoryImplementation implements RegisterRepository {
   RegisterRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, bool>> register(
-      RegisterEntity registerUser) async {
+  Future<Either<Failure, bool>> register(RegisterEntity registerUser) async {
     try {
       RegisterModel registerModel = RegisterModel(
         name: registerUser.name,
@@ -27,11 +27,12 @@ class RegisterRepositoryImplementation implements RegisterRepository {
       return const Right(true);
     } on DioError catch (e) {
       if (e.response!.statusCode == 500) {
-        return Left(ServerFailure(e.response!.data["reason"].toString()));
-      } else if (e.response!.statusCode == 400) {
-        return Left(BadRequestFailure(e.response!.data["reason"].toString()));
+        return Left(ServerFailure(MessagesHelper.serverMessage));
       } else if (e.response!.statusCode == 403) {
-        return Left(InvalidCredentialsFailure(e.toString()));
+        return Left(InvalidCredentialsFailure(
+            MessagesHelper.invalidCredentialsMessage));
+      } else if (e.response!.statusCode == 400) {
+        return Left(BadRequestFailure(MessagesHelper.badRequestMessage));
       } else {
         return Left(GeneralFailure(e.toString()));
       }

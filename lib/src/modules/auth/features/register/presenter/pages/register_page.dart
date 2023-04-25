@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/register/domain/entities/register_user_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/states/register_state.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_fields_component.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/components/register_logo_background_component.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/profile_id_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
@@ -22,6 +21,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  late RegisterBloc registerBloc;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
@@ -34,6 +34,56 @@ class _RegisterPageState extends State<RegisterPage> {
   bool emailError = false;
   bool passwordError = false;
   bool repeatPasswordError = false;
+
+  _showErrorAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return ErrorPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+        );
+      },
+    );
+  }
+
+  _showSuccessAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return SuccessPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+          function: () {
+            Navigator.pop(context);
+            context.pushReplacement(
+              "${RouteKeys.auth}${RouteKeys.login}",
+              extra: <String>[
+                emailController.text,
+                passwordController.text,
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
 
   _validateRegisterForm(GlobalKey<FormState> formKey) {
     String email = emailController.text.replaceAll(" ", "");
@@ -74,7 +124,14 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    registerBloc = BlocProvider.of<RegisterBloc>(context);
+
     Size size = MediaQuery.of(context).size;
 
     double returnHeight() {
@@ -88,16 +145,23 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     return BlocBuilder<RegisterBloc, RegisterState>(
+      bloc: registerBloc,
       builder: (context, state) {
         if (state is RegisterLoadingState) {
           return const LoadingPage();
         }
         if (state is RegisterErrorState) {
           log(state.message);
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            _showErrorAlert(state.message);
+          });
+          context
+              .read<RegisterBloc>()
+              .add(CleanStateEvent(state: RegisterInitialState()));
         }
         if (state is RegisterSuccessState) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            context.pushReplacement("${RouteKeys.auth}${RouteKeys.login}");
+            _showSuccessAlert(MessagesHelper.successRegisterMessage);
           });
         }
 
@@ -203,7 +267,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           alignment: Alignment.center,
                           child: SelectionArea(
                             child: GestureDetector(
-                              onTap: () => context.pop(),
+                              onTap: () => Navigator.pop(context),
                               child: AutoSizeText.rich(
                                 maxLines: 1,
                                 TextSpan(
@@ -348,7 +412,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               alignment: Alignment.bottomCenter,
                               child: SelectionArea(
                                 child: GestureDetector(
-                                  onTap: () => context.pop(),
+                                  onTap: () => Navigator.pop(context),
                                   child: AutoSizeText.rich(
                                     maxLines: 1,
                                     maxFontSize: 16,
