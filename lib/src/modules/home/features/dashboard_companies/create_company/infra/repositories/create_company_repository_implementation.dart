@@ -21,6 +21,8 @@ class CreateCompanyRepositoryImplementation implements CreateCompanyRepository {
         location: companyData.location,
         description: companyData.description,
         status: companyData.status,
+        state: companyData.state,
+        city: companyData.city,
       );
 
       var result = await datasource.createCompany(companyModel);

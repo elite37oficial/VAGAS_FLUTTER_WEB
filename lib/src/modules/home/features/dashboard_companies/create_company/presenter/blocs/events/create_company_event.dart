@@ -1,15 +1,26 @@
 import 'package:equatable/equatable.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/domain/entities/create_company_entity.dart';
 
 abstract class CreateCompanyEvent extends Equatable {
   const CreateCompanyEvent();
 }
 
 class DoCreateCompanyEvent extends CreateCompanyEvent {
-  final CreateCompanyEntity createCompanyData;
+  final String name;
+  final String location;
+  final String description;
+  final String status;
+  final String state;
+  final String city;
 
-  const DoCreateCompanyEvent({required this.createCompanyData});
+  const DoCreateCompanyEvent({
+    required this.name,
+    required this.location,
+    required this.description,
+    required this.status,
+    required this.state,
+    required this.city,
+  });
 
   @override
-  List<CreateCompanyEntity> get props => [createCompanyData];
+  List<Object?> get props => [name, location, description, status, state, city];
 }

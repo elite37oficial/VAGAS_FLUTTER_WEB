@@ -5,12 +5,16 @@ class CreateCompanyEntity extends Equatable {
   final String location;
   final String description;
   final String status;
+  final String state;
+  final String city;
 
   const CreateCompanyEntity({
     required this.name,
     required this.location,
     required this.description,
     required this.status,
+    required this.state,
+    required this.city,
   });
 
   @override
@@ -19,5 +23,7 @@ class CreateCompanyEntity extends Equatable {
         location,
         description,
         status,
+        state,
+        city,
       ];
 }

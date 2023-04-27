@@ -14,12 +14,21 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
   }
 
   void createCompany(
-    CreateCompanyEvent event,
+    DoCreateCompanyEvent event,
     Emitter<CreateCompanyStates> emitter,
   ) async {
     emitter(CreateCompanyLoadingState());
 
-    var result = await usecase(event.props.first as CreateCompanyEntity);
+    CreateCompanyEntity createCompanyEntity = CreateCompanyEntity(
+      name: event.name,
+      location: event.location,
+      description: event.description,
+      status: event.status,
+      state: event.state,
+      city: event.city,
+    );
+
+    var result = await usecase(createCompanyEntity);
 
     result.fold(
       (Failure failure) => emitter(

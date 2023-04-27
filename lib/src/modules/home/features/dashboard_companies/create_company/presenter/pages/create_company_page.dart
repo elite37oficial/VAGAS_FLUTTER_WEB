@@ -28,6 +28,8 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   String? imageBase64;
 
   bool nameError = false;
+  bool stateError = false;
+  bool cityError = false;
   bool descriptionError = false;
 
   TextEditingController nameController = TextEditingController();
@@ -101,12 +103,13 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   _validateForm(GlobalKey<FormState> formKey) {
     setState(() {
       nameError = nameController.text.isEmpty;
-
+      stateError = stateTextController.text.isEmpty;
+      cityError = cityTextController.text.isEmpty;
       descriptionError = descriptionController.text.isEmpty;
     });
 
     if (formKey.currentState!.validate()) {
-      if (!nameError && !descriptionError) {
+      if (!nameError && !descriptionError && !stateError && cityError) {
         // context.read<CreateCompanyBloc>().add(
         //       DoCreateCompanyEvent(
         //         createCompanyData: CreateCompanyEntity(
@@ -170,11 +173,11 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: size.width * 0.3,
+                                width: size.width * 0.35,
                                 height:
-                                    Sizer.calculateVertical(context, 40) <= 35
+                                    Sizer.calculateVertical(context, 95) <= 35
                                         ? 35
-                                        : Sizer.calculateVertical(context, 40),
+                                        : Sizer.calculateVertical(context, 95),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: ResponsiveTextWidget(
@@ -186,7 +189,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                                           fontWeight: FontWeight.w700,
                                           color: AppColors.black,
                                         ),
-                                    maxLines: 1,
+                                    maxLines: 2,
                                     hintSemantics: "cadastre",
                                     tooltipSemantics: "cadastre",
                                     minFontSize: 24,
@@ -212,7 +215,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                           ),
                           const SizedBox(height: 20),
                           SizedBox(
-                            width: size.width * 0.7,
+                            width: size.width * 0.8,
                             height: Sizer.calculateVertical(context, 40) <= 35
                                 ? 35
                                 : Sizer.calculateVertical(context, 40),
@@ -290,14 +293,13 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                               }),
                               hint: "Nome da empresa",
                               label: "Nome",
-                              heigth: 55,
                               width: Sizer.calculateHorizontal(
                                   context, size.width),
                             ),
                           ),
                           const SizedBox(height: 15),
                           SizedBox(
-                            width: size.width * 0.5,
+                            width: size.width * 0.8,
                             height: 80,
                             child: AppMenuDropDownWidget(
                               height: Sizer.calculateVertical(context, 55) >= 50
@@ -309,12 +311,12 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                               label: "Estado",
                               listItens: _estadoItens,
                               onChanged: _onEstadoChange,
-                              error: false,
+                              error: stateError,
                             ),
                           ),
                           const SizedBox(height: 15),
                           SizedBox(
-                            width: size.width * 0.5,
+                            width: size.width * 0.8,
                             height: 80,
                             child: AppMenuDropDownWidget(
                               height: Sizer.calculateVertical(context, 55) >= 50
@@ -326,12 +328,12 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                               label: "Municipio",
                               listItens: _municipioItens,
                               onChanged: _onMunicipioChange,
-                              error: false,
+                              error: cityError,
                             ),
                           ),
                           const SizedBox(height: 15),
                           SizedBox(
-                            width: size.width * 0.7,
+                            width: size.width * 0.8,
                             height: Sizer.calculateVertical(context, 40) <= 35
                                 ? 35
                                 : Sizer.calculateVertical(context, 40),
@@ -355,7 +357,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                             ),
                           ),
                           Container(
-                            width: size.width * 0.7,
+                            width: size.width * 0.8,
                             height: Sizer.calculateVertical(context, 200) <= 35
                                 ? 35
                                 : Sizer.calculateVertical(context, 200),
@@ -399,7 +401,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                                     Sizer.calculateVertical(context, 55) <= 20
                                         ? 20
                                         : Sizer.calculateVertical(context, 55),
-                                width: size.width * 0.12,
+                                width: 160,
                                 tooltip: "cancelar",
                                 hintSemantics: "cancelar",
                                 child: ResponsiveTextWidget(
@@ -424,7 +426,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                                     Sizer.calculateVertical(context, 55) <= 20
                                         ? 20
                                         : Sizer.calculateVertical(context, 55),
-                                width: size.width * 0.12,
+                                width: 160,
                                 tooltip: "salvar",
                                 hintSemantics: "salvar",
                                 child: ResponsiveTextWidget(
