@@ -23,7 +23,7 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
       name: event.name,
       location: event.location,
       description: event.description,
-      status: event.status,
+      status: "active",
       state: event.state,
       city: event.city,
     );

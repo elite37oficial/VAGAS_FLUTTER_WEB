@@ -11,6 +11,7 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/presenter/blocs/blocs/create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/presenter/blocs/events/create_company_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/presenter/blocs/states/create_company_states.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class CreateCompanyPage extends StatefulWidget {
@@ -102,27 +103,69 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
 
   _validateForm(GlobalKey<FormState> formKey) {
     setState(() {
-      nameError = nameController.text.isEmpty;
+      nameError = nameController.text.isEmpty || nameController.text.length < 4;
       stateError = stateTextController.text.isEmpty;
       cityError = cityTextController.text.isEmpty;
-      descriptionError = descriptionController.text.isEmpty;
+      descriptionError = descriptionController.text.isEmpty ||
+          descriptionController.text.length < 6;
     });
 
     if (formKey.currentState!.validate()) {
-      if (!nameError && !descriptionError && !stateError && cityError) {
-        // context.read<CreateCompanyBloc>().add(
-        //       DoCreateCompanyEvent(
-        //         createCompanyData: CreateCompanyEntity(
-        //           name: nameController.text,
-        //           description: descriptionController.text,
-        //           location: "",
-        //           status: "",
-        //         ),
-        //       ),
-        // );
-        context.pop();
+      if (!nameError && !stateError && !cityError && !descriptionError) {
+        context.read<CreateCompanyBloc>().add(
+              DoCreateCompanyEvent(
+                name: nameController.text,
+                location: stateTextController.text + cityTextController.text,
+                state: stateTextController.text,
+                city: cityTextController.text,
+                description: descriptionController.text,
+              ),
+            );
       }
     }
+  }
+
+  _showErrorAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return ErrorPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+        );
+      },
+    );
+  }
+
+  _showSuccessAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return SuccessPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 350) >= 320
+              ? Sizer.calculateVertical(context, 350)
+              : 320,
+          width: Sizer.calculateHorizontal(context, 170) >= 370
+              ? Sizer.calculateHorizontal(context, 170)
+              : 370,
+          message: message,
+          function: () {
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -143,10 +186,13 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
         }
         if (state is CreateCompanyErrorState) {
           log(state.message);
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            _showErrorAlert(state.message);
+          });
         }
         if (state is CreateCompanySuccessState) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            context.pop();
+            _showSuccessAlert(MessagesHelper.successRegisterMessage);
           });
         }
         return AlertDialog(

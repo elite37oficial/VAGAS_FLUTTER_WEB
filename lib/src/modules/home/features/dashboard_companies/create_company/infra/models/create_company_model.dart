@@ -15,8 +15,6 @@ class CreateCompanyModel extends CreateCompanyEntity {
       'location': "$city - $state",
       'description': description,
       'status': status,
-      'state': state,
-      'city': city,
     };
   }
 
