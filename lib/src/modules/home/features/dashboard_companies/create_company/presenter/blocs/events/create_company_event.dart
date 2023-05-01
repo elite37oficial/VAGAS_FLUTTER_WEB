@@ -8,7 +8,6 @@ class DoCreateCompanyEvent extends CreateCompanyEvent {
   final String name;
   final String location;
   final String description;
-  final String? status;
   final String? state;
   final String? city;
 
@@ -16,11 +15,10 @@ class DoCreateCompanyEvent extends CreateCompanyEvent {
     required this.name,
     required this.location,
     required this.description,
-    this.status,
     this.state,
     this.city,
   });
 
   @override
-  List<Object?> get props => [name, location, description, status];
+  List<Object?> get props => [name, location, description];
 }

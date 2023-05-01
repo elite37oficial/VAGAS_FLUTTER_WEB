@@ -23,7 +23,6 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
       name: event.name,
       location: event.location,
       description: event.description,
-      status: "active",
       state: event.state,
       city: event.city,
     );
@@ -31,8 +30,7 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
     var result = await usecase(createCompanyEntity);
 
     result.fold(
-      (Failure failure) => emitter(
-          CreateCompanyErrorState(message: failure.props.first.toString())),
+      (Failure failure) => emitter(CreateCompanyErrorState(message: "teste")),
       (CompanyEntity success) =>
           emitter(CreateCompanySuccessState(company: success)),
     );
