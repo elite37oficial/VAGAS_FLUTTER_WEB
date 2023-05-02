@@ -5,28 +5,20 @@ class CreateCompanyModel extends CreateCompanyEntity {
     required super.name,
     required super.location,
     required super.description,
-    required super.state,
-    required super.city,
   });
-  Map<String?, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'location': "$city - $state",
+      'location': location,
       'description': description,
     };
   }
 
-  factory CreateCompanyModel.fromMap(Map<String?, dynamic> map) {
-    final location = map['location'] ?? {};
-    final state = location['state']?.split(" - ")[0] ?? '';
-    final city = location['city']?.split(" - ")[1] ?? '';
-
+  factory CreateCompanyModel.fromMap(Map<String, dynamic> map) {
     return CreateCompanyModel(
-      name: map["name"] ?? "",
-      location: map["location"] ?? "",
-      description: map["description"] ?? "",
-      state: state,
-      city: city,
+      name: map["name"],
+      location: map["location"],
+      description: map["description"],
     );
   }
 }

@@ -5,7 +5,6 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/infra/datasources/create_company_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/infra/models/create_company_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 
 class CreateCompanyRepositoryImplementation implements CreateCompanyRepository {
   final CreateCompanyDatasource datasource;
@@ -13,15 +12,13 @@ class CreateCompanyRepositoryImplementation implements CreateCompanyRepository {
   CreateCompanyRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, CompanyEntity>> createCompany(
+  Future<Either<Failure, CreateCompanyEntity>> createCompany(
       CreateCompanyEntity companyData) async {
     try {
       CreateCompanyModel companyModel = CreateCompanyModel(
         name: companyData.name,
         location: companyData.location,
         description: companyData.description,
-        state: companyData.state,
-        city: companyData.city,
       );
 
       var result = await datasource.createCompany(companyModel);

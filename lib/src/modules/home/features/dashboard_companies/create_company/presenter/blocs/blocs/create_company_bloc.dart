@@ -3,7 +3,6 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/domain/usecases/create_company_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/presenter/blocs/events/create_company_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/presenter/blocs/states/create_company_states.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
@@ -23,15 +22,14 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
       name: event.name,
       location: event.location,
       description: event.description,
-      state: event.state,
-      city: event.city,
     );
 
     var result = await usecase(createCompanyEntity);
 
     result.fold(
-      (Failure failure) => emitter(CreateCompanyErrorState(message: "teste")),
-      (CompanyEntity success) =>
+      (Failure failure) => emitter(
+          CreateCompanyErrorState(message: failure.props.first.toString())),
+      (CreateCompanyEntity success) =>
           emitter(CreateCompanySuccessState(company: success)),
     );
   }

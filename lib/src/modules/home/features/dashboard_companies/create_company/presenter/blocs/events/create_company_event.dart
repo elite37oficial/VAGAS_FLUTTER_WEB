@@ -8,15 +8,11 @@ class DoCreateCompanyEvent extends CreateCompanyEvent {
   final String name;
   final String location;
   final String description;
-  final String? state;
-  final String? city;
 
   const DoCreateCompanyEvent({
     required this.name,
     required this.location,
     required this.description,
-    this.state,
-    this.city,
   });
 
   @override

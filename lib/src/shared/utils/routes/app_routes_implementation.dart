@@ -22,8 +22,8 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/b
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/domain/usecases/create_company_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/domain/usecases/get_company_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/infra/datasources/create_company_datarouce_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/infra/datasources/get_company_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/infra/datasources/create_company_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/infra/repositories/create_company_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/infra/repositories/get_company_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/presenter/blocs/blocs/create_company_bloc.dart';

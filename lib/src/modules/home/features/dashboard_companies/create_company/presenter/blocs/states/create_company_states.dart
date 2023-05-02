@@ -1,4 +1,4 @@
-import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/domain/entities/create_company_entity.dart';
 
 abstract class CreateCompanyStates {}
 
@@ -7,7 +7,7 @@ class CreateCompanyInitialState extends CreateCompanyStates {}
 class CreateCompanyLoadingState extends CreateCompanyStates {}
 
 class CreateCompanySuccessState extends CreateCompanyStates {
-  final CompanyEntity company;
+  final CreateCompanyEntity company;
 
   CreateCompanySuccessState({required this.company});
 }

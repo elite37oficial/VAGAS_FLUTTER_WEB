@@ -111,13 +111,13 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
     });
 
     if (formKey.currentState!.validate()) {
+      final stateTextControllerText = stateTextController.text;
+      final cityTextControllerText = cityTextController.text;
       if (!nameError && !stateError && !cityError && !descriptionError) {
         context.read<CreateCompanyBloc>().add(
               DoCreateCompanyEvent(
                 name: nameController.text,
-                location: stateTextController.text + cityTextController.text,
-                state: stateTextController.text,
-                city: cityTextController.text,
+                location: "$stateTextControllerText - $cityTextControllerText",
                 description: descriptionController.text,
               ),
             );
@@ -140,6 +140,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               ? Sizer.calculateHorizontal(context, 170)
               : 370,
           message: message,
+          function: () {
+            Navigator.pop(context);
+          },
         );
       },
     );
