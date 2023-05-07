@@ -3,7 +3,15 @@ import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class PageButtonsComponent extends StatelessWidget {
-  const PageButtonsComponent({Key? key}) : super(key: key);
+  final Function changePage;
+  final int actualPage;
+  final int totalPages;
+  const PageButtonsComponent(
+      {Key? key,
+      required this.changePage,
+      required this.actualPage,
+      required this.totalPages})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,8 @@ class PageButtonsComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               PageButtonWidget(
-                onPressed: null,
+                onPressed:
+                    actualPage <= 1 ? null : () => changePage(actualPage - 1),
                 height: Sizer.calculateVertical(context, 35) <= 20
                     ? 20
                     : Sizer.calculateVertical(context, 35),
@@ -39,15 +48,17 @@ class PageButtonsComponent extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const ResponsiveTextWidget(
-                text: "1 de 10",
+              ResponsiveTextWidget(
+                text: "$actualPage de $totalPages",
                 maxLines: 1,
                 hintSemantics: "páginas",
                 tooltipSemantics: "páginas",
               ),
               const Spacer(),
               PageButtonWidget(
-                onPressed: () {},
+                onPressed: actualPage >= totalPages
+                    ? null
+                    : () => changePage(actualPage + 1),
                 height: Sizer.calculateVertical(context, 35) <= 20
                     ? 20
                     : Sizer.calculateVertical(context, 35),

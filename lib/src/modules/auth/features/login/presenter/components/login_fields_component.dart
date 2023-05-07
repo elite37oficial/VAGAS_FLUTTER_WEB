@@ -22,10 +22,21 @@ class LoginFieldsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double returnHeight() {
-      if (Sizer.calculateVertical(context, 60) > 35) {
+      if (Sizer.calculateVertical(context, 60) > 45) {
         return Sizer.calculateVertical(context, 60);
       } else {
-        return 35;
+        return 45;
+      }
+    }
+
+    double returnMaxHeight() {
+      if (Sizer.calculateVertical(context, 100) <= 50 &&
+          Sizer.calculateVertical(context, 100) > 45) {
+        return Sizer.calculateVertical(context, 100);
+      } else if (Sizer.calculateVertical(context, 100) >= 50) {
+        return 50;
+      } else {
+        return 46;
       }
     }
 
@@ -38,9 +49,7 @@ class LoginFieldsComponent extends StatelessWidget {
             AppWebFieldWidget(
               constraints: BoxConstraints(
                 minHeight: 35,
-                maxHeight: Sizer.calculateVertical(context, 100) >= 36
-                    ? Sizer.calculateVertical(context, 100)
-                    : 36,
+                maxHeight: returnMaxHeight(),
               ),
               fieldSemantic: "Campo de texto do email.",
               hintSemantic: "email",
@@ -59,9 +68,7 @@ class LoginFieldsComponent extends StatelessWidget {
               child: AppWebFieldWidget(
                 constraints: BoxConstraints(
                   minHeight: 35,
-                  maxHeight: Sizer.calculateVertical(context, 100) >= 36
-                      ? Sizer.calculateVertical(context, 100)
-                      : 36,
+                  maxHeight: returnMaxHeight(),
                 ),
                 fieldSemantic: "Campo de texto do senha.",
                 hintSemantic: "password",
@@ -74,22 +81,27 @@ class LoginFieldsComponent extends StatelessWidget {
                 isPassword: true,
               ),
             ),
-            GestureDetector(
-              onTap: () {},
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: ResponsiveTextWidget(
-                  text: "Esqueceu a senha?",
-                  hintSemantics: "Forgot Password",
-                  tooltipSemantics: "Forgot Password",
-                  maxLines: 1,
-                  maxFontSize: 16,
-                  minFontSize: 12,
-                  textAlign: TextAlign.left,
-                  textStyle:
-                      Theme.of(context).textTheme.headlineSmall!.copyWith(
-                            color: AppColors.greyBlue,
-                          ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: Sizer.calculateVertical(context, 20),
+                  bottom: Sizer.calculateVertical(context, 70)),
+              child: GestureDetector(
+                onTap: () {},
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: ResponsiveTextWidget(
+                    text: "Esqueceu a senha?",
+                    hintSemantics: "Forgot Password",
+                    tooltipSemantics: "Forgot Password",
+                    maxLines: 1,
+                    maxFontSize: 16,
+                    minFontSize: 12,
+                    textAlign: TextAlign.left,
+                    textStyle:
+                        Theme.of(context).textTheme.headlineSmall!.copyWith(
+                              color: AppColors.greyBlue,
+                            ),
+                  ),
                 ),
               ),
             )

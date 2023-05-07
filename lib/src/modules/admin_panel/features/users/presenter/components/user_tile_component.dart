@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/status_component.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/status_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 

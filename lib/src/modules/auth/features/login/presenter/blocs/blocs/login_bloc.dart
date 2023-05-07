@@ -41,8 +41,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         DecodedTokenEntity decodedToken =
             DecodedTokenEntity.fromMap(res.payload);
 
-  
-        return emitter(LoginSuccessState(userId: decodedToken.userID, token: success.token));
+        return emitter(LoginSuccessState(
+            userId: decodedToken.userID, token: success.token));
       },
     );
   }

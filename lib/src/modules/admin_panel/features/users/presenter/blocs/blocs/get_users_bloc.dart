@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/domain/usecases/get_users_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/events/get_users_event.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/states/get_users_states.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/usecases/get_users_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/events/get_users_event.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/states/get_users_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';

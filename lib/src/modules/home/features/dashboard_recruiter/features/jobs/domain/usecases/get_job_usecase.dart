@@ -4,13 +4,13 @@ import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
 
-class GetJobUsecase implements Usecase<List<JobEntity>, NoParams> {
+class GetJobUsecase implements Usecase<List<JobEntity>, int> {
   final GetJobRepository repository;
 
   GetJobUsecase({required this.repository});
 
   @override
-  Future<Either<Failure, List<JobEntity>>> call(NoParams noParams) async {
-    return await repository.getJob();
+  Future<Either<Failure, List<JobEntity>>> call(int page) async {
+    return await repository.getJob(page);
   }
 }

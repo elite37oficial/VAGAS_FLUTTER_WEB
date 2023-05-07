@@ -57,11 +57,12 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                      ? Sizer.calculateHorizontal(context, 40)
+                      : 180,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
-                  logout: () async => await LogoutHelper.logout()
-                      ? context.pushReplacement(RouteKeys.auth)
-                      : null,
+                  logout: LogoutHelper.logout,
                   username: username,
                   isMobile: true,
                   height: Sizer.calculateVertical(context, 70) <= 35
@@ -145,11 +146,12 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                      ? Sizer.calculateHorizontal(context, 40)
+                      : 180,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
-                  logout: () async => await LogoutHelper.logout()
-                      ? context.pushReplacement(RouteKeys.auth)
-                      : null,
+                  logout: LogoutHelper.logout,
                   username: username,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35

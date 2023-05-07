@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/events/get_users_event.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/states/get_users_states.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/header_filter_component.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/list_users_component.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/page_buttons_component.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/components/top_buttons_component.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/blocs/get_users_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/events/get_users_event.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/states/get_users_states.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/header_filter_component.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/list_users_component.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/page_buttons_component.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/top_buttons_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/logout_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
@@ -105,12 +105,13 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                        ? Sizer.calculateHorizontal(context, 40)
+                        : 180,
                     enterprisesFunction: () =>
                         context.push(RouteKeys.companies),
                     jobsFunction: () => context.push(RouteKeys.home),
-                    logout: () async => await LogoutHelper.logout()
-                        ? context.pushReplacement(RouteKeys.auth)
-                        : null,
+                    logout: LogoutHelper.logout,
                     username: username,
                     isMobile: true,
                     height: Sizer.calculateVertical(context, 70) <= 35
@@ -177,12 +178,13 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
               child: Column(
                 children: [
                   TopBarWebWidget(
+                    widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                        ? Sizer.calculateHorizontal(context, 40)
+                        : 180,
                     enterprisesFunction: () =>
                         context.push(RouteKeys.companies),
                     jobsFunction: () => context.push(RouteKeys.home),
-                    logout: () async => await LogoutHelper.logout()
-                        ? context.pushReplacement(RouteKeys.auth)
-                        : null,
+                    logout: LogoutHelper.logout,
                     username: username,
                     height: Sizer.calculateVertical(context, 70) <= 35
                         ? 35

@@ -26,11 +26,19 @@ class HomeRecruiterPage extends StatefulWidget {
 }
 
 class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
+  int actualPage = 1;
+  int totalPages = 1;
   String username = "";
   String token = "";
   bool isLoaded = false;
   List<JobEntity> listJobs = [];
   late GetJobBloc getjobBloc;
+
+  changePage(newPage) {
+    getjobBloc.add(GetJobListEvent(page: newPage));
+
+    setState(() => actualPage = newPage);
+  }
 
   _showCreateJobPopup() async {
     return await showDialog(
@@ -65,7 +73,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
 
   _setUsername() async {
     getjobBloc = BlocProvider.of<GetJobBloc>(context);
-    context.read<GetJobBloc>().add(GetJobListEvent());
+    context.read<GetJobBloc>().add(GetJobListEvent(page: actualPage));
     username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
     token = await SecureStorageManager.readData(StorageKeys.accessToken) ?? "";
 
@@ -92,12 +100,13 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                      ? Sizer.calculateHorizontal(context, 40)
+                      : 180,
                   username: username,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
-                  logout: () async => await LogoutHelper.logout()
-                      ? context.pushReplacement(RouteKeys.auth)
-                      : null,
+                  logout: LogoutHelper.logout,
                   isMobile: true,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
@@ -161,7 +170,11 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                     },
                                   ),
                                 ),
-                                const PageButtonsComponent(),
+                                PageButtonsComponent(
+                                  actualPage: actualPage,
+                                  totalPages: totalPages,
+                                  changePage: changePage,
+                                ),
                               ],
                             ),
                           ),
@@ -183,12 +196,13 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                      ? Sizer.calculateHorizontal(context, 40)
+                      : 180,
                   username: username,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
-                  logout: () async => await LogoutHelper.logout()
-                      ? context.pushReplacement(RouteKeys.auth)
-                      : null,
+                  logout: LogoutHelper.logout,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
                       : Sizer.calculateVertical(context, 70),
@@ -251,7 +265,11 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                     },
                                   ),
                                 ),
-                                const PageButtonsComponent(),
+                                PageButtonsComponent(
+                                  actualPage: actualPage,
+                                  totalPages: totalPages,
+                                  changePage: changePage,
+                                ),
                               ],
                             ),
                           ),

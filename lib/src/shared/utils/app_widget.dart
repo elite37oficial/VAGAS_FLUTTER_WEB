@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/domain/usecases/get_users_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/infra/datasources/get_users_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/infra/repositories/get_users_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/blocs/blocs/get_users_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/blocs/get_users_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/get_my_self_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/blocs/blocs/login_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
@@ -53,17 +50,7 @@ class AppWidget extends StatelessWidget {
           ),
         ),
         BlocProvider<GetJobBloc>(create: (_) => sl<GetJobBloc>()),
-        BlocProvider<GetUsersBloc>(
-          create: (_) => GetUsersBloc(
-            usecase: GetUsersUsecase(
-              repository: GetUsersRepositoryImplementation(
-                datasource: GetUsersDatasourceImplementation(
-                  requester: AppRequesterImplementation(),
-                ),
-              ),
-            ),
-          ),
-        ),
+        BlocProvider<GetUsersBloc>(create: (_) => sl<GetUsersBloc>()),
         BlocProvider<RegisterBloc>(create: (_) => sl<RegisterBloc>()),
         BlocProvider<LoginBloc>(create: (_) => sl<LoginBloc>()),
         BlocProvider<GetMySelfBloc>(create: (_) => sl<GetMySelfBloc>()),
