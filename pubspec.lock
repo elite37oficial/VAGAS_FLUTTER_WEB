@@ -120,6 +120,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  currency_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: currency_text_input_formatter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.9"
   dart_jsonwebtoken:
     dependency: "direct main"
     description:
@@ -436,6 +443,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.3"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.18.1"
   io:
     dependency: transitive
     description:
@@ -843,11 +857,9 @@ packages:
   vagas_design_system:
     dependency: "direct main"
     description:
-      path: "."
-      ref: dev
-      resolved-ref: da85ea086b8ba1fef952e991516a64534e6f9931
-      url: "https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM"
-    source: git
+      path: "../VAGAS_FLUTTER_DESIGN_SYSTEM"
+      relative: true
+    source: path
     version: "0.3.0"
   vector_math:
     dependency: transitive

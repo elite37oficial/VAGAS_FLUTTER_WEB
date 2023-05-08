@@ -3,19 +3,24 @@ import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
-class CreateDescriptionjobPage extends StatefulWidget {
+class CreateDescriptionjobComponent extends StatefulWidget {
   final Function changePage;
   final TextEditingController descriptionController;
-  const CreateDescriptionjobPage(
-      {Key? key, required this.changePage, required this.descriptionController})
-      : super(key: key);
+  final Function createJob;
+  const CreateDescriptionjobComponent({
+    Key? key,
+    required this.changePage,
+    required this.descriptionController,
+    required this.createJob,
+  }) : super(key: key);
 
   @override
-  State<CreateDescriptionjobPage> createState() =>
-      _CreateDescriptionjobPageState();
+  State<CreateDescriptionjobComponent> createState() =>
+      _CreateDescriptionjobComponentState();
 }
 
-class _CreateDescriptionjobPageState extends State<CreateDescriptionjobPage> {
+class _CreateDescriptionjobComponentState
+    extends State<CreateDescriptionjobComponent> {
   bool descriptionError = false;
 
   GlobalKey<FormState> formKey = GlobalKey();
@@ -28,7 +33,7 @@ class _CreateDescriptionjobPageState extends State<CreateDescriptionjobPage> {
 
     if (formKey.currentState!.validate()) {
       if (!descriptionError) {
-        context.pop();
+        widget.createJob();
       }
     }
   }
@@ -38,9 +43,8 @@ class _CreateDescriptionjobPageState extends State<CreateDescriptionjobPage> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: AppColors.transparent,
+      backgroundColor: AppColors.white,
       body: SizedBox(
-        height: size.height,
         width: size.width,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -52,14 +56,41 @@ class _CreateDescriptionjobPageState extends State<CreateDescriptionjobPage> {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 20),
+                      padding: const EdgeInsets.only(top: 30, bottom: 15),
                       child: SizedBox(
                         width: size.width,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ResponsiveTextWidget(
+                            SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(50),
+                                onTap: () => Navigator.pop(context),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.close_rounded,
+                                    size: 22,
+                                    color: AppColors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: Sizer.calculateHorizontal(context, 70),
+                            child: ResponsiveTextWidget(
                               text: "3 de 3: Conte-nos mais sobre a vaga",
                               textStyle: Theme.of(context)
                                   .textTheme
@@ -68,7 +99,7 @@ class _CreateDescriptionjobPageState extends State<CreateDescriptionjobPage> {
                                     color: AppColors.black,
                                     fontWeight: FontWeight.w700,
                                   ),
-                              maxLines: 2,
+                              maxLines: 4,
                               maxFontSize: 28,
                               minFontSize: 22,
                               textAlign: TextAlign.left,
@@ -77,23 +108,8 @@ class _CreateDescriptionjobPageState extends State<CreateDescriptionjobPage> {
                               tooltipSemantics:
                                   "3 de 3: Conte-nos mais sobre a vaga",
                             ),
-                            SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(50),
-                                onTap: () => Navigator.pop(context),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.close_rounded,
-                                    size: 27,
-                                    color: AppColors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -105,17 +121,10 @@ class _CreateDescriptionjobPageState extends State<CreateDescriptionjobPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: BigStaticWebFieldWidget(
-                          height: 380,
+                          height: size.height * 0.45,
                           onError: descriptionError,
-                          onChanged: () {
-                            setState(() {
-                              descriptionError = widget
-                                      .descriptionController.text.isEmpty ||
-                                  widget.descriptionController.text.length < 5;
-                            });
-                          },
                           hint: "Digite sua descrição",
-                          textController: widget.descriptionController,
+                          controller: widget.descriptionController,
                         ),
                       ),
                     ],

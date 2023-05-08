@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/pages/home_admin_panel_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/forgot_password/presenter/pages/forgot_password_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/pages/login_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/reset_password/presenter/pages/reset_password_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/presenter/pages/dashboard_companies_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
@@ -95,6 +97,24 @@ final appRoutesConfig = GoRouter(
           pageBuilder: (context, state) {
             return const NoTransitionPage(
               child: RegisterPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: RouteKeys.forgotPassword.replaceAll("/", ""),
+          name: RouteKeys.forgotPassword.replaceAll("/", ""),
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(
+              child: ForgotPasswordPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: RouteKeys.resetPassword.replaceAll("/", ""),
+          name: RouteKeys.resetPassword.replaceAll("/", ""),
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(
+              child: ResetPasswordPage(),
             );
           },
         ),

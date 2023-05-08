@@ -54,15 +54,15 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
           elevation: 0,
           scrollable: true,
           content: Container(
-            height: Sizer.calculateVertical(context, 800) >= 550
+            height: Sizer.calculateVertical(context, 800) >= 720
                 ? Sizer.calculateVertical(context, 800)
-                : 550,
+                : 720,
             width: Sizer.calculateHorizontal(context, 120) >= 300
                 ? Sizer.calculateHorizontal(context, 120)
                 : 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: AppColors.white,
+              color: AppColors.transparent,
             ),
             child: const CreatejobPage(),
           ),

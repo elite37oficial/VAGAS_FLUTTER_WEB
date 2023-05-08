@@ -1,31 +1,86 @@
+import 'package:estados_municipios/estados_municipios.dart';
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/masks/input_masks_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
-class CreateContactjobPage extends StatefulWidget {
+class CreateContactjobComponent extends StatefulWidget {
   final Function changePage;
   final TextEditingController phoneController;
   final TextEditingController linkController;
   final TextEditingController emailController;
-  const CreateContactjobPage({
+  final TextEditingController cityController;
+  final TextEditingController stateController;
+  const CreateContactjobComponent({
     Key? key,
     required this.changePage,
     required this.emailController,
     required this.linkController,
     required this.phoneController,
+    required this.stateController,
+    required this.cityController,
   }) : super(key: key);
 
   @override
-  State<CreateContactjobPage> createState() => _CreateContactjobPageState();
+  State<CreateContactjobComponent> createState() =>
+      _CreateContactjobComponentState();
 }
 
-class _CreateContactjobPageState extends State<CreateContactjobPage> {
+class _CreateContactjobComponentState extends State<CreateContactjobComponent> {
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool phoneError = false;
   bool linkError = false;
   bool emailError = false;
+
+  bool cityError = false;
+  bool stateError = false;
+
+  List<DropdownMenuItem<String>> _estadoItens = [];
+  List<DropdownMenuItem<String>> _municipioItens = [];
+
+  String _estadoSelecionado = "";
+  String _municipioSelecionado = "";
+
+  EstadosMunicipiosController stateCityController =
+      EstadosMunicipiosController();
+
+  Future<void> _loadEstados() async {
+    List<Estado> estados = await stateCityController.buscaTodosEstados();
+    setState(() {
+      _estadoItens = estados
+          .map((estado) =>
+              DropdownMenuItem(value: estado.sigla, child: Text(estado.sigla!)))
+          .toList();
+    });
+  }
+
+  Future<void> _loadMunicipios(String estado) async {
+    List<Municipio> municipios =
+        await stateCityController.buscaMunicipiosPorEstado(estado);
+    setState(() {
+      _municipioItens = municipios
+          .map((municipio) => DropdownMenuItem(
+              value: municipio.nome, child: Text(municipio.nome!)))
+          .toList();
+    });
+  }
+
+  void _onEstadoChange(String? newValue) {
+    setState(() {
+      _estadoSelecionado = newValue ?? "";
+      _municipioSelecionado = "";
+      _loadMunicipios(_estadoSelecionado);
+      widget.stateController.text = newValue ?? "";
+    });
+  }
+
+  void _onMunicipioChange(String? newValue) {
+    setState(() {
+      _municipioSelecionado = newValue ?? "";
+      widget.cityController.text = newValue ?? "";
+    });
+  }
 
   _validateForm(formKey) {
     setState(() {
@@ -41,30 +96,56 @@ class _CreateContactjobPageState extends State<CreateContactjobPage> {
 
       phoneError = widget.phoneController.text.isEmpty ||
           widget.phoneController.text.length < 9;
+
+      stateError = widget.stateController.text.isEmpty;
+      cityError = widget.cityController.text.isEmpty;
     });
 
     if (formKey.currentState!.validate()) {
-      if (!phoneError && !emailError && !linkError) {
+      if (!phoneError &&
+          !emailError &&
+          !linkError &&
+          !stateError &&
+          !cityError) {
         widget.changePage(2);
       }
     }
   }
 
   @override
+  void initState() {
+    super.initState();
+    _loadEstados();
+    widget.stateController.text.isNotEmpty
+        ? _loadMunicipios(widget.stateController.text)
+        : null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double returnHeight() {
-      if (Sizer.calculateVertical(context, 60) > 35) {
+      if (Sizer.calculateVertical(context, 60) > 45) {
         return Sizer.calculateVertical(context, 60);
       } else {
-        return 35;
+        return 45;
+      }
+    }
+
+    double returnMaxHeight() {
+      if (Sizer.calculateVertical(context, 100) <= 50 &&
+          Sizer.calculateVertical(context, 100) > 45) {
+        return Sizer.calculateVertical(context, 100);
+      } else if (Sizer.calculateVertical(context, 100) >= 50) {
+        return 50;
+      } else {
+        return 46;
       }
     }
 
     return Scaffold(
-      backgroundColor: AppColors.transparent,
+      backgroundColor: AppColors.white,
       body: SizedBox(
-        height: size.height,
         width: size.width,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -76,42 +157,23 @@ class _CreateContactjobPageState extends State<CreateContactjobPage> {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 20),
+                      padding: const EdgeInsets.only(top: 30, bottom: 15),
                       child: SizedBox(
                         width: size.width,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ResponsiveTextWidget(
-                              text:
-                                  "2 de 3: Formas do canditato entrar \nem contato",
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                              maxLines: 2,
-                              maxFontSize: 28,
-                              minFontSize: 22,
-                              textAlign: TextAlign.left,
-                              hintSemantics:
-                                  "2 de 3: Formas do canditato entrar em contato",
-                              tooltipSemantics:
-                                  "2 de 3: Formas do canditato entrar \nem contato",
-                            ),
                             SizedBox(
-                              height: 25,
-                              width: 25,
+                              height: 20,
+                              width: 20,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(50),
                                 onTap: () => Navigator.pop(context),
                                 child: const Center(
                                   child: Icon(
                                     Icons.close_rounded,
-                                    size: 27,
+                                    size: 22,
                                     color: AppColors.black,
                                   ),
                                 ),
@@ -121,10 +183,41 @@ class _CreateContactjobPageState extends State<CreateContactjobPage> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      width: size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: Sizer.calculateHorizontal(context, 70),
+                            child: ResponsiveTextWidget(
+                              text:
+                                  "2 de 3: Formas do canditato entrar em contato",
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                              maxLines: 2,
+                              maxFontSize: 30,
+                              minFontSize: 22,
+                              textAlign: TextAlign.left,
+                              hintSemantics:
+                                  "2 de 3: Formas do canditato entrar em contato",
+                              tooltipSemantics:
+                                  "2 de 3: Formas do canditato entrar \nem contato",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
-                  height: size.height * 0.5,
+                  height: size.height * 0.66,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -133,10 +226,7 @@ class _CreateContactjobPageState extends State<CreateContactjobPage> {
                         child: StaticWebFieldWidget(
                           constraints: BoxConstraints(
                             minHeight: 35,
-                            maxHeight:
-                                Sizer.calculateVertical(context, 55) >= 36
-                                    ? Sizer.calculateVertical(context, 55)
-                                    : 36,
+                            maxHeight: returnMaxHeight(),
                           ),
                           fieldSemantic: "Digite o número do whatsapp",
                           hintSemantic: "Whatsapp",
@@ -157,9 +247,7 @@ class _CreateContactjobPageState extends State<CreateContactjobPage> {
                         maxLength: 50,
                         constraints: BoxConstraints(
                           minHeight: 35,
-                          maxHeight: Sizer.calculateVertical(context, 55) >= 36
-                              ? Sizer.calculateVertical(context, 55)
-                              : 36,
+                          maxHeight: returnMaxHeight(),
                         ),
                         fieldSemantic: "Campo de texto do Email.",
                         hintSemantic: "Email",
@@ -182,10 +270,7 @@ class _CreateContactjobPageState extends State<CreateContactjobPage> {
                           maxLength: 50,
                           constraints: BoxConstraints(
                             minHeight: 35,
-                            maxHeight:
-                                Sizer.calculateVertical(context, 55) >= 36
-                                    ? Sizer.calculateVertical(context, 55)
-                                    : 36,
+                            maxHeight: returnMaxHeight(),
                           ),
                           fieldSemantic: "Campo de texto do Link.",
                           hintSemantic: "Link",
@@ -201,6 +286,37 @@ class _CreateContactjobPageState extends State<CreateContactjobPage> {
                           label: "Link",
                           height: returnHeight(),
                           width: Sizer.calculateHorizontal(context, size.width),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: SizedBox(
+                          width: size.width * 0.8,
+                          height: 80,
+                          child: AppMenuDropDownWidget(
+                            height: returnMaxHeight(),
+                            semantics: "Selecione um estado",
+                            controller: widget.stateController,
+                            hint: "Selecione um estado",
+                            label: "Estado",
+                            listItens: _estadoItens,
+                            onChanged: _onEstadoChange,
+                            error: stateError,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: size.width * 0.8,
+                        height: 80,
+                        child: AppMenuDropDownWidget(
+                          height: returnMaxHeight(),
+                          semantics: "Selecione uma cidade",
+                          controller: widget.cityController,
+                          hint: "Selecione uma cidade",
+                          label: "Cidade",
+                          listItens: _municipioItens,
+                          onChanged: _onMunicipioChange,
+                          error: cityError,
                         ),
                       ),
                     ],

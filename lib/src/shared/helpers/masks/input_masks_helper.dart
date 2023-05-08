@@ -25,5 +25,9 @@ abstract class InputMasksHelper {
       mask: '##/##/####',
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
-}
 
+  static final MaskTextInputFormatter money = MaskTextInputFormatter(
+      mask: '###.###',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+}

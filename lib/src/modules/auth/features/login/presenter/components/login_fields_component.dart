@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class LoginFieldsComponent extends StatelessWidget {
   final TextEditingController emailController;
@@ -85,12 +87,18 @@ class LoginFieldsComponent extends StatelessWidget {
               padding: EdgeInsets.only(
                   top: Sizer.calculateVertical(context, 20),
                   bottom: Sizer.calculateVertical(context, 70)),
-              child: GestureDetector(
-                onTap: () {},
+              child: InkWell(
+                focusColor: AppColors.transparent,
+                hoverColor: AppColors.transparent,
+                highlightColor: AppColors.transparent,
+                splashColor: AppColors.transparent,
+                onTap: () => context
+                    .push("${RouteKeys.auth}${RouteKeys.forgotPassword}"),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: ResponsiveTextWidget(
                     text: "Esqueceu a senha?",
+                    selectable: false,
                     hintSemantics: "Forgot Password",
                     tooltipSemantics: "Forgot Password",
                     maxLines: 1,

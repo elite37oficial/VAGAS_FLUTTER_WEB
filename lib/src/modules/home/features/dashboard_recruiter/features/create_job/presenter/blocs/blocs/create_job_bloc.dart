@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/entities/create_job_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/entities/create_job_response_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/usecases/create_job_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/events/create_job_events.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/states/create_job_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
+
+part '../states/create_job_states.dart';
+part '../events/create_job_events.dart';
 
 class CreateJobBloc extends Bloc<CreateJobEvent, CreateJobStates> {
   final CreateJobUsecase usecase;
@@ -23,6 +25,16 @@ class CreateJobBloc extends Bloc<CreateJobEvent, CreateJobStates> {
       description: event.description,
       companyId: event.companyId,
       userId: event.userId,
+      email: event.email,
+      level: event.level,
+      link: event.link,
+      phone: event.phone,
+      type: event.type,
+      city: event.city,
+      companyDescription: event.companyDescription,
+      modality: event.modality,
+      salary: event.salary,
+      state: event.state,
     );
 
     var result = await usecase(params);

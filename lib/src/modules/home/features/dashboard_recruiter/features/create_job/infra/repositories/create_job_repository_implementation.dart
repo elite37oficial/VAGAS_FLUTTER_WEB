@@ -14,14 +14,24 @@ class CreateJobRepositoryImplementation implements CreateJobRepository {
   const CreateJobRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, CreateJobResponseModel>> createJob(CreateJobEntity params) async {
+  Future<Either<Failure, CreateJobResponseModel>> createJob(
+      CreateJobEntity params) async {
     try {
       CreateJobModel createJobModel = CreateJobModel(
-        userId: params.userId,
-        title: params.title,
-        description: params.description,
-        companyId: params.companyId,
-      );
+          userId: params.userId,
+          title: params.title,
+          description: params.description,
+          companyId: params.companyId,
+          email: params.email,
+          level: params.level,
+          link: params.link,
+          phone: params.phone,
+          type: params.type,
+          city: params.city,
+          salary: params.salary,
+          companyDescription: params.companyDescription,
+          modality: params.modality,
+          state: params.state);
 
       var result = await datasource.createJob(createJobModel);
 
