@@ -3,8 +3,8 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/datasources/create_job_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/datasources/get_all_companies_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/datasources/get_all_companies_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/repositories/create_Job_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_Job/presenter/blocs/blocs/create_Job_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/repositories/create_job_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/create_job_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/repositories/create_job_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/usecases/create_job_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/datasources/create_job_datasource.dart';

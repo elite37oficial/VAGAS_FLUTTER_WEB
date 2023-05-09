@@ -7,7 +7,7 @@ class GetJobInitialState extends GetJobStates {}
 class GetJobLoadingState extends GetJobStates {}
 
 class GetJobSuccessState extends GetJobStates {
-  final List<JobEntity> listJobs;
+  final GetJobResponseEntity listJobs;
 
   GetJobSuccessState({required this.listJobs});
 }

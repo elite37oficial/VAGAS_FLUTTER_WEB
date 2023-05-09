@@ -34,6 +34,17 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
   List<JobEntity> listJobs = [];
   late GetJobBloc getjobBloc;
 
+  _setJobsInfo(GetJobSuccessState state) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        listJobs = state.listJobs.listJobs;
+        actualPage = int.parse(state.listJobs.actualPage);
+        totalPages = int.parse(state.listJobs.totalPages);
+      });
+    });
+    log(listJobs.length.toString());
+  }
+
   changePage(newPage) {
     getjobBloc.add(GetJobListEvent(page: newPage));
 
@@ -162,8 +173,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                         log(state.message);
                                       }
                                       if (state is GetJobSuccessState) {
-                                        listJobs = state.listJobs;
-                                        log(listJobs.length.toString());
+                                        _setJobsInfo(state);
                                       }
                                       return ListJobsComponent(
                                           token: token, listJobs: listJobs);
@@ -257,8 +267,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                         log(state.message);
                                       }
                                       if (state is GetJobSuccessState) {
-                                        listJobs = state.listJobs;
-                                        log(listJobs.length.toString());
+                                        _setJobsInfo(state);
                                       }
                                       return ListJobsComponent(
                                           token: token, listJobs: listJobs);
