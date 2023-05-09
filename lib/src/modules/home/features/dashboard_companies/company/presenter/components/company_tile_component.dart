@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/presenter/components/company_status_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
@@ -22,7 +21,7 @@ class CompanyTileComponent extends StatelessWidget {
       child: Row(
         children: [
           Flexible(
-            flex: 12,
+            flex: 3,
             child: SizedBox(
               width: size.width * 0.7,
               child: Row(
@@ -46,6 +45,8 @@ class CompanyTileComponent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
                         companyTileData.image64,
+                        width: 20,
+                        height: 20,
                       ),
                     ),
                   ),
@@ -63,19 +64,7 @@ class CompanyTileComponent extends StatelessWidget {
             ),
           ),
           Flexible(
-            flex: 10,
-            child: SizedBox(
-              width: size.width * 0.7,
-              child: Center(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: CompanyStatusComponent(status: companyTileData.status),
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 10,
+            flex: 7,
             child: SizedBox(
               width: size.width * 0.7,
               child: ResponsiveTextWidget(
@@ -88,20 +77,7 @@ class CompanyTileComponent extends StatelessWidget {
             ),
           ),
           Flexible(
-            flex: 10,
-            child: SizedBox(
-              width: size.width * 0.7,
-              child: ResponsiveTextWidget(
-                text: companyTileData.location,
-                textStyle: Theme.of(context).textTheme.bodyMedium,
-                maxLines: 1,
-                hintSemantics: "local",
-                tooltipSemantics: "local",
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 4,
+            flex: 2,
             child: SizedBox(
               width: size.width * 0.7,
               child: Center(

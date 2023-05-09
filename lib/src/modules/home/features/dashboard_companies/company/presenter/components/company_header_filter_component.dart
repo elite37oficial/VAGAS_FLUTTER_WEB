@@ -24,7 +24,7 @@ class CompanyHeaderFilterComponent extends StatelessWidget {
         child: Row(
           children: [
             Flexible(
-              flex: 12,
+              flex: 3,
               child: SizedBox(
                 width: size.width * 0.7,
                 child: Row(
@@ -53,20 +53,7 @@ class CompanyHeaderFilterComponent extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 10,
-              child: SizedBox(
-                width: size.width * 0.7,
-                child: ResponsiveTextWidget(
-                  text: "Status",
-                  textStyle: Theme.of(context).textTheme.bodyMedium,
-                  maxLines: 1,
-                  hintSemantics: "status",
-                  tooltipSemantics: "status",
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 10,
+              flex: 7,
               child: SizedBox(
                 width: size.width * 0.7,
                 child: Align(
@@ -82,23 +69,7 @@ class CompanyHeaderFilterComponent extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 10,
-              child: SizedBox(
-                width: size.width * 0.7,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: ResponsiveTextWidget(
-                    text: "Localização",
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 1,
-                    hintSemantics: "localização",
-                    tooltipSemantics: "localização",
-                  ),
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 4,
+              flex: 2,
               child: SizedBox(
                 width: size.width * 0.7,
                 child: Center(

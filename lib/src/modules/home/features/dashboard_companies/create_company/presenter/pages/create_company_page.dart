@@ -141,7 +141,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               : 370,
           message: message,
           function: () {
-            Navigator.pop(context);
+            context.pop();
           },
         );
       },
@@ -164,7 +164,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               : 370,
           message: message,
           function: () {
-            Navigator.pop(context);
+            context.pop();
           },
         );
       },
@@ -174,18 +174,16 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double returnHeight() {
-      if (Sizer.calculateVertical(context, 60) > 35) {
-        return Sizer.calculateVertical(context, 60);
-      } else {
-        return 35;
-      }
-    }
 
     return BlocBuilder<CreateCompanyBloc, CreateCompanyStates>(
       builder: (context, state) {
         if (state is CreateCompanyLoadingState) {
           return const LoadingPage();
+        }
+        if (state is CreateCompanySuccessState) {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            _showSuccessAlert(MessagesHelper.successRegisterMessage);
+          });
         }
         if (state is CreateCompanyErrorState) {
           log(state.message);
@@ -193,11 +191,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
             _showErrorAlert(state.message);
           });
         }
-        if (state is CreateCompanySuccessState) {
-          WidgetsBinding.instance.addPostFrameCallback((_) async {
-            _showSuccessAlert(MessagesHelper.successRegisterMessage);
-          });
-        }
+
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

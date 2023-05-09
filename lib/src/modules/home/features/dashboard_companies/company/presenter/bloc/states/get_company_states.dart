@@ -1,19 +1,19 @@
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 
-abstract class GetCompanyStates {}
+abstract class GetCompaniesStates {}
 
-class GetCompanyInitialState extends GetCompanyStates {}
+class GetCompaniesInitialState extends GetCompaniesStates {}
 
-class GetCompanyLoadingState extends GetCompanyStates {}
+class GetCompaniesLoadingState extends GetCompaniesStates {}
 
-class GetCompanySuccessState extends GetCompanyStates {
+class GetCompaniesSuccessState extends GetCompaniesStates {
   final List<CompanyEntity> listCompanies;
 
-  GetCompanySuccessState({required this.listCompanies});
+  GetCompaniesSuccessState({required this.listCompanies});
 }
 
-class GetCompanyErrorState extends GetCompanyStates {
+class GetCompaniesErrorState extends GetCompaniesStates {
   final String message;
 
-  GetCompanyErrorState({required this.message});
+  GetCompaniesErrorState({required this.message});
 }

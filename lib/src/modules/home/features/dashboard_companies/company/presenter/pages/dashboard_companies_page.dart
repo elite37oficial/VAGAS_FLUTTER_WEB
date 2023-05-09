@@ -37,7 +37,7 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
 
   @override
   void initState() {
-    context.read<GetCompanyBloc>().add(GetCompanyListEvent());
+    context.read<GetCompaniesBloc>().add(DoGetCompaniesEvent());
     _setUsername();
     super.initState();
   }
@@ -45,15 +45,15 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocBuilder<GetCompanyBloc, GetCompanyStates>(
+    return BlocBuilder<GetCompaniesBloc, GetCompaniesStates>(
         builder: (context, state) {
-      if (state is GetCompanyLoadingState) {
+      if (state is GetCompaniesLoadingState) {
         return const LoadingPage();
       }
-      if (state is GetCompanyErrorState) {
+      if (state is GetCompaniesErrorState) {
         log(state.message);
       }
-      if (state is GetCompanySuccessState) {
+      if (state is GetCompaniesSuccessState) {
         listCompanies = state.listCompanies;
         log(listCompanies.length.toString());
       }

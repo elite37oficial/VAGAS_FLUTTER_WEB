@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-abstract class GetCompanyEvent extends Equatable {
-  const GetCompanyEvent();
+abstract class GetCompaniesEvent extends Equatable {
+  const GetCompaniesEvent();
 }
 
-class GetCompanyListEvent extends GetCompanyEvent {
+class DoGetCompaniesEvent extends GetCompaniesEvent {
   @override
   List<Object> get props => [];
 }

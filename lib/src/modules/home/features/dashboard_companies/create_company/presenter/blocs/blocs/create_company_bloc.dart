@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/domain/entities/create_company_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/domain/usecases/create_company_usecase.dart';
@@ -25,7 +27,6 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
     );
 
     var result = await usecase(createCompanyEntity);
-
     result.fold(
       (Failure failure) => emitter(
           CreateCompanyErrorState(message: failure.props.first.toString())),

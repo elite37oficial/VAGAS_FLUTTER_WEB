@@ -21,11 +21,11 @@ import 'package:vagas_flutter_web/src/modules/auth/features/register/infra/repos
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/domain/usecases/create_company_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/domain/usecases/get_company_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/infra/datasources/get_company_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/domain/usecases/get_companies_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/infra/datasources/get_companies_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/infra/datasources/create_company_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/infra/repositories/create_company_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/infra/repositories/get_company_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/infra/repositories/get_companies_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/create_company/presenter/blocs/blocs/create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/presenter/bloc/bloc/get_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/presenter/pages/dashboard_companies_page.dart';
@@ -215,11 +215,11 @@ final appRoutesConfig = GoRouter(
                   ),
                 ),
               ),
-              BlocProvider<GetCompanyBloc>(
-                create: (context) => GetCompanyBloc(
-                  usecase: GetCompanyUsecase(
-                    repository: GetCompanyRepositoryImplementation(
-                      datasource: GetCompanyDatasourceImplementation(
+              BlocProvider<GetCompaniesBloc>(
+                create: (context) => GetCompaniesBloc(
+                  usecase: GetCompaniesUsecase(
+                    repository: GetCompaniesRepositoryImplementation(
+                      datasource: GetCompaniesDatasourceImplementation(
                         requester: AppRequesterImplementation(),
                       ),
                     ),
