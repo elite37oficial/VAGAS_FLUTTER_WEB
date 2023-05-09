@@ -174,99 +174,113 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: SizedBox(
                   height: size.height,
                   width: size.width,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: Sizer.calculateVertical(context, 70),
-                      bottom: Sizer.calculateVertical(context, 20),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: Sizer.calculateHorizontal(context, 250),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ResponsiveTextWidget(
-                                  text: "Cadastrar-se",
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                  maxLines: 1,
-                                  maxFontSize: 50,
-                                  minFontSize: 32,
-                                  textScaleFactor: 1.5,
-                                ),
-                              ],
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: Sizer.calculateVertical(context, 70),
+                        bottom: Sizer.calculateVertical(context, 20),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: Sizer.calculateHorizontal(context, 250),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  ResponsiveTextWidget(
+                                    text: "Cadastrar-se",
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                    maxLines: 1,
+                                    maxFontSize: 50,
+                                    minFontSize: 32,
+                                    textScaleFactor: 1.5,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        RegisterFieldsComponent(
-                          formKey: formKey,
-                          nameError: nameError,
-                          phoneError: phoneError,
-                          emailError: emailError,
-                          passwordError: passwordError,
-                          repeatPasswordError: repeatPasswordError,
-                          nameController: nameController,
-                          phoneController: phoneController,
-                          emailController: emailController,
-                          passwordController: passwordController,
-                          repeatPasswordController: repeatPasswordController,
-                          width: 250,
-                        ),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minHeight: 35,
-                            maxHeight:
-                                Sizer.calculateVertical(context, 55) >= 36
-                                    ? Sizer.calculateVertical(context, 55)
-                                    : 36,
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: Sizer.calculateVertical(context, 60),
+                              bottom: Sizer.calculateVertical(context, 50),
+                            ),
+                            child: RegisterFieldsComponent(
+                              formKey: formKey,
+                              nameError: nameError,
+                              phoneError: phoneError,
+                              emailError: emailError,
+                              passwordError: passwordError,
+                              repeatPasswordError: repeatPasswordError,
+                              nameController: nameController,
+                              phoneController: phoneController,
+                              emailController: emailController,
+                              passwordController: passwordController,
+                              repeatPasswordController:
+                                  repeatPasswordController,
+                              width: 250,
+                            ),
                           ),
-                          child: SizedBox(
-                            height: Sizer.calculateVertical(context, 55) >= 36
-                                ? Sizer.calculateVertical(context, 55)
-                                : 36,
-                            width: Sizer.calculateHorizontal(context, 250),
-                            child: ElevatedButtonTheme(
-                              data: ElevatedButtonThemeData(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  backgroundColor: AppColors.greyBlue,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: 35,
+                              maxHeight:
+                                  Sizer.calculateVertical(context, 55) >= 36
+                                      ? Sizer.calculateVertical(context, 55)
+                                      : 36,
+                            ),
+                            child: SizedBox(
+                              height: Sizer.calculateVertical(context, 55) >= 36
+                                  ? Sizer.calculateVertical(context, 55)
+                                  : 36,
+                              width: Sizer.calculateHorizontal(context, 250),
+                              child: ElevatedButtonTheme(
+                                data: ElevatedButtonThemeData(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor: AppColors.greyBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () =>
+                                      _validateRegisterForm(formKey),
+                                  child: ResponsiveTextWidget(
+                                    text: "Cadastrar",
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: AppColors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 20,
+                                        ),
+                                    hintSemantics: "Cadastro",
+                                    tooltipSemantics: "Cadastro",
+                                    maxLines: 1,
                                   ),
                                 ),
                               ),
-                              child: ElevatedButton(
-                                onPressed: () => _validateRegisterForm(formKey),
-                                child: ResponsiveTextWidget(
-                                  text: "Cadastrar",
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: AppColors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 20,
-                                      ),
-                                  hintSemantics: "Cadastro",
-                                  tooltipSemantics: "Cadastro",
-                                  maxLines: 1,
-                                ),
-                              ),
                             ),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: SelectionArea(
-                            child: GestureDetector(
+                          SizedBox(
+                              height: Sizer.calculateVertical(context, 170)),
+                          Align(
+                            alignment: Alignment.center,
+                            child: InkWell(
+                              splashColor: AppColors.transparent,
+                              highlightColor: AppColors.transparent,
+                              focusColor: AppColors.transparent,
+                              hoverColor: AppColors.transparent,
                               onTap: () => Navigator.pop(context),
                               child: AutoSizeText.rich(
                                 maxLines: 1,
@@ -298,8 +312,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -317,101 +331,116 @@ class _RegisterPageState extends State<RegisterPage> {
                   SingleChildScrollView(
                     child: SizedBox(
                       height: returnHeight(),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          right: Sizer.calculateHorizontal(context, 10),
-                          top: Sizer.calculateVertical(context, 80),
-                          bottom: Sizer.calculateVertical(context, 30),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: Sizer.calculateHorizontal(context, 150),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Column(
-                                  children: [
-                                    ResponsiveTextWidget(
-                                      text: "Cadastrar-se",
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge!
-                                          .copyWith(
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                      maxLines: 1,
-                                      maxFontSize: 50,
-                                      minFontSize: 32,
-                                      textScaleFactor: 1.5,
-                                    ),
-                                  ],
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: Sizer.calculateHorizontal(context, 10),
+                            top: Sizer.calculateVertical(context, 80),
+                            bottom: Sizer.calculateVertical(context, 30),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Sizer.calculateHorizontal(context, 150),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    children: [
+                                      ResponsiveTextWidget(
+                                        text: "Cadastrar-se",
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .copyWith(
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                        maxLines: 1,
+                                        maxFontSize: 50,
+                                        minFontSize: 32,
+                                        textScaleFactor: 1.5,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            RegisterFieldsComponent(
-                              formKey: formKey,
-                              nameError: nameError,
-                              phoneError: phoneError,
-                              emailError: emailError,
-                              passwordError: passwordError,
-                              repeatPasswordError: repeatPasswordError,
-                              nameController: nameController,
-                              phoneController: phoneController,
-                              emailController: emailController,
-                              passwordController: passwordController,
-                              repeatPasswordController:
-                                  repeatPasswordController,
-                            ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight: 35,
-                                maxHeight:
-                                    Sizer.calculateVertical(context, 55) >= 36
-                                        ? Sizer.calculateVertical(context, 55)
-                                        : 36,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: Sizer.calculateVertical(context, 60),
+                                  bottom: Sizer.calculateVertical(context, 50),
+                                ),
+                                child: RegisterFieldsComponent(
+                                  formKey: formKey,
+                                  nameError: nameError,
+                                  phoneError: phoneError,
+                                  emailError: emailError,
+                                  passwordError: passwordError,
+                                  repeatPasswordError: repeatPasswordError,
+                                  nameController: nameController,
+                                  phoneController: phoneController,
+                                  emailController: emailController,
+                                  passwordController: passwordController,
+                                  repeatPasswordController:
+                                      repeatPasswordController,
+                                ),
                               ),
-                              child: SizedBox(
-                                height:
-                                    Sizer.calculateVertical(context, 55) >= 36
-                                        ? Sizer.calculateVertical(context, 55)
-                                        : 36,
-                                width: Sizer.calculateHorizontal(context, 150),
-                                child: ElevatedButtonTheme(
-                                  data: ElevatedButtonThemeData(
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      backgroundColor: AppColors.greyBlue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: 35,
+                                  maxHeight:
+                                      Sizer.calculateVertical(context, 55) >= 36
+                                          ? Sizer.calculateVertical(context, 55)
+                                          : 36,
+                                ),
+                                child: SizedBox(
+                                  height:
+                                      Sizer.calculateVertical(context, 55) >= 36
+                                          ? Sizer.calculateVertical(context, 55)
+                                          : 36,
+                                  width:
+                                      Sizer.calculateHorizontal(context, 150),
+                                  child: ElevatedButtonTheme(
+                                    data: ElevatedButtonThemeData(
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 0,
+                                        backgroundColor: AppColors.greyBlue,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                    ),
+                                    child: ElevatedButton(
+                                      onPressed: () =>
+                                          _validateRegisterForm(formKey),
+                                      child: ResponsiveTextWidget(
+                                        text: "Cadastrar",
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              color: AppColors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 20,
+                                            ),
+                                        hintSemantics: "Cadastro",
+                                        tooltipSemantics: "Cadastro",
+                                        maxLines: 1,
                                       ),
                                     ),
                                   ),
-                                  child: ElevatedButton(
-                                    onPressed: () =>
-                                        _validateRegisterForm(formKey),
-                                    child: ResponsiveTextWidget(
-                                      text: "Cadastrar",
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: AppColors.white,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 20,
-                                          ),
-                                      hintSemantics: "Cadastro",
-                                      tooltipSemantics: "Cadastro",
-                                      maxLines: 1,
-                                    ),
-                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: SelectionArea(
-                                child: GestureDetector(
+                              SizedBox(
+                                  height:
+                                      Sizer.calculateVertical(context, 170)),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: InkWell(
+                                  splashColor: AppColors.transparent,
+                                  highlightColor: AppColors.transparent,
+                                  focusColor: AppColors.transparent,
+                                  hoverColor: AppColors.transparent,
                                   onTap: () => Navigator.pop(context),
                                   child: AutoSizeText.rich(
                                     maxLines: 1,
@@ -443,8 +472,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -5,6 +5,10 @@ abstract class GetJobEvent extends Equatable {
 }
 
 class GetJobListEvent extends GetJobEvent {
+  final int page;
+
+  const GetJobListEvent({required this.page});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [page];
 }

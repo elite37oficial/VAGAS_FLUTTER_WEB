@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/presenter/pages/home_admin_panel_page.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/pages/home_admin_panel_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/forgot_password/presenter/pages/forgot_password_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/pages/login_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/reset_password/presenter/pages/reset_password_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_companies/company/presenter/pages/dashboard_companies_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
@@ -32,14 +34,12 @@ final appRoutesConfig = GoRouter(
         state.subloc == "${RouteKeys.auth}${RouteKeys.register}";
     final isLoginRoute = state.subloc == "${RouteKeys.auth}${RouteKeys.login}";
 
-    if (!isAuthenticated && isLoginRoute) {
-      return isAuthRoute ? null : "${RouteKeys.auth}${RouteKeys.login}";
-    }
-    if (!isAuthenticated && isRegisterRoute) {
-      return isAuthRoute ? null : "${RouteKeys.auth}${RouteKeys.register}";
-    }
-
-    if (isAuthRoute) return RouteKeys.home;
+    // if (!isAuthenticated && isLoginRoute) {
+    //   return isAuthRoute ? null : "${RouteKeys.auth}${RouteKeys.login}";
+    // }
+    // if (!isAuthenticated && isRegisterRoute) {
+    //   return isAuthRoute ? null : "${RouteKeys.auth}${RouteKeys.register}";
+    // }
 
     return null;
   },
@@ -71,8 +71,21 @@ final appRoutesConfig = GoRouter(
     GoRoute(
       path: RouteKeys.auth,
       name: RouteKeys.auth.replaceAll("/", ""),
-      redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
-      pageBuilder: (context, state) => NoTransitionPage(child: Container()),
+      redirect: (_, state) {
+        if (authService.isAuthenticated) {
+          return RouteKeys.home;
+        } else if (authService.isAdminAuthenticated) {
+          return RouteKeys.homeAdmin;
+        } else {
+          return null;
+        }
+      },
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: RedirectPageRoute(
+          duration: Duration(milliseconds: 0),
+          redirectRoute: "${RouteKeys.auth}${RouteKeys.login}",
+        ),
+      ),
       routes: [
         GoRoute(
           path: RouteKeys.login.replaceAll("/", ""),
@@ -94,11 +107,32 @@ final appRoutesConfig = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: RouteKeys.forgotPassword.replaceAll("/", ""),
+          name: RouteKeys.forgotPassword.replaceAll("/", ""),
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(
+              child: ForgotPasswordPage(),
+            );
+          },
+        ),
+        GoRoute(
+          path: RouteKeys.resetPassword.replaceAll("/", ""),
+          name: RouteKeys.resetPassword.replaceAll("/", ""),
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(
+              child: ResetPasswordPage(),
+            );
+          },
+        ),
       ],
     ),
     GoRoute(
       path: RouteKeys.homeAdmin,
       name: RouteKeys.homeAdmin.replaceAll("/", ""),
+      redirect: (_, __) => !authService.isAdminAuthenticated
+          ? "${RouteKeys.auth}${RouteKeys.login}"
+          : null,
       pageBuilder: (context, state) {
         return const NoTransitionPage(
           child: HomeAdminPanelPage(),
@@ -108,6 +142,9 @@ final appRoutesConfig = GoRouter(
     GoRoute(
       path: RouteKeys.home,
       name: RouteKeys.home.replaceAll("/", ""),
+      redirect: (_, __) => !authService.isAuthenticated
+          ? "${RouteKeys.auth}${RouteKeys.login}"
+          : null,
       pageBuilder: (context, state) {
         return const NoTransitionPage(
           child: HomeRecruiterPage(),
@@ -117,6 +154,9 @@ final appRoutesConfig = GoRouter(
     GoRoute(
       path: RouteKeys.companies,
       name: RouteKeys.companies.replaceAll("/", ""),
+      redirect: (_, __) => !authService.isAuthenticated
+          ? "${RouteKeys.auth}${RouteKeys.login}"
+          : null,
       pageBuilder: (context, state) {
         return const NoTransitionPage(
           child: HomeCompaniesPage(),

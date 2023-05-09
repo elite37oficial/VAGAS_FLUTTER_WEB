@@ -15,12 +15,12 @@ class GetJobBloc extends Bloc<GetJobEvent, GetJobStates> {
   }
 
   void getJob(
-    GetJobEvent event,
+    GetJobListEvent event,
     Emitter<GetJobStates> emitter,
   ) async {
     emitter(GetJobLoadingState());
 
-    var result = await usecase(NoParams());
+    var result = await usecase(event.page);
 
     result.fold(
       (Failure failure) =>

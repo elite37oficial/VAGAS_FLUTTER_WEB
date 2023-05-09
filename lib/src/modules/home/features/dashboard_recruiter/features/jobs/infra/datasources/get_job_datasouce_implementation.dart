@@ -11,10 +11,11 @@ class GetJobDatasourceImplementation implements GetJobDatasource {
   GetJobDatasourceImplementation({required this.requester});
 
   @override
-  Future getJob() async {
-    String id = await SecureStorageManager.readData(StorageKeys.userId) ?? "";
+  Future getJob(int page) async {
+    String userId =
+        await SecureStorageManager.readData(StorageKeys.userId) ?? "";
     return await requester.get(
-        url: Endpoints.getJobsByRecruiterId(id),
+        url: Endpoints.pageJobs(page, userId),
         fromJson: (value) => GetJobResponseModel.fromMap(value));
   }
 }

@@ -9,7 +9,13 @@ abstract class Endpoints {
   static String jobs = "$baseURL/jobs";
   static String companies = "$baseURL/companies";
 
-  static String getJobsByRecruiterId(String userId) => "$baseURL/jobs?created_by=$userId";
+  static String forgotPassword = "$baseURL/forgotPassword";
+  static String resetPassword = "$baseURL/resetPassword";
+
+  static String getJobsByRecruiterId(String userId) =>
+      "$baseURL/jobs?created_by=$userId";
+  static String pageJobs(int page, String userId) =>
+      "$baseURL/jobs?page=$page&limit=10&created_by=$userId";
 
   static String getJobById(String jobId) => "$baseURL/jobs/id/$jobId";
   static String getUserById(String userId) => "$baseURL/users/id/$userId";

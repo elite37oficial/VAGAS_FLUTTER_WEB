@@ -25,79 +25,30 @@ class LoginRegisterButtonComponent extends StatelessWidget {
             context: context,
             width: Sizer.calculateHorizontal(context, width),
           ),
-          SelectionArea(
-            child: GestureDetector(
-              onTap: () =>
-                  context.push("${RouteKeys.auth}${RouteKeys.register}"),
-              child: AutoSizeText.rich(
-                maxFontSize: 16,
-                minFontSize: 12,
-                TextSpan(
-                    text: "Não tem uma conta? ",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: AppColors.grey,
-                          fontWeight: FontWeight.w700,
-                        ),
-                    children: [
-                      TextSpan(
-                        text: "Cadastre-se aqui",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: AppColors.greyBlue,
-                              fontWeight: FontWeight.w700,
-                            ),
-                      )
-                    ]),
-              ),
-            ),
-          ),
-          returnDivider(
-            context: context,
-            width: Sizer.calculateHorizontal(context, width),
-          ),
-          SizedBox(
-            width: Sizer.calculateHorizontal(context, width),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SocialCircleButtonWidget(
-                  height: Sizer.calculateVertical(context, 70),
-                  width: Sizer.calculateVertical(context, 70),
-                  backgroundColor: AppColors.blue,
-                  onTap: () {},
-                  hint: "Linkedin Button",
-                  tooltip: "Linkedin Button",
-                  widget: FaIcon(
-                    FontAwesomeIcons.linkedinIn,
-                    color: AppColors.white,
-                    size: Sizer.calculateVertical(context, 40),
-                  ),
-                ),
-                SocialCircleButtonWidget(
-                  height: Sizer.calculateVertical(context, 70),
-                  width: Sizer.calculateVertical(context, 70),
-                  backgroundColor: AppColors.accentBlue,
-                  onTap: () {},
-                  hint: "Facebook Button",
-                  tooltip: "Facebook Button",
-                  widget: FaIcon(
-                    FontAwesomeIcons.facebookF,
-                    color: AppColors.white,
-                    size: Sizer.calculateVertical(context, 40),
-                  ),
-                ),
-                SocialCircleButtonWidget(
-                  height: Sizer.calculateVertical(context, 70),
-                  width: Sizer.calculateVertical(context, 70),
-                  backgroundColor: AppColors.white,
-                  onTap: () {},
-                  hint: "Google Button",
-                  tooltip: "Google Button",
-                  widget: FaIcon(
-                    FontAwesomeIcons.google,
-                    size: Sizer.calculateVertical(context, 40),
-                  ),
-                ),
-              ],
+          InkWell(
+            splashColor: AppColors.transparent,
+            highlightColor: AppColors.transparent,
+            focusColor: AppColors.transparent,
+            hoverColor: AppColors.transparent,
+            onTap: () => context.push("${RouteKeys.auth}${RouteKeys.register}"),
+            child: AutoSizeText.rich(
+              maxFontSize: 16,
+              minFontSize: 12,
+              TextSpan(
+                  text: "Não tem uma conta? ",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: AppColors.grey,
+                        fontWeight: FontWeight.w700,
+                      ),
+                  children: [
+                    TextSpan(
+                      text: "Cadastre-se aqui",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: AppColors.greyBlue,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    )
+                  ]),
             ),
           ),
         ],

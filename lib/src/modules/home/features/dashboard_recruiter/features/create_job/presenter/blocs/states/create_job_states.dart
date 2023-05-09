@@ -1,4 +1,4 @@
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/entities/create_job_response_entity.dart';
+part of "../blocs/create_job_bloc.dart";
 
 abstract class CreateJobStates {}
 
@@ -7,7 +7,7 @@ class CreateJobInitialState extends CreateJobStates {}
 class CreateJobLoadingState extends CreateJobStates {}
 
 class CreateJobSuccessState extends CreateJobStates {
-  final CreateJobResponseEntity response;
+  final bool response;
 
   CreateJobSuccessState({required this.response});
 }

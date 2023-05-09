@@ -14,9 +14,9 @@ class GetJobRepositoryImplementation implements GetJobRepository {
   GetJobRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, List<JobEntity>>> getJob() async {
+  Future<Either<Failure, List<JobEntity>>> getJob(int page) async {
     try {
-      GetJobResponseModel result = await datasource.getJob();
+      GetJobResponseModel result = await datasource.getJob(page);
       return Right(result.listJobs);
     } on DioError catch (e) {
       if (e.response!.statusCode == 500) {

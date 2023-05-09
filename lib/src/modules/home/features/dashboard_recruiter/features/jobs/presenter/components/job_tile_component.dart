@@ -109,7 +109,7 @@ class JobTileComponent extends StatelessWidget {
               child: Center(
                   child: Align(
                 alignment: Alignment.centerLeft,
-                child: StatusComponent(status: "jobTileData.status"),
+                child: StatusComponent(status: jobTileData.status),
               )),
             ),
           ),
@@ -159,7 +159,11 @@ class JobTileComponent extends StatelessWidget {
             child: SizedBox(
                 width: size.width * 0.7,
                 child: Center(
-                    child: GestureDetector(
+                    child: InkWell(
+                  focusColor: AppColors.transparent,
+                  highlightColor: AppColors.transparent,
+                  hoverColor: AppColors.transparent,
+                  splashColor: AppColors.transparent,
                   onTap: () {},
                   child: SvgPicture.asset(
                     AppImages.editIcon,

@@ -25,11 +25,11 @@ class StatusComponent extends StatelessWidget {
 }
 
 Color _getStatusColor(String status) {
-  if (status == "Em Aberto") {
+  if (status == "Active") {
     return AppColors.darkBlue.withOpacity(0.1);
-  } else if (status == "Fechada") {
+  } else if (status == "Closed") {
     return AppColors.lightGrey.withOpacity(0.1);
-  } else if (status == "Cancelada") {
+  } else if (status == "Canceled") {
     return AppColors.red.withOpacity(0.1);
   } else {
     return AppColors.lightGrey.withOpacity(0.1);
@@ -38,9 +38,9 @@ Color _getStatusColor(String status) {
 
 ResponsiveTextWidget _getLabel(
     {required String status, required BuildContext context}) {
-  if (status == "Em Aberto") {
+  if (status == "Active") {
     return ResponsiveTextWidget(
-      text: "Em Aberto",
+      text: "Active",
       textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
             color: AppColors.darkBlue,
             fontWeight: FontWeight.w700,
@@ -49,9 +49,9 @@ ResponsiveTextWidget _getLabel(
       minFontSize: 7,
       maxLines: 1,
     );
-  } else if (status == "Fechada") {
+  } else if (status == "Closed") {
     return ResponsiveTextWidget(
-      text: "Fechada",
+      text: "Closed",
       textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
             color: AppColors.black.withOpacity(0.5),
             fontWeight: FontWeight.w700,
@@ -60,9 +60,9 @@ ResponsiveTextWidget _getLabel(
       minFontSize: 7,
       maxLines: 1,
     );
-  } else if (status == "Cancelada") {
+  } else if (status == "Canceled") {
     return ResponsiveTextWidget(
-      text: "Cancelada",
+      text: "Canceled",
       textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
             color: AppColors.red,
             fontWeight: FontWeight.w700,
@@ -73,7 +73,7 @@ ResponsiveTextWidget _getLabel(
     );
   } else {
     return ResponsiveTextWidget(
-      text: "Fechada",
+      text: "Closed",
       textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
             color: AppColors.black.withOpacity(0.5),
             fontWeight: FontWeight.w700,
