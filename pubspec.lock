@@ -857,9 +857,11 @@ packages:
   vagas_design_system:
     dependency: "direct main"
     description:
-      path: "../VAGAS_FLUTTER_DESIGN_SYSTEM"
-      relative: true
-    source: path
+      path: "."
+      ref: dev
+      resolved-ref: "19986b8f856778683955fafe82a0bd23e6ca786b"
+      url: "https://github.com/elite37oficial/VAGAS_FLUTTER_DESIGN_SYSTEM"
+    source: git
     version: "0.3.0"
   vector_math:
     dependency: transitive

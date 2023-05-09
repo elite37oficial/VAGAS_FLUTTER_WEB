@@ -1,4 +1,4 @@
-part of "../blocs/create_job_bloc.dart";
+part of '../blocs/create_job_bloc.dart';
 
 abstract class CreateJobEvent extends Equatable {
   const CreateJobEvent();

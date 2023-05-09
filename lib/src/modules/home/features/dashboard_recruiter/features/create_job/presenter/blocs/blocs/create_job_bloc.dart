@@ -4,8 +4,8 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/usecases/create_job_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
-part '../states/create_job_states.dart';
 part '../events/create_job_events.dart';
+part '../states/create_job_states.dart';
 
 class CreateJobBloc extends Bloc<CreateJobEvent, CreateJobStates> {
   final CreateJobUsecase usecase;

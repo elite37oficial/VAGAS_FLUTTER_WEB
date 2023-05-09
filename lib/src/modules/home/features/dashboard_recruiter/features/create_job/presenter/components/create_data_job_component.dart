@@ -2,7 +2,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/get_companies_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/get_all_companies_bloc.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
@@ -36,7 +36,7 @@ class CreateDataJobComponent extends StatefulWidget {
 class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
   GlobalKey<FormState> formKey = GlobalKey();
 
-  late GetCompaniesBloc getCompaniesBloc;
+  late GetAllCompaniesBloc getAllCompaniesBloc;
 
   bool titleError = false;
   bool levelError = false;
@@ -50,7 +50,7 @@ class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
   List<CompanyEntity> listCompaniesEntities = [];
 
   _getcompanys() async {
-    getCompaniesBloc.add(DoGetCompaniesEvent());
+    getAllCompaniesBloc.add(DoGetAllCompaniesEvent());
   }
 
   _validateForm(formKey) {
@@ -82,7 +82,7 @@ class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
 
   @override
   void initState() {
-    getCompaniesBloc = BlocProvider.of<GetCompaniesBloc>(context);
+    getAllCompaniesBloc = BlocProvider.of<GetAllCompaniesBloc>(context);
     _getcompanys();
     super.initState();
   }
@@ -109,9 +109,9 @@ class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
       }
     }
 
-    return BlocBuilder<GetCompaniesBloc, GetCompaniesStates>(
+    return BlocBuilder<GetAllCompaniesBloc, GetAllCompaniesStates>(
         builder: (context, state) {
-      if (state is GetCompaniesSuccessState) {
+      if (state is GetAllCompaniesSuccessState) {
         listCompaniesEntities = state.listCompanies;
         listCompanies = state.listCompanies
             .map(
