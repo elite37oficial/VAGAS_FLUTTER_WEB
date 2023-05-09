@@ -11,7 +11,13 @@ Future<void> buildApp(EnvironmentEnum environmentArgs) async {
 
   String? loged = await SecureStorageManager.readData(StorageKeys.loged);
 
-  loged != null ? authService.loged() : null;
+  String? role = await SecureStorageManager.readData(StorageKeys.role);
+
+  if (role == "admin" && loged != null) {
+    authService.adminLoged();
+  } else if (role != "admin" && loged != null) {
+    authService.loged();
+  }
 
   setupLocator();
 

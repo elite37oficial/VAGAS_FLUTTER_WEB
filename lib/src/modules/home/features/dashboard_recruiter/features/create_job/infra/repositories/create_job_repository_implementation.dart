@@ -4,7 +4,6 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/repositories/create_job_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/datasources/create_job_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/models/create_job_model.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/models/create_job_response_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
 
@@ -14,8 +13,7 @@ class CreateJobRepositoryImplementation implements CreateJobRepository {
   const CreateJobRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, CreateJobResponseModel>> createJob(
-      CreateJobEntity params) async {
+  Future<Either<Failure, bool>> createJob(CreateJobEntity params) async {
     try {
       CreateJobModel createJobModel = CreateJobModel(
           userId: params.userId,
@@ -33,9 +31,9 @@ class CreateJobRepositoryImplementation implements CreateJobRepository {
           modality: params.modality,
           state: params.state);
 
-      var result = await datasource.createJob(createJobModel);
+      await datasource.createJob(createJobModel);
 
-      return Right(result);
+      return Right(true);
     } on DioError catch (e) {
       if (e.response!.statusCode == 500) {
         return Left(ServerFailure(MessagesHelper.serverMessage));

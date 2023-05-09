@@ -30,6 +30,7 @@ class TopButtonsComponent extends StatelessWidget {
                 ),
                 ResponsiveTextWidget(
                   text: "Filtros",
+                  selectable: false,
                   textStyle: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -73,6 +74,7 @@ class TopButtonsComponent extends StatelessWidget {
                       const Spacer(),
                       ResponsiveTextWidget(
                         text: "Nova",
+                        selectable: false,
                         textStyle:
                             Theme.of(context).textTheme.bodyMedium!.copyWith(
                                   fontWeight: FontWeight.w700,

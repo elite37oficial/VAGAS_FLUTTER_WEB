@@ -12,7 +12,7 @@ class CreateJobEntity extends Equatable {
   final String email;
   final String modality;
   final String link;
-  final int salary;
+  final double salary;
   final String state;
   final String city;
 

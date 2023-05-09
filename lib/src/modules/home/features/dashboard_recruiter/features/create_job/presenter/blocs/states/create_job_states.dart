@@ -7,7 +7,7 @@ class CreateJobInitialState extends CreateJobStates {}
 class CreateJobLoadingState extends CreateJobStates {}
 
 class CreateJobSuccessState extends CreateJobStates {
-  final CreateJobResponseEntity response;
+  final bool response;
 
   CreateJobSuccessState({required this.response});
 }

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/entities/create_job_entity.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/entities/create_job_response_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/domain/usecases/create_job_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
@@ -12,6 +11,7 @@ class CreateJobBloc extends Bloc<CreateJobEvent, CreateJobStates> {
   final CreateJobUsecase usecase;
   CreateJobBloc({required this.usecase}) : super(CreateJobInitialState()) {
     on<DoCreateJobEvent>(createJob);
+    on<CleanStateEvent>(cleanState);
   }
 
   void createJob(
@@ -42,8 +42,13 @@ class CreateJobBloc extends Bloc<CreateJobEvent, CreateJobStates> {
     result.fold(
       (Failure failure) =>
           emitter(CreateJobErrorState(message: failure.props.first.toString())),
-      (CreateJobResponseEntity success) =>
-          emitter(CreateJobSuccessState(response: success)),
+      (bool success) => emitter(CreateJobSuccessState(response: success)),
     );
   }
+
+  Future<void> cleanState(
+    CleanStateEvent event,
+    Emitter<CreateJobStates> emitter,
+  ) async =>
+      emitter(event.state);
 }

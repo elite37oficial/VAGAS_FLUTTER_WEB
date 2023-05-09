@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/forgot_password/presenter/blocs/blocs/forgot_password_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/forgot_password/presenter/components/forgot_password_background_component.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/forgot_password/presenter/components/forgot_password_button_component.dart';
+import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
@@ -73,6 +76,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     if (formKey.currentState!.validate()) {
       if (!emailError) {
+        emailError = false;
+
         forgotPasswordBloc.add(
           DoForgotPasswordEvent(email: emailController.text),
         );
@@ -134,148 +139,166 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
         return forgotPasswordBloc.state is ForgotPasswordLoadingState
             ? const LoadingPage()
-            : Scaffold(
-                body: Form(
-                  key: formKey,
-                  child: SizedBox(
+            : ResponsiveLayout(
+                mobile: Scaffold(
+                  body: SizedBox(
                     height: size.height,
                     width: size.width,
                     child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: Sizer.calculateHorizontal(context, 120),
-                            right: Sizer.calculateHorizontal(context, 120),
-                            top: 80,
-                            bottom: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 30),
-                                child: SvgPicture.asset(
-                                  AppImages.logoVagas,
-                                  color: AppColors.greyBlue,
-                                  package: "vagas_design_system",
-                                ),
-                              ),
+                      child: SizedBox(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: Sizer.calculateVertical(context, 180),
+                              bottom: Sizer.calculateVertical(context, 20),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 30, bottom: 70),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: ResponsiveTextWidget(
-                                  text:
-                                      "Insira o email para enviar o código de recuperação de senha.",
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                  maxLines: 4,
-                                  maxFontSize: 28,
-                                  minFontSize: 24,
-                                  textAlign: TextAlign.center,
-                                  tooltipSemantics: "senha",
-                                  hintSemantics: "senha",
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 80),
-                              child: AppWebFieldWidget(
-                                constraints: BoxConstraints(
-                                  minHeight: 35,
-                                  maxHeight: returnMaxHeight(),
-                                ),
-                                fieldSemantic: "Campo de texto do email.",
-                                hintSemantic: "email",
-                                controller: emailController,
-                                onError: emailError,
-                                hint: "Digite seu email",
-                                label: "Email",
-                                heigth: returnHeight(),
-                                width: Sizer.calculateHorizontal(context, 800),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  minHeight: 35,
-                                  maxHeight: returnMaxHeight(),
-                                ),
-                                child: SizedBox(
-                                  height: returnHeight(),
-                                  width:
-                                      Sizer.calculateHorizontal(context, 180),
-                                  child: ElevatedButtonTheme(
-                                    data: ElevatedButtonThemeData(
-                                      style: ElevatedButton.styleFrom(
-                                        elevation: 0,
-                                        backgroundColor: AppColors.greyBlue,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                      ),
-                                    ),
-                                    child: ElevatedButton(
-                                      onPressed: () => _validateForm(formKey),
-                                      child: ResponsiveTextWidget(
-                                        text: "Enviar",
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              color: AppColors.white,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 20,
-                                            ),
-                                        hintSemantics: "Senha",
-                                        tooltipSemantics: "Senha",
-                                        maxLines: 1,
+                            child: Form(
+                              key: formKey,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        Sizer.calculateHorizontal(context, 200),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Column(
+                                        children: [
+                                          ResponsiveTextWidget(
+                                            text: "Recuperação de Senha",
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w900,
+                                                ),
+                                            maxLines: 2,
+                                            maxFontSize: 37,
+                                            minFontSize: 20,
+                                            textScaleFactor: 1.5,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      top: Sizer.calculateVertical(context, 60),
+                                      bottom:
+                                          Sizer.calculateVertical(context, 50),
+                                    ),
+                                    child: AppWebFieldWidget(
+                                      constraints: BoxConstraints(
+                                        minHeight: 35,
+                                        maxHeight: returnMaxHeight(),
+                                      ),
+                                      fieldSemantic: "Campo de texto do email.",
+                                      hintSemantic: "email",
+                                      controller: emailController,
+                                      onError: emailError,
+                                      hint: "Digite seu email",
+                                      label: "Email",
+                                      heigth: returnHeight(),
+                                      width: Sizer.calculateHorizontal(
+                                          context, 200),
+                                    ),
+                                  ),
+                                  ForgotPasswordButtonComponent(
+                                    sendEmail: () => _validateForm(formKey),
+                                  ),
+                                ],
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: Sizer.calculateVertical(context, 120),
-                                  bottom: Sizer.calculateVertical(context, 70)),
-                              child: GestureDetector(
-                                onTap: () => context.pop(),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: ResponsiveTextWidget(
-                                    text: "Voltar",
-                                    selectable: false,
-                                    hintSemantics: "Voltar",
-                                    tooltipSemantics: "Voltar",
-                                    maxLines: 1,
-                                    maxFontSize: 16,
-                                    minFontSize: 12,
-                                    textAlign: TextAlign.center,
-                                    textStyle: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                          color: AppColors.greyBlue,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
                       ),
+                    ),
+                  ),
+                ),
+                desktop: Scaffold(
+                  body: SizedBox(
+                    height: size.height,
+                    width: size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ForgotPasswordLogoBackgroundComponent(size: size),
+                        SingleChildScrollView(
+                          child: SizedBox(
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: Sizer.calculateHorizontal(context, 40),
+                                  top: Sizer.calculateVertical(context, 80),
+                                  bottom: Sizer.calculateVertical(context, 20),
+                                ),
+                                child: Form(
+                                  key: formKey,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: Sizer.calculateHorizontal(
+                                            context, 100),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Column(
+                                            children: [
+                                              ResponsiveTextWidget(
+                                                text: "Recuperação de Senha",
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge!
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                    ),
+                                                maxLines: 2,
+                                                maxFontSize: 37,
+                                                minFontSize: 27,
+                                                textScaleFactor: 1.5,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          top: Sizer.calculateVertical(
+                                              context, 60),
+                                          bottom: Sizer.calculateVertical(
+                                              context, 50),
+                                        ),
+                                        child: AppWebFieldWidget(
+                                          constraints: BoxConstraints(
+                                            minHeight: 35,
+                                            maxHeight: returnMaxHeight(),
+                                          ),
+                                          fieldSemantic:
+                                              "Campo de texto do email.",
+                                          hintSemantic: "email",
+                                          controller: emailController,
+                                          onError: emailError,
+                                          hint: "Digite seu email",
+                                          label: "Email",
+                                          heigth: returnHeight(),
+                                          width: Sizer.calculateHorizontal(
+                                              context, 100),
+                                        ),
+                                      ),
+                                      ForgotPasswordButtonComponent(
+                                        sendEmail: () => _validateForm(formKey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

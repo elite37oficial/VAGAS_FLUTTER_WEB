@@ -16,7 +16,7 @@ class DoCreateJobEvent extends CreateJobEvent {
   final String email;
   final String link;
   final String modality;
-  final int salary;
+  final double salary;
   final String state;
   final String city;
 
@@ -54,4 +54,15 @@ class DoCreateJobEvent extends CreateJobEvent {
         city,
         state,
       ];
+}
+
+class CleanStateEvent extends CreateJobEvent {
+  final CreateJobStates state;
+
+  const CleanStateEvent({
+    required this.state,
+  });
+
+  @override
+  List<CreateJobStates> get props => [state];
 }

@@ -13,6 +13,7 @@ class JobModel extends JobEntity {
     required super.period,
     required super.state,
     required super.city,
+    required super.status,
     required super.description,
     required super.modality,
     required super.regime,
@@ -33,6 +34,7 @@ class JobModel extends JobEntity {
       'city': city,
       'modality': modality,
       'regime': regime,
+      'status': status,
       'salary': salary,
       'seniority': seniority,
       'period': period,
@@ -61,6 +63,7 @@ class JobModel extends JobEntity {
       link: map['link'] ?? '',
       whatsapp: map['whatsapp'] ?? '',
       email: map['email'] ?? '',
+      status: map['status'] ?? '',
       createdDate: map['createdDate'] ?? 0,
     );
   }

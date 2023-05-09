@@ -51,7 +51,7 @@ class CreateJobModel extends CreateJobEntity {
       companyDescription: map['company_description'] ?? '',
       city: map['city'] ?? '',
       modality: map['modality'] ?? '',
-      salary: map['salary'] ?? 0,
+      salary: map['salary'] ?? 0.00,
       state: map['state'] ?? '',
     );
   }

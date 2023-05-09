@@ -71,8 +71,15 @@ final appRoutesConfig = GoRouter(
     GoRoute(
       path: RouteKeys.auth,
       name: RouteKeys.auth.replaceAll("/", ""),
-      redirect: (_, state) =>
-          authService.isAuthenticated ? RouteKeys.home : null,
+      redirect: (_, state) {
+        if (authService.isAuthenticated) {
+          return RouteKeys.home;
+        } else if (authService.isAdminAuthenticated) {
+          return RouteKeys.homeAdmin;
+        } else {
+          return null;
+        }
+      },
       pageBuilder: (context, state) => const NoTransitionPage(
         child: RedirectPageRoute(
           duration: Duration(milliseconds: 0),
@@ -123,7 +130,7 @@ final appRoutesConfig = GoRouter(
     GoRoute(
       path: RouteKeys.homeAdmin,
       name: RouteKeys.homeAdmin.replaceAll("/", ""),
-      redirect: (_, __) => !authService.isAuthenticated
+      redirect: (_, __) => !authService.isAdminAuthenticated
           ? "${RouteKeys.auth}${RouteKeys.login}"
           : null,
       pageBuilder: (context, state) {

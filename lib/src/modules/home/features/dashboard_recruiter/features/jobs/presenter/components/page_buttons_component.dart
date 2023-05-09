@@ -42,6 +42,7 @@ class PageButtonsComponent extends StatelessWidget {
                 hintSemantics: "anterior",
                 child: const ResponsiveTextWidget(
                   text: "Anterior",
+                  selectable: false,
                   maxLines: 1,
                   hintSemantics: "anterior",
                   tooltipSemantics: "anterior",
@@ -67,6 +68,7 @@ class PageButtonsComponent extends StatelessWidget {
                 hintSemantics: "próximo",
                 child: const ResponsiveTextWidget(
                   text: "Próximo",
+                  selectable: false,
                   maxLines: 1,
                   hintSemantics: "próximo",
                   tooltipSemantics: "próximo",

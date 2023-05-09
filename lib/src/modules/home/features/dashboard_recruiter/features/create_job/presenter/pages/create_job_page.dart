@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/create_job_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/components/create_contact_job_component.dart';
@@ -42,14 +43,37 @@ class _CreatejobPageState extends State<CreatejobPage> {
 
   late CreateJobBloc createJobBloc;
 
+  _showSuccessAlert(String message) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return SuccessPopUpWidget.show(
+          context: context,
+          height: Sizer.calculateVertical(context, 250),
+          width: Sizer.calculateHorizontal(context, 350) <= 600
+              ? Sizer.calculateHorizontal(context, 350)
+              : 600,
+          message: message,
+          function: () {
+            context.pop();
+            context.pop();
+          },
+        );
+      },
+    );
+  }
+
   createJob() async {
     String userId =
         await SecureStorageManager.readData(StorageKeys.userId) ?? "";
-    int salary = int.parse(salaryController.text
+    double salary = double.parse(salaryController.text
         .replaceAll("R\$", "")
         .replaceAll(" ", "")
         .replaceAll(".", "")
-        .replaceAll(",", ""));
+        .replaceAll(",", "."));
+
     createJobBloc.add(DoCreateJobEvent(
       title: titleController.text,
       description: descriptionController.text,
@@ -94,8 +118,12 @@ class _CreatejobPageState extends State<CreatejobPage> {
         bloc: createJobBloc,
         builder: (context, state) {
           if (state is CreateJobSuccessState) {
-            changePage(3);
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              _showSuccessAlert("Sua vaga foi publicada com sucesso!");
+            });
+            createJobBloc.add(CleanStateEvent(state: CreateJobInitialState()));
           }
+
           if (state is CreateJobErrorState) {
             log(state.message);
           }

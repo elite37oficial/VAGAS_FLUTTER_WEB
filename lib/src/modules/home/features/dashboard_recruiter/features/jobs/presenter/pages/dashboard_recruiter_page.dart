@@ -100,9 +100,9 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
-                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
-                      ? Sizer.calculateHorizontal(context, 40)
-                      : 180,
+                  widthPopup: Sizer.calculateHorizontal(context, 70) >= 250
+                      ? Sizer.calculateHorizontal(context, 70)
+                      : 250,
                   username: username,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
@@ -196,9 +196,9 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
-                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
-                      ? Sizer.calculateHorizontal(context, 40)
-                      : 180,
+                  widthPopup: Sizer.calculateHorizontal(context, 60) >= 220
+                      ? Sizer.calculateHorizontal(context, 60)
+                      : 220,
                   username: username,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
