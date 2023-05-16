@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/auth/features/reset_password/domain/entities/reset_password_entity.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/reset_password/domain/usecases/reset_password_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
@@ -20,7 +21,12 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordStates> {
   ) async {
     emitter(ResetPasswordLoadingState());
 
-    var result = await resetPasswordUsecase(event.email);
+    ResetPasswordEntity resetPasswordEntity = ResetPasswordEntity(
+      password: event.password,
+      token: event.token,
+    );
+
+    var result = await resetPasswordUsecase(resetPasswordEntity);
 
     result.fold(
       (Failure failure) => emitter(

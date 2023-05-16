@@ -12,18 +12,18 @@ class ForgotPasswordRepositoryImplementation
   const ForgotPasswordRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, String>> forgotPassword(String email) async {
+  Future<Either<Failure, bool>> forgotPassword(String email) async {
     try {
-      var result = await datasource.forgotPassword(email);
+      await datasource.forgotPassword(email);
 
-      return Right(result);
+      return Right(true);
     } on DioError catch (e) {
-      if (e.response!.statusCode == 500) {
+      if (e.response?.statusCode == 500) {
         return Left(ServerFailure(MessagesHelper.serverMessage));
-      } else if (e.response!.statusCode == 403) {
+      } else if (e.response?.statusCode == 403) {
         return Left(InvalidCredentialsFailure(
             MessagesHelper.invalidCredentialsMessage));
-      } else if (e.response!.statusCode == 400) {
+      } else if (e.response?.statusCode == 400) {
         return Left(BadRequestFailure(MessagesHelper.badRequestMessage));
       } else {
         return Left(GeneralFailure(e.toString()));

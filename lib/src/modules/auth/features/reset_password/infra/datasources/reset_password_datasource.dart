@@ -1,3 +1,5 @@
+import 'package:vagas_flutter_web/src/modules/auth/features/reset_password/infra/models/reset_password_model.dart';
+
 abstract class ResetPasswordDatasource {
-  Future resetPassword(String email);
+  Future resetPassword(ResetPasswordModel resetPassword);
 }
