@@ -1,22 +1,24 @@
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/entities/create_company_entity.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/domain/entities/edit_company_entity.dart';
 
-class CreateCompanyModel extends CreateCompanyEntity {
-  const CreateCompanyModel({
-    super.id,
+class EditCompanyModel extends EditCompanyEntity {
+  const EditCompanyModel({
+    required super.id,
     required super.name,
     required super.location,
     required super.description,
   });
+
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'location': location,
       'description': description,
     };
   }
 
-  factory CreateCompanyModel.fromMap(Map<String, dynamic> map) {
-    return CreateCompanyModel(
+  factory EditCompanyModel.fromMap(Map<String, dynamic> map) {
+    return EditCompanyModel(
       id: map["id"],
       name: map["name"],
       location: map["location"],

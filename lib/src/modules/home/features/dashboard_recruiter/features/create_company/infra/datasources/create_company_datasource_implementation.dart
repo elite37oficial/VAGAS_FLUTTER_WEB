@@ -12,13 +12,12 @@ class CreateCompanyDatasourceImplementation implements CreateCompanyDatasource {
   @override
   Future<CreateCompanyEntity> createCompany(
       CreateCompanyModel companyData) async {
-    final response = await requester.post(
+    return await requester.post(
       url: Endpoints.companies,
       body: companyData.toMap(),
       fromJson: (value) {
-        return CreateCompanyModel.fromMap(value);
+        return CreateCompanyModel.fromMap({"id": value});
       },
     );
-    return response;
   }
 }

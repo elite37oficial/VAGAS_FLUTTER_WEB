@@ -3,7 +3,6 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/repositories/create_company_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/create_company_abs_usecase.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
 
 class CreateCompanyUsecase
     implements UsecaseCreateCompany<CreateCompanyEntity, CreateCompanyEntity> {
