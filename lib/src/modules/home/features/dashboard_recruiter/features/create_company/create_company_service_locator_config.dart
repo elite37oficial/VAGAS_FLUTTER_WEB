@@ -1,8 +1,10 @@
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/repositories/create_company_repository.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/change_image_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/create_company_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/create_company_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/create_company_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/create_company_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/change_image_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator_config.dart';
@@ -41,8 +43,9 @@ class CreateCompanyServiceLocatorConfig
 
   @override
   void registerManagerState(ServiceLocatorWrapper sl) {
-    sl.registerFactory(
-        () => CreateCompanyBloc(usecase: sl<CreateCompanyUsecase>()));
+    sl.registerFactory(() => CreateCompanyBloc(
+        usecase: sl<CreateCompanyUsecase>(),
+        changeImageBloc: ChangeImageBloc(usecase: sl<ChangeImageUsecase>())));
   }
 
   @override

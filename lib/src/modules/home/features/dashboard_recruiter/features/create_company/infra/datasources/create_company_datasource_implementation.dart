@@ -1,4 +1,3 @@
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/entities/create_company_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/create_company_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/models/create_company_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
@@ -10,13 +9,18 @@ class CreateCompanyDatasourceImplementation implements CreateCompanyDatasource {
   CreateCompanyDatasourceImplementation({required this.requester});
 
   @override
-  Future<CreateCompanyEntity> createCompany(
+  Future<CreateCompanyModel> createCompany(
       CreateCompanyModel companyData) async {
     return await requester.post(
       url: Endpoints.companies,
       body: companyData.toMap(),
       fromJson: (value) {
-        return CreateCompanyModel.fromMap({"id": value});
+        return CreateCompanyModel(
+          id: value["id"] as String,
+          name: companyData.name,
+          location: companyData.location,
+          description: companyData.description,
+        );
       },
     );
   }

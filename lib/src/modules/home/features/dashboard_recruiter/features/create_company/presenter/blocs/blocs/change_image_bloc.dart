@@ -21,7 +21,6 @@ class ChangeImageBloc extends Bloc<ChangeImageEvent, ChangeImageStates> {
       companyId: event.companyId,
       image64: event.image64,
     );
-
     var result = await usecase(params);
 
     result.fold(

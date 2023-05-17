@@ -2,9 +2,9 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 
 class ChangeImageModel extends ChangeImageEntity {
   const ChangeImageModel({
-    required super.companyId,
-    required super.image64,
-  });
+    required String? companyId,
+    required String? image64,
+  }) : super(companyId: companyId, image64: image64);
   Map<String, dynamic> toMap() {
     return {
       'companyId': companyId,

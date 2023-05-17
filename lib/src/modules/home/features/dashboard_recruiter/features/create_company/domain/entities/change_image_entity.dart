@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class ChangeImageEntity extends Equatable {
-  final String companyId;
-  final String image64;
+  final String? companyId;
+  final String? image64;
 
   const ChangeImageEntity({
     required this.companyId,

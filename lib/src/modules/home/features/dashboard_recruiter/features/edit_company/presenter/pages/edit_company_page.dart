@@ -7,10 +7,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/change_image_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/create_company_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/change_image_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/create_company_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/change_image_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/create_company_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/change_image_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/events/create_company_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/states/create_company_states.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/datasources/create_job_datasource_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/infra/repositories/create_job_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
+import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class EditCompanyPage extends StatefulWidget {
@@ -27,6 +37,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
   String? imageName;
   String? imageBase64;
 
+  bool imageError = false;
   bool nameError = false;
   bool stateError = false;
   bool cityError = false;
@@ -107,19 +118,23 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
       cityError = cityTextController.text.isEmpty;
       descriptionError = descriptionController.text.isEmpty ||
           descriptionController.text.length < 6;
+      imageError = imageBase64.toString().isEmpty;
     });
 
     if (formKey.currentState!.validate()) {
       final stateTextControllerText = stateTextController.text;
       final cityTextControllerText = cityTextController.text;
-      if (!nameError && !stateError && !cityError && !descriptionError) {
-        context.read<CreateCompanyBloc>().add(
-              DoCreateCompanyEvent(
-                name: nameController.text,
-                location: "$stateTextControllerText - $cityTextControllerText",
-                description: descriptionController.text,
-              ),
-            );
+      if (!nameError &&
+          !stateError &&
+          !cityError &&
+          !descriptionError &&
+          !imageError) {
+        context.read<CreateCompanyBloc>().add(DoCreateCompanyEvent(
+              name: nameController.text,
+              location: "$stateTextControllerText - $cityTextControllerText",
+              description: descriptionController.text,
+              image64: imageBase64.toString(),
+            ));
       }
     }
   }
@@ -174,7 +189,29 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    final ChangeImageBloc changeImageBloc = ChangeImageBloc(
+      usecase: ChangeImageUsecase(
+        repository: ChangeImageRepositoryImplementation(
+          datasource: ChangeImageDatasourceImplementation(
+            requester: AppRequesterImplementation(),
+          ),
+        ),
+      ),
+    );
+
+    final CreateCompanyBloc createCompanyBloc = CreateCompanyBloc(
+      usecase: CreateCompanyUsecase(
+        repository: CreateCompanyRepositoryImplementation(
+          datasource: CreateCompanyDatasourceImplementation(
+            requester: AppRequesterImplementation(),
+          ),
+        ),
+      ),
+      changeImageBloc: changeImageBloc,
+    );
+
     return BlocBuilder<CreateCompanyBloc, CreateCompanyStates>(
+      bloc: createCompanyBloc,
       builder: (context, state) {
         if (state is CreateCompanyLoadingState) {
           return const LoadingPage();

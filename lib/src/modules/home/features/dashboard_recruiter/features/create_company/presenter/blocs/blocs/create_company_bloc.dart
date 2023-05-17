@@ -1,15 +1,16 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/entities/create_company_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/create_company_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/change_image_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/events/change_image_events.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/events/create_company_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/states/create_company_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
   final CreateCompanyUsecase usecase;
-  CreateCompanyBloc({required this.usecase})
+  final ChangeImageBloc changeImageBloc;
+  CreateCompanyBloc({required this.usecase, required this.changeImageBloc})
       : super(CreateCompanyInitialState()) {
     on<DoCreateCompanyEvent>(createCompany);
   }
@@ -28,10 +29,15 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
 
     var result = await usecase(createCompanyEntity);
     result.fold(
-      (Failure failure) => emitter(
-          CreateCompanyErrorState(message: failure.props.first.toString())),
-      (CreateCompanyEntity success) =>
-          emitter(CreateCompanySuccessState(company: success)),
-    );
+        (Failure failure) => emitter(
+            CreateCompanyErrorState(message: failure.props.first.toString())),
+        (CreateCompanyEntity success) {
+      emitter(CreateCompanySuccessState(company: success));
+      final companyId = success.id;
+      final image64 = event.image64;
+
+      changeImageBloc
+          .add(DoChangeImageEvent(companyId: companyId, image64: image64));
+    });
   }
 }
