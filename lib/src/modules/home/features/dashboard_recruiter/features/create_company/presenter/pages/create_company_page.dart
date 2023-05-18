@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:estados_municipios/estados_municipios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/change_image_usecase.dart';
@@ -33,6 +32,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
 
   final ImagePicker picker = ImagePicker();
   String? imageName;
+  String? imageType;
   String? imageBase64;
 
   bool imageError = false;
@@ -54,6 +54,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
         if ((image.path.length / 1024) / 1024 <= 12) {
           setState(() => imageName = image.name);
           final List<int> imageBytes = await image.readAsBytes();
+          imageType = image.mimeType;
           imageBase64 = base64.encode(imageBytes);
         }
       }
@@ -131,6 +132,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               name: nameController.text,
               location: "$stateTextControllerText - $cityTextControllerText",
               description: descriptionController.text,
+              imageType: imageType.toString(),
               image64: imageBase64.toString(),
             ));
       }
