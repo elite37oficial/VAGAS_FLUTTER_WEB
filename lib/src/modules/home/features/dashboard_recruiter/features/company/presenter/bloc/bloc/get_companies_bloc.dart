@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/entities/get_companies_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/usecases/get_companies_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/bloc/bloc/get_company_image_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/bloc/events/get_company_image_event.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
@@ -11,8 +13,11 @@ part "../states/get_companies_states.dart";
 
 class GetCompaniesBloc extends Bloc<GetCompaniesEvent, GetCompaniesStates> {
   final GetCompaniesUsecase usecase;
-  GetCompaniesBloc({required this.usecase})
-      : super(GetCompaniesInitialState()) {
+  // final GetCompanyImageBloc getCompanyImageBloc;
+  GetCompaniesBloc({
+    required this.usecase,
+    //  required this.getCompanyImageBloc
+  }) : super(GetCompaniesInitialState()) {
     on<DoGetCompaniesEvent>(getCompanies);
   }
 
@@ -25,10 +30,10 @@ class GetCompaniesBloc extends Bloc<GetCompaniesEvent, GetCompaniesStates> {
     var result = await usecase(NoParams());
 
     result.fold(
-      (Failure failure) => emitter(
-          GetCompaniesErrorState(message: failure.props.first.toString())),
-      (GetCompaniesEntity success) => emitter(
-          GetCompaniesSuccessState(listCompanies: success.listCompanies)),
-    );
+        (Failure failure) => emitter(
+            GetCompaniesErrorState(message: failure.props.first.toString())),
+        (GetCompaniesEntity success) {
+      emitter(GetCompaniesSuccessState(listCompanies: success.listCompanies));
+    });
   }
 }

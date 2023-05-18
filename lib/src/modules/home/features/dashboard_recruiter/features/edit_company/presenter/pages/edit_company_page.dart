@@ -133,6 +133,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
               name: nameController.text,
               location: "$stateTextControllerText - $cityTextControllerText",
               description: descriptionController.text,
+              imageType: descriptionController.text,
               image64: imageBase64.toString(),
             ));
       }
