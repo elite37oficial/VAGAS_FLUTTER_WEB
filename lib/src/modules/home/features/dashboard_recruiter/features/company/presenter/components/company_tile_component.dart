@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
@@ -6,6 +8,7 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/infra/repositories/edit_company_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/bloc/edit_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/pages/edit_company_page.dart';
+import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
@@ -48,13 +51,14 @@ class CompanyTileComponent extends StatelessWidget {
                           ? 25
                           : Sizer.calculateHorizontal(context, 10),
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        companyTileData.image64,
-                        width: 20,
-                        height: 20,
-                      ),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: "",
+                      placeholderErrorBuilder: (context, error, stackTrace) =>
+                          Container(),
+                      image: Endpoints.getCompanyImageById(companyTileData.id),
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Container();
+                      },
                     ),
                   ),
                   Expanded(

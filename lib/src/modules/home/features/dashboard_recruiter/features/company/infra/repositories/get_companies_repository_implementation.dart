@@ -3,10 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/repositories/get_companies_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/datasources/get_companies_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/models/get_companies_model.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/models/company_model.dart';
 
 class GetCompaniesRepositoryImplementation implements GetCompaniesRepository {
   final GetCompaniesDatasource datasource;

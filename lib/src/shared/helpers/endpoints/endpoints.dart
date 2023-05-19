@@ -20,7 +20,7 @@ abstract class Endpoints {
 
   static String getJobById(String jobId) => "$baseURL/jobs/id/$jobId";
   static String getUserById(String userId) => "$baseURL/users/id/$userId";
-  static String getCompanyImageById(String companyId) =>
+  static String getCompanyImageById(String? companyId) =>
       "$baseURL/companies-image/id/$companyId";
   static String getCompanyById(String companyId) =>
       "$baseURL/companies/id/$companyId";

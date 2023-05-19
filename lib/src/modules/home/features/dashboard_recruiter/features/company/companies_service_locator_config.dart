@@ -1,17 +1,12 @@
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/repositories/get_companies_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/usecases/get_companies_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/usecases/get_company_image_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/datasources/get_companies_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/datasources/get_companies_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/datasources/get_company_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/repositories/get_companies_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/bloc/bloc/get_companies_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/infra/repositories/get_company_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator_config.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator_wrapper.dart';
-
-import 'presenter/bloc/bloc/get_company_image_bloc.dart';
 
 class CompaniesServiceLocatorConfig
     implements ServiceLocatorConfigInternals, ServiceLocatorConfig {
@@ -48,8 +43,6 @@ class CompaniesServiceLocatorConfig
   void registerManagerState(ServiceLocatorWrapper sl) {
     sl.registerFactory(
         () => GetCompaniesBloc(usecase: sl<GetCompaniesUsecase>()));
-    // getCompanyImageBloc:
-    // GetCompanyImageBloc(usecase: sl<GetCompanyImageUsecase>())));
   }
 
   @override

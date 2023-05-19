@@ -135,6 +135,9 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               imageType: imageType.toString(),
               image64: imageBase64.toString(),
             ));
+        return WidgetsBinding.instance.addPostFrameCallback((_) async {
+          _showSuccessAlert(MessagesHelper.successRegisterMessage);
+        });
       }
     }
   }
