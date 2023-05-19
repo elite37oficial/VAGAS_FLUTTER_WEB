@@ -6,6 +6,7 @@ class EditCompanyModel extends EditCompanyEntity {
     required super.name,
     required super.location,
     required super.description,
+    super.image64,
   });
 
   Map<String, dynamic> toMap() {

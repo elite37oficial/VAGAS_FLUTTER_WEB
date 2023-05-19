@@ -191,6 +191,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     final ChangeImageBloc changeImageBloc = ChangeImageBloc(
       usecase: ChangeImageUsecase(
         repository: ChangeImageRepositoryImplementation(
