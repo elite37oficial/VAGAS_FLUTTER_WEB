@@ -136,8 +136,10 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
               name: nameController.text,
               location: "$stateTextControllerText - $cityTextControllerText",
               description: descriptionController.text,
-              imageType: imageType.toString(),
-              image64: imageBase64.toString(),
+            ));
+        context.read<EditImageBloc>().add(DoEditImageEvent(
+              companyId: widget.id,
+              image64: "data:$imageType;base64,$imageBase64",
             ));
 
         return WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -197,29 +199,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    final EditImageBloc editImageBloc = EditImageBloc(
-      usecase: EditImageUsecase(
-        repository: EditImageRepositoryImplementation(
-          datasource: EditImageDatasourceImplementation(
-            requester: AppRequesterImplementation(),
-          ),
-        ),
-      ),
-    );
-
-    final EditCompanyBloc editCompanyBloc = EditCompanyBloc(
-      usecase: EditCompanyUsecase(
-        repository: EditCompanyRepositoryImplementation(
-          datasource: EditCompanyDatasourceImplementation(
-            requester: AppRequesterImplementation(),
-          ),
-        ),
-      ),
-      editImageBloc: editImageBloc,
-    );
-
     return BlocBuilder<EditCompanyBloc, EditCompanyStates>(
-      bloc: editCompanyBloc,
       builder: (context, state) {
         if (state is EditCompanyLoadingState) {
           return const LoadingPage();
@@ -231,6 +211,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
         }
         if (state is EditCompanyErrorState) {
           log(state.message);
+
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             _showErrorAlert(state.message);
           });

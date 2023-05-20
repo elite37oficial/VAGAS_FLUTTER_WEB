@@ -114,14 +114,15 @@ class CompanyTileComponent extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                editImageBloc: EditImageBloc(
-                                  usecase: EditImageUsecase(
-                                    repository:
-                                        EditImageRepositoryImplementation(
-                                      datasource:
-                                          EditImageDatasourceImplementation(
-                                        requester: AppRequesterImplementation(),
-                                      ),
+                              ),
+                            ),
+                            BlocProvider<EditImageBloc>(
+                              create: (context) => EditImageBloc(
+                                usecase: EditImageUsecase(
+                                  repository: EditImageRepositoryImplementation(
+                                    datasource:
+                                        EditImageDatasourceImplementation(
+                                      requester: AppRequesterImplementation(),
                                     ),
                                   ),
                                 ),
