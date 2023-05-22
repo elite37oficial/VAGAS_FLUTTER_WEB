@@ -4,30 +4,29 @@ import 'dart:developer';
 import 'package:estados_municipios/estados_municipios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/change_image_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/create_company_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/change_image_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/create_company_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/change_image_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/create_company_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/change_image_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/create_company_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/events/create_company_event.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/states/create_company_states.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/bloc/edit_company_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/bloc/edit_image_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/bloc/get_company_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/events/edit_company_event.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/events/edit_image_event.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/events/get_company_event.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/states/edit_company_states.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/states/get_company_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
-import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
-class CreateCompanyPage extends StatefulWidget {
-  const CreateCompanyPage({Key? key}) : super(key: key);
+class EditCompanyPage extends StatefulWidget {
+  final String id;
+  const EditCompanyPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  State<CreateCompanyPage> createState() => _CreateCompanyPageState();
+  State<EditCompanyPage> createState() => _EditCompanyPageState();
 }
 
-class _CreateCompanyPageState extends State<CreateCompanyPage> {
+class _EditCompanyPageState extends State<EditCompanyPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final ImagePicker picker = ImagePicker();
@@ -70,7 +69,22 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   @override
   void initState() {
     super.initState();
-    _loadEstados();
+    context.read<GetCompanyBloc>().add(DoGetCompanyEvent(id: widget.id));
+
+    context.read<GetCompanyBloc>().stream.listen((state) {
+      if (state is GetCompanySuccessState) {
+        _loadEstados();
+        final companyName = state.getCompany.name;
+        final companyState = state.getCompany.location.substring(0, 2);
+        final companyCity = state.getCompany.location.substring(5);
+        final companyDescription = state.getCompany.description;
+        _onEstadoChange(companyState);
+        _loadMunicipios(companyState);
+        cityTextController.text = companyCity;
+        nameController.text = companyName;
+        descriptionController.text = companyDescription;
+      }
+    });
   }
 
   Future<void> _loadEstados() async {
@@ -123,21 +137,20 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
     if (formKey.currentState!.validate()) {
       final stateTextControllerText = stateTextController.text;
       final cityTextControllerText = cityTextController.text;
-      if (!nameError &&
-          !stateError &&
-          !cityError &&
-          !descriptionError &&
-          !imageError) {
-        context.read<CreateCompanyBloc>().add(DoCreateCompanyEvent(
+      if (!nameError && !stateError && !cityError && !descriptionError) {
+        context.read<EditCompanyBloc>().add(DoEditCompanyEvent(
+              id: widget.id,
               name: nameController.text,
               location: "$stateTextControllerText - $cityTextControllerText",
               description: descriptionController.text,
-              imageType: imageType.toString(),
-              image64: imageBase64.toString(),
             ));
-        return WidgetsBinding.instance.addPostFrameCallback((_) async {
-          _showSuccessAlert(MessagesHelper.successRegisterMessage);
-        });
+
+        if (!imageError) {
+          context.read<EditImageBloc>().add(DoEditImageEvent(
+                companyId: widget.id,
+                image64: "data:$imageType;base64,$imageBase64",
+              ));
+        }
       }
     }
   }
@@ -158,7 +171,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               : 370,
           message: message,
           function: () {
-            Navigator.pop(context);
+            context.pop();
           },
         );
       },
@@ -181,7 +194,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               : 370,
           message: message,
           function: () {
-            Navigator.pop(context);
+            context.pop();
           },
         );
       },
@@ -192,39 +205,19 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    final ChangeImageBloc changeImageBloc = ChangeImageBloc(
-      usecase: ChangeImageUsecase(
-        repository: ChangeImageRepositoryImplementation(
-          datasource: ChangeImageDatasourceImplementation(
-            requester: AppRequesterImplementation(),
-          ),
-        ),
-      ),
-    );
-
-    final CreateCompanyBloc createCompanyBloc = CreateCompanyBloc(
-      usecase: CreateCompanyUsecase(
-        repository: CreateCompanyRepositoryImplementation(
-          datasource: CreateCompanyDatasourceImplementation(
-            requester: AppRequesterImplementation(),
-          ),
-        ),
-      ),
-    );
-
-    return BlocBuilder<CreateCompanyBloc, CreateCompanyStates>(
-      bloc: createCompanyBloc,
+    return BlocBuilder<EditCompanyBloc, EditCompanyStates>(
       builder: (context, state) {
-        if (state is CreateCompanyLoadingState) {
+        if (state is EditCompanyLoadingState) {
           return const LoadingPage();
         }
-        if (state is CreateCompanySuccessState) {
+        if (state is EditCompanySuccessState) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            _showSuccessAlert(MessagesHelper.successRegisterMessage);
+            _showSuccessAlert(MessagesHelper.successEditMessage);
           });
         }
-        if (state is CreateCompanyErrorState) {
+        if (state is EditCompanyErrorState) {
           log(state.message);
+
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             _showErrorAlert(state.message);
           });
@@ -262,7 +255,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: ResponsiveTextWidget(
-                                    text: "Cadastre sua empresa",
+                                    text: "Editar empresa",
                                     textStyle: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -271,8 +264,8 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                                           color: AppColors.black,
                                         ),
                                     maxLines: 2,
-                                    hintSemantics: "cadastre",
-                                    tooltipSemantics: "cadastre",
+                                    hintSemantics: "editar",
+                                    tooltipSemantics: "editar",
                                     minFontSize: 24,
                                   ),
                                 ),
@@ -347,7 +340,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: imageName ??
-                                          'Escolha a imagem da sua empresa',
+                                          'Altere a imagem da sua empresa',
                                     ),
                                     maxLines: 1,
                                   ),

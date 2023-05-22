@@ -5,8 +5,8 @@ abstract class ChangeImageEvent extends Equatable {
 }
 
 class DoChangeImageEvent extends ChangeImageEvent {
-  final String companyId;
-  final String image64;
+  final String? companyId;
+  final String? image64;
 
   const DoChangeImageEvent({
     required this.companyId,
@@ -14,5 +14,5 @@ class DoChangeImageEvent extends ChangeImageEvent {
   });
 
   @override
-  List<Object> get props => [companyId, image64];
+  List<Object?> get props => [companyId, image64];
 }

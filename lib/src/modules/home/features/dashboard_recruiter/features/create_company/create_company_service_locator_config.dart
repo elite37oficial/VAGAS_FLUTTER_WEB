@@ -42,7 +42,10 @@ class CreateCompanyServiceLocatorConfig
   @override
   void registerManagerState(ServiceLocatorWrapper sl) {
     sl.registerFactory(
-        () => CreateCompanyBloc(usecase: sl<CreateCompanyUsecase>()));
+      () => CreateCompanyBloc(
+        usecase: sl<CreateCompanyUsecase>(),
+      ),
+    );
   }
 
   @override

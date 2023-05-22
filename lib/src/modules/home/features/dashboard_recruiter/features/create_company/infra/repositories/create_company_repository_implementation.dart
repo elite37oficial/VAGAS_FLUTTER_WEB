@@ -16,12 +16,14 @@ class CreateCompanyRepositoryImplementation implements CreateCompanyRepository {
       CreateCompanyEntity companyData) async {
     try {
       CreateCompanyModel companyModel = CreateCompanyModel(
+        id: companyData.id,
         name: companyData.name,
         location: companyData.location,
         description: companyData.description,
       );
 
       var result = await datasource.createCompany(companyModel);
+
       return Right(result);
     } on DioError catch (e) {
       if (e.response!.statusCode == 500) {
