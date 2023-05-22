@@ -210,7 +210,6 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
           ),
         ),
       ),
-      changeImageBloc: changeImageBloc,
     );
 
     return BlocBuilder<CreateCompanyBloc, CreateCompanyStates>(

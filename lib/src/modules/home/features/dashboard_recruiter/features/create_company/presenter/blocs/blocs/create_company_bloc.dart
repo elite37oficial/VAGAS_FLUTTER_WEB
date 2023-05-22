@@ -9,8 +9,7 @@ import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
   final CreateCompanyUsecase usecase;
-  final ChangeImageBloc changeImageBloc;
-  CreateCompanyBloc({required this.usecase, required this.changeImageBloc})
+  CreateCompanyBloc({required this.usecase})
       : super(CreateCompanyInitialState()) {
     on<DoCreateCompanyEvent>(createCompany);
   }
@@ -33,12 +32,6 @@ class CreateCompanyBloc extends Bloc<CreateCompanyEvent, CreateCompanyStates> {
             CreateCompanyErrorState(message: failure.props.first.toString())),
         (CreateCompanyEntity success) {
       emitter(CreateCompanySuccessState(company: success));
-      final companyId = success.id;
-      final imageType = event.imageType;
-      final image64 = "data:$imageType;base64,${event.image64}";
-
-      changeImageBloc
-          .add(DoChangeImageEvent(companyId: companyId, image64: image64));
     });
   }
 }

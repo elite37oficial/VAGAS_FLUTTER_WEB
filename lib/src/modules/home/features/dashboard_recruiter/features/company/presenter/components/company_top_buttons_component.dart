@@ -82,17 +82,6 @@ class CompanyTopButtonsComponent extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                changeImageBloc: ChangeImageBloc(
-                                  usecase: ChangeImageUsecase(
-                                    repository:
-                                        ChangeImageRepositoryImplementation(
-                                      datasource:
-                                          ChangeImageDatasourceImplementation(
-                                        requester: AppRequesterImplementation(),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ),
                             ),
                           ],

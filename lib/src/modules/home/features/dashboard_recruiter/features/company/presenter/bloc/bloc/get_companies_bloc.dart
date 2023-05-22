@@ -27,7 +27,7 @@ class GetCompaniesBloc extends Bloc<GetCompaniesEvent, GetCompaniesStates> {
     result.fold(
         (Failure failure) => emitter(
             GetCompaniesErrorState(message: failure.props.first.toString())),
-        (GetCompaniesEntity success) async {
+        (GetCompaniesEntity success) {
       emitter(GetCompaniesSuccessState(listCompanies: success.listCompanies));
     });
   }
