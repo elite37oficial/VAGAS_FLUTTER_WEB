@@ -10,11 +10,10 @@ class ForgotPasswordDatasourceImplementation
 
   @override
   Future forgotPassword(String email) async {
-    // return await requester.post(
-    //   url: Endpoints.login,
-    //   body: {"email": email},
-    //   fromJson: (value) {},
-    // );
-    return "teste";
+    return await requester.post(
+      url: Endpoints.forgotPassword,
+      body: {"email": email},
+      fromJson: (_){},
+    );
   }
 }

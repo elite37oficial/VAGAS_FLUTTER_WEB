@@ -118,7 +118,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       bloc: forgotPasswordBloc,
       builder: (context, state) {
         if (state is ForgotPasswordSuccessState) {
-          log(state.message);
+          log(state.success.toString());
           emailController.clear();
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             _showSuccessAlert(

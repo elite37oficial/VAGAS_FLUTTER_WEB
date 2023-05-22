@@ -24,10 +24,15 @@ goToHome(BuildContext context) async {
 
 final appRoutesConfig = GoRouter(
   initialLocation: home,
+  routerNeglect: false,
   refreshListenable: authService,
   errorPageBuilder: (context, state) =>
       const NoTransitionPage(child: ErrorPage()),
   redirect: (context, state) {
+    if (state.subloc == "${RouteKeys.auth}${RouteKeys.resetPassword}") {
+      return state.location;
+    }
+
     final isAuthenticated = authService.isAuthenticated;
     final isAuthRoute = state.subloc == RouteKeys.register;
     final isRegisterRoute =
@@ -47,49 +52,62 @@ final appRoutesConfig = GoRouter(
     GoRoute(
         path: RouteKeys.init,
         name: RouteKeys.init,
-        redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
+        redirect: (context, state) {
+          if (state.subloc == "${RouteKeys.auth}${RouteKeys.resetPassword}") {
+            return state.location;
+          } else {
+            return "${RouteKeys.auth}${RouteKeys.login}";
+          }
+        },
         pageBuilder: (context, state) {
-          return const NoTransitionPage(
-            child: RedirectPageRoute(
-              duration: Duration(milliseconds: 0),
-              redirectRoute: "${RouteKeys.auth}${RouteKeys.login}",
-            ),
+          return NoTransitionPage(
+            child: Container(),
           );
         }),
     GoRoute(
         path: RouteKeys.initial,
         name: RouteKeys.initial.replaceAll("/", ""),
-        redirect: (context, state) => "${RouteKeys.auth}${RouteKeys.login}",
+        redirect: (context, state) {
+          if (state.subloc == "${RouteKeys.auth}${RouteKeys.resetPassword}") {
+            return state.location;
+          } else {
+            return "${RouteKeys.auth}${RouteKeys.login}";
+          }
+        },
         pageBuilder: (context, state) {
-          return const NoTransitionPage(
-            child: RedirectPageRoute(
-              duration: Duration(milliseconds: 0),
-              redirectRoute: "${RouteKeys.auth}${RouteKeys.login}",
-            ),
+          return NoTransitionPage(
+            child: Container(),
           );
         }),
     GoRoute(
       path: RouteKeys.auth,
       name: RouteKeys.auth.replaceAll("/", ""),
       redirect: (_, state) {
-        if (authService.isAuthenticated) {
+        if (state.subloc == "${RouteKeys.auth}${RouteKeys.resetPassword}") {
+          return state.location;
+        } else if (authService.isAuthenticated) {
           return RouteKeys.home;
         } else if (authService.isAdminAuthenticated) {
           return RouteKeys.homeAdmin;
+        } else if (state.subloc == "${RouteKeys.auth}${RouteKeys.login}") {
+          return "${RouteKeys.auth}${RouteKeys.login}";
         } else {
           return null;
         }
       },
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: RedirectPageRoute(
-          duration: Duration(milliseconds: 0),
-          redirectRoute: "${RouteKeys.auth}${RouteKeys.login}",
-        ),
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: Container(),
       ),
       routes: [
         GoRoute(
           path: RouteKeys.login.replaceAll("/", ""),
           name: RouteKeys.login.replaceAll("/", ""),
+          redirect: (context, state) {
+            if (state.subloc == "${RouteKeys.auth}${RouteKeys.resetPassword}") {
+              return state.location;
+            }
+            return null;
+          },
           pageBuilder: (context, state) {
             List<String> loginArgs =
                 state.extra == null ? <String>[] : state.extra as List<String>;
@@ -120,8 +138,9 @@ final appRoutesConfig = GoRouter(
           path: RouteKeys.resetPassword.replaceAll("/", ""),
           name: RouteKeys.resetPassword.replaceAll("/", ""),
           pageBuilder: (context, state) {
-            return const NoTransitionPage(
-              child: ResetPasswordPage(),
+            String token = state.queryParams["token"] ?? "";
+            return NoTransitionPage(
+              child: ResetPasswordPage(token: token),
             );
           },
         ),

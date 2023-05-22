@@ -9,8 +9,8 @@ abstract class Endpoints {
   static String jobs = "$baseURL/jobs";
   static String companies = "$baseURL/companies";
 
-  static String forgotPassword = "$baseURL/forgotPassword";
-  static String resetPassword = "$baseURL/resetPassword";
+  static String forgotPassword = "$baseURL/reset-password-email";
+  static String resetPassword = "$baseURL/reset-password";
 
   static String getJobsByRecruiterId(String userId) =>
       "$baseURL/jobs?created_by=$userId";

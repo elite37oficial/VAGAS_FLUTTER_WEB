@@ -26,7 +26,7 @@ class ForgotPasswordBloc
     result.fold(
       (Failure failure) => emitter(
           ForgotPasswordErrorState(message: failure.props.first.toString())),
-      (String success) => emitter(ForgotPasswordSuccessState(message: success)),
+      (bool success) => emitter(ForgotPasswordSuccessState(success: success)),
     );
   }
 
