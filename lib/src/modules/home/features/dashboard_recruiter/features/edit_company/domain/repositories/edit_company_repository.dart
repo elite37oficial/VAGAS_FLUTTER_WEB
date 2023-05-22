@@ -3,6 +3,5 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 abstract class EditCompanyRepository {
-  Future<Either<Failure, EditCompanyEntity>> editCompany(
-      EditCompanyEntity editCompanyData);
+  Future<Either<Failure, bool>> editCompany(EditCompanyEntity editCompanyData);
 }

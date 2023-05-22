@@ -5,14 +5,12 @@ abstract class EditImageEvent extends Equatable {
 }
 
 class DoEditImageEvent extends EditImageEvent {
-  final String? companyId;
-  final String? image64;
-  final String? imageType;
+  final String companyId;
+  final String image64;
 
   const DoEditImageEvent({
     required this.companyId,
     required this.image64,
-    this.imageType,
   });
 
   @override

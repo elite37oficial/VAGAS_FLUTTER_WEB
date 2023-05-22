@@ -7,7 +7,7 @@ class EditCompanyInitialState extends EditCompanyStates {}
 class EditCompanyLoadingState extends EditCompanyStates {}
 
 class EditCompanySuccessState extends EditCompanyStates {
-  final EditCompanyEntity editCompany;
+  final bool editCompany;
 
   EditCompanySuccessState({required this.editCompany});
 }

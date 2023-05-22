@@ -4,15 +4,13 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
 
-class EditCompanyUsecase
-    implements Usecase<EditCompanyEntity, EditCompanyEntity> {
+class EditCompanyUsecase implements Usecase<bool, EditCompanyEntity> {
   final EditCompanyRepository repository;
 
   EditCompanyUsecase({required this.repository});
 
   @override
-  Future<Either<Failure, EditCompanyEntity>> call(
-      EditCompanyEntity editCompanyData) async {
-    return repository.editCompany(editCompanyData);
+  Future<Either<Failure, bool>> call(EditCompanyEntity editCompanyData) async {
+    return await repository.editCompany(editCompanyData);
   }
 }

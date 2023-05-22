@@ -12,7 +12,7 @@ class EditCompanyRepositoryImplementation extends EditCompanyRepository {
   EditCompanyRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, EditCompanyEntity>> editCompany(
+  Future<Either<Failure, bool>> editCompany(
       EditCompanyEntity editCompanyData) async {
     try {
       EditCompanyModel editCompanyModel = EditCompanyModel(
@@ -22,7 +22,9 @@ class EditCompanyRepositoryImplementation extends EditCompanyRepository {
         description: editCompanyData.description,
       );
 
-      return await datasource.editCompany(editCompanyModel);
+      await datasource.editCompany(editCompanyModel);
+
+      return const Right(true);
     } on DioError catch (e) {
       if (e.response!.statusCode == 500) {
         return Left(ServerFailure(e.response!.data["reason"].toString()));

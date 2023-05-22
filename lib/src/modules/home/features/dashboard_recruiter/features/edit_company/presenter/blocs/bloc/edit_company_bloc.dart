@@ -29,7 +29,7 @@ class EditCompanyBloc extends Bloc<EditCompanyEvent, EditCompanyStates> {
     result.fold(
         (Failure failure) => emitter(
             EditCompanyErrorState(message: failure.props.first.toString())),
-        (EditCompanyEntity success) {
+        (bool success) {
       emitter(EditCompanySuccessState(editCompany: success));
     });
   }
