@@ -7,19 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/domain/usecases/edit_company_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/domain/usecases/edit_image_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/infra/datasources/edit_company_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/infra/datasources/edit_image_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/infra/repositories/edit_company_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/infra/repositories/edit_image_repository_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/bloc/edit_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/bloc/edit_image_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/bloc/get_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/events/edit_company_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/events/edit_image_event.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/events/get_company_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/states/edit_company_states.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_company/presenter/blocs/states/get_company_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
-import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class EditCompanyPage extends StatefulWidget {
@@ -73,7 +69,22 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
   @override
   void initState() {
     super.initState();
-    _loadEstados();
+    context.read<GetCompanyBloc>().add(DoGetCompanyEvent(id: widget.id));
+
+    context.read<GetCompanyBloc>().stream.listen((state) {
+      if (state is GetCompanySuccessState) {
+        _loadEstados();
+        final companyName = state.getCompany.name;
+        final companyState = state.getCompany.location.substring(0, 2);
+        final companyCity = state.getCompany.location.substring(5);
+        final companyDescription = state.getCompany.description;
+        _onEstadoChange(companyState);
+        _loadMunicipios(companyState);
+        cityTextController.text = companyCity;
+        nameController.text = companyName;
+        descriptionController.text = companyDescription;
+      }
+    });
   }
 
   Future<void> _loadEstados() async {
@@ -126,25 +137,20 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
     if (formKey.currentState!.validate()) {
       final stateTextControllerText = stateTextController.text;
       final cityTextControllerText = cityTextController.text;
-      if (!nameError &&
-          !stateError &&
-          !cityError &&
-          !descriptionError &&
-          !imageError) {
+      if (!nameError && !stateError && !cityError && !descriptionError) {
         context.read<EditCompanyBloc>().add(DoEditCompanyEvent(
               id: widget.id,
               name: nameController.text,
               location: "$stateTextControllerText - $cityTextControllerText",
               description: descriptionController.text,
             ));
-        context.read<EditImageBloc>().add(DoEditImageEvent(
-              companyId: widget.id,
-              image64: "data:$imageType;base64,$imageBase64",
-            ));
 
-        return WidgetsBinding.instance.addPostFrameCallback((_) async {
-          _showSuccessAlert(MessagesHelper.successRegisterMessage);
-        });
+        if (!imageError) {
+          context.read<EditImageBloc>().add(DoEditImageEvent(
+                companyId: widget.id,
+                image64: "data:$imageType;base64,$imageBase64",
+              ));
+        }
       }
     }
   }
@@ -206,7 +212,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
         }
         if (state is EditCompanySuccessState) {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            _showSuccessAlert(MessagesHelper.successRegisterMessage);
+            _showSuccessAlert(MessagesHelper.successEditMessage);
           });
         }
         if (state is EditCompanyErrorState) {
@@ -334,7 +340,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: imageName ??
-                                          'Escolha a imagem da sua empresa',
+                                          'Altere a imagem da sua empresa',
                                     ),
                                     maxLines: 1,
                                   ),

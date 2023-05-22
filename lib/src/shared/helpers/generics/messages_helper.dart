@@ -1,6 +1,5 @@
 abstract class MessagesHelper {
-  static const String credentialsErrorMessage =
-      "Erro! Credenciais inválidas.";
+  static const String credentialsErrorMessage = "Erro! Credenciais inválidas.";
   static const String invalidCredentialsMessage =
       "Email e/ou senha inseridos estão incorretos. Tente novamente!";
   static const String badRequestMessage =
@@ -9,4 +8,5 @@ abstract class MessagesHelper {
       "Erro interno do servidor. Tente novamente mais tarde!";
   static const String successRegisterMessage =
       "Cadastro realizado com sucesso!";
+  static const String successEditMessage = "Empresa editada com sucesso!";
 }

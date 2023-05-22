@@ -15,6 +15,7 @@ class GetCompanyModel extends GetCompanyEntity {
       'name': name,
       'location': location,
       'description': description,
+      'status': status,
     };
   }
 
