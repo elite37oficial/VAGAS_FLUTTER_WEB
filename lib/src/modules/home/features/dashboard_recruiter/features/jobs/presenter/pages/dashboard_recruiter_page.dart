@@ -59,9 +59,9 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
       builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(20),
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           elevation: 0,
           scrollable: true,
           content: Container(
@@ -73,7 +73,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                 : 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: AppColors.transparent,
+              color: AppColors.white,
             ),
             child: const CreatejobPage(),
           ),
@@ -162,8 +162,6 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                   child: BlocBuilder<GetJobBloc, GetJobStates>(
                                     bloc: getjobBloc,
                                     builder: (context, state) {
-                                      log(state.toString());
-
                                       if (state is GetJobLoadingState) {
                                         return const Center(
                                             child: CircularProgressIndicator(
@@ -174,6 +172,8 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                       }
                                       if (state is GetJobSuccessState) {
                                         _setJobsInfo(state);
+                                        getjobBloc.add(CleanGetJobStateEvent(
+                                            state: GetJobInitialState()));
                                       }
                                       return ListJobsComponent(
                                           token: token, listJobs: listJobs);
@@ -268,6 +268,9 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                       }
                                       if (state is GetJobSuccessState) {
                                         _setJobsInfo(state);
+                                        context.read<GetJobBloc>().add(
+                                            CleanGetJobStateEvent(
+                                                state: GetJobInitialState()));
                                       }
                                       return ListJobsComponent(
                                           token: token, listJobs: listJobs);

@@ -12,3 +12,14 @@ class GetJobListEvent extends GetJobEvent {
   @override
   List<Object> get props => [page];
 }
+
+class CleanGetJobStateEvent extends GetJobEvent {
+  final GetJobStates state;
+
+  const CleanGetJobStateEvent({
+    required this.state,
+  });
+
+  @override
+  List<GetJobStates> get props => [state];
+}

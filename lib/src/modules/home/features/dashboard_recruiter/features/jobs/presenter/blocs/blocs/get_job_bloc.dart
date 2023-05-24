@@ -13,6 +13,7 @@ class GetJobBloc extends Bloc<GetJobEvent, GetJobStates> {
   final GetJobUsecase usecase;
   GetJobBloc({required this.usecase}) : super(GetJobInitialState()) {
     on<GetJobListEvent>(getJob);
+    on<CleanGetJobStateEvent>(cleanState);
   }
 
   void getJob(
@@ -30,4 +31,10 @@ class GetJobBloc extends Bloc<GetJobEvent, GetJobStates> {
           emitter(GetJobSuccessState(listJobs: success)),
     );
   }
+
+  Future<void> cleanState(
+    CleanGetJobStateEvent event,
+    Emitter<GetJobStates> emitter,
+  ) async =>
+      emitter(event.state);
 }

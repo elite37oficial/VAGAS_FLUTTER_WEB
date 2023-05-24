@@ -4,14 +4,14 @@ import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/masks/input_masks_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
-class CreateContactjobComponent extends StatefulWidget {
+class EditContactjobComponent extends StatefulWidget {
   final Function changePage;
   final TextEditingController phoneController;
   final TextEditingController linkController;
   final TextEditingController emailController;
   final TextEditingController cityController;
   final TextEditingController stateController;
-  const CreateContactjobComponent({
+  const EditContactjobComponent({
     Key? key,
     required this.changePage,
     required this.emailController,
@@ -22,11 +22,11 @@ class CreateContactjobComponent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CreateContactjobComponent> createState() =>
-      _CreateContactjobComponentState();
+  State<EditContactjobComponent> createState() =>
+      _EditContactjobComponentState();
 }
 
-class _CreateContactjobComponentState extends State<CreateContactjobComponent> {
+class _EditContactjobComponentState extends State<EditContactjobComponent> {
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool phoneError = false;
@@ -58,6 +58,7 @@ class _CreateContactjobComponentState extends State<CreateContactjobComponent> {
   Future<void> _loadMunicipios(String estado) async {
     List<Municipio> municipios =
         await stateCityController.buscaMunicipiosPorEstado(estado);
+
     setState(() {
       _municipioItens = municipios
           .map((municipio) => DropdownMenuItem(
@@ -144,7 +145,7 @@ class _CreateContactjobComponentState extends State<CreateContactjobComponent> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.transparent,
+      backgroundColor: AppColors.white,
       body: SizedBox(
         width: size.width,
         child: Padding(

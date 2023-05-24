@@ -10,6 +10,9 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/create_job_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/get_all_companies_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_job/presenter/blocs/blocs/edit_get_all_companies_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_job/presenter/blocs/blocs/edit_job_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_job/presenter/blocs/blocs/get_job_by_id_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/blocs/blocs/get_job_bloc.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator.dart';
 
@@ -37,6 +40,11 @@ class AppWidget extends StatelessWidget {
         BlocProvider<GetAllCompaniesBloc>(
             create: (_) => sl<GetAllCompaniesBloc>()),
         BlocProvider<CreateJobBloc>(create: (_) => sl<CreateJobBloc>()),
+        BlocProvider<EditJobBloc>(create: (_) => sl<EditJobBloc>()),
+        BlocProvider<EditGetAllCompaniesBloc>(
+            create: (_) => sl<EditGetAllCompaniesBloc>()),
+        BlocProvider<GetJobByIdBloc>(
+            create: (_) => sl<GetJobByIdBloc>()),
       ],
       child: MaterialApp.router(
         // showSemanticsDebugger: debugMode,

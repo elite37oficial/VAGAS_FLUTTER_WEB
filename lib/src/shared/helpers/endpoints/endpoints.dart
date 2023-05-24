@@ -7,6 +7,7 @@ abstract class Endpoints {
 
   static String users = "$baseURL/users";
   static String jobs = "$baseURL/jobs";
+  static String jobsById(String jobId) => "$baseURL/jobs/id/$jobId";
   static String companies = "$baseURL/companies";
 
   static String forgotPassword = "$baseURL/reset-password-email";

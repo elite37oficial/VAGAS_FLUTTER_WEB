@@ -11,7 +11,7 @@ class JobEntity extends Equatable {
   final String city;
   final String modality;
   final String regime;
-  final String salary;
+  final double salary;
   final String seniority;
   final String period;
   final String link;

@@ -2,11 +2,12 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/get_all_companies_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_job/presenter/blocs/blocs/edit_get_all_companies_bloc.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
-class CreateDataJobComponent extends StatefulWidget {
+class EditDataJobComponent extends StatefulWidget {
+  final String companyInitial;
   final Function changePage;
   final TextEditingController companyController;
   final TextEditingController companyDescriptionController;
@@ -16,8 +17,9 @@ class CreateDataJobComponent extends StatefulWidget {
   final TextEditingController levelController;
   final TextEditingController titleController;
   final TextEditingController salaryController;
-  const CreateDataJobComponent({
+  const EditDataJobComponent({
     Key? key,
+    required this.companyInitial,
     required this.changePage,
     required this.companyController,
     required this.companyIdController,
@@ -30,13 +32,13 @@ class CreateDataJobComponent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CreateDataJobComponent> createState() => _CreateDataJobComponentState();
+  State<EditDataJobComponent> createState() => _EditDataJobComponentState();
 }
 
-class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
+class _EditDataJobComponentState extends State<EditDataJobComponent> {
   GlobalKey<FormState> formKey = GlobalKey();
 
-  late GetAllCompaniesBloc getAllCompaniesBloc;
+  late EditGetAllCompaniesBloc getAllCompaniesBloc;
 
   bool titleError = false;
   bool levelError = false;
@@ -49,8 +51,21 @@ class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
   List<DropdownMenuItem<String>> listCompanies = [];
   List<CompanyEntity> listCompaniesEntities = [];
 
-  _getcompanys() async {
-    getAllCompaniesBloc.add(DoGetAllCompaniesEvent());
+  _setCompanyValue(String? value) {
+    for (CompanyEntity company in listCompaniesEntities) {
+      if (company.id == value) {
+        if (mounted) {
+          setState(() {
+            widget.companyController.text = company.name;
+            widget.companyDescriptionController.text = company.description;
+          });
+        }
+      }
+    }
+  }
+
+  _getcompanies() async {
+    getAllCompaniesBloc.add(DoEditGetAllCompaniesEvent());
   }
 
   _validateForm(formKey) {
@@ -82,8 +97,9 @@ class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
 
   @override
   void initState() {
-    getAllCompaniesBloc = BlocProvider.of<GetAllCompaniesBloc>(context);
-    _getcompanys();
+    getAllCompaniesBloc = BlocProvider.of<EditGetAllCompaniesBloc>(context);
+    _getcompanies();
+
     super.initState();
   }
 
@@ -109,9 +125,9 @@ class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
       }
     }
 
-    return BlocBuilder<GetAllCompaniesBloc, GetAllCompaniesStates>(
+    return BlocBuilder<EditGetAllCompaniesBloc, EditGetAllCompaniesStates>(
         builder: (context, state) {
-      if (state is GetAllCompaniesSuccessState) {
+      if (state is EditGetAllCompaniesSuccessState) {
         listCompaniesEntities = state.listCompanies;
         listCompanies = state.listCompanies
             .map(
@@ -121,9 +137,12 @@ class _CreateDataJobComponentState extends State<CreateDataJobComponent> {
               ),
             )
             .toList();
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          _setCompanyValue(widget.companyIdController.text);
+        });
       }
       return Scaffold(
-        backgroundColor: AppColors.transparent,
+        backgroundColor: AppColors.white,
         body: SizedBox(
           width: size.width,
           child: Padding(
