@@ -1,3 +1,3 @@
 abstract class GetCompaniesDatasource {
-  Future getCompanies();
+  Future getCompanies(int page);
 }

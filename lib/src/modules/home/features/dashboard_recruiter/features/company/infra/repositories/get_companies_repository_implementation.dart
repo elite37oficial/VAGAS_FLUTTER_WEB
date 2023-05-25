@@ -12,9 +12,9 @@ class GetCompaniesRepositoryImplementation implements GetCompaniesRepository {
   GetCompaniesRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, GetCompaniesModel>> getCompanies() async {
+  Future<Either<Failure, GetCompaniesModel>> getCompanies(int page) async {
     try {
-      var result = await datasource.getCompanies();
+      GetCompaniesModel result = await datasource.getCompanies(page);
 
       return Right(result);
     } on DioError catch (e) {

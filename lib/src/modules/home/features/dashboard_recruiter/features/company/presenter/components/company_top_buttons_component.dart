@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/change_image_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/create_company_usecase.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/change_image_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/create_company_datasource_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/change_image_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/create_company_repository_implementation.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/change_image_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/create_company_bloc.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/pages/create_company_page.dart';
-import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class CompanyTopButtonsComponent extends StatelessWidget {
-  const CompanyTopButtonsComponent({Key? key}) : super(key: key);
+  final Function showCreateCompaniesPopup;
+  const CompanyTopButtonsComponent(
+      {Key? key, required this.showCreateCompaniesPopup})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,31 +57,7 @@ class CompanyTopButtonsComponent extends StatelessWidget {
                     : Sizer.calculateVertical(context, 40),
                 width: 100,
                 child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (context) => CreateCompanyBloc(
-                                usecase: CreateCompanyUsecase(
-                                  repository:
-                                      CreateCompanyRepositoryImplementation(
-                                    datasource:
-                                        CreateCompanyDatasourceImplementation(
-                                      requester: AppRequesterImplementation(),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                          child: const CreateCompanyPage(),
-                        );
-                      },
-                    );
-                  },
+                  onPressed: () => showCreateCompaniesPopup(),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.greyBlue,
                       elevation: 5,

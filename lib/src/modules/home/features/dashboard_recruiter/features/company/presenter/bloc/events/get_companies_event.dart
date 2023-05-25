@@ -4,7 +4,11 @@ abstract class GetCompaniesEvent extends Equatable {
   const GetCompaniesEvent();
 }
 
-class DoGetCompaniesEvent extends GetCompaniesEvent {
+class GetCompaniesListEvent extends GetCompaniesEvent {
+  final int page;
+
+  const GetCompaniesListEvent({required this.page});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [page];
 }
