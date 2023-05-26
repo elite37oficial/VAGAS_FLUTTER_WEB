@@ -9,11 +9,10 @@ class GetCompaniesDatasourceImplementation implements GetCompaniesDatasource {
   GetCompaniesDatasourceImplementation({required this.requester});
 
   @override
-  Future getCompanies() async {
+  Future getCompanies(int page) async {
     return await requester.get(
-      url: Endpoints.companies,
-      fromJson: (value) =>
-          GetCompaniesModel.fromMap({"listCompanyModels": value}),
+      url: Endpoints.pageCompanies(page),
+      fromJson: (value) => GetCompaniesModel.fromMap(value),
     );
   }
 }

@@ -18,6 +18,9 @@ abstract class Endpoints {
       "$baseURL/jobs?page=$page&limit=10&created_by=$userId";
   static String companyImage = "$baseURL/companies-image";
 
+  static String pageCompanies(int page) =>
+      "$baseURL/companies?page=$page&limit=10";
+
   static String getJobById(String jobId) => "$baseURL/jobs/id/$jobId";
   static String getUserById(String userId) => "$baseURL/users/id/$userId";
   static String getCompanyImageById(String? companyId) =>

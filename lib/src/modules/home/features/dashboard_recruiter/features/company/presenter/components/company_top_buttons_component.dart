@@ -65,31 +65,41 @@ class CompanyTopButtonsComponent extends StatelessWidget {
                     : Sizer.calculateVertical(context, 40),
                 width: 100,
                 child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return MultiBlocProvider(
-                          providers: [
-                            BlocProvider(
-                              create: (context) => CreateCompanyBloc(
-                                usecase: CreateCompanyUsecase(
-                                  repository:
-                                      CreateCompanyRepositoryImplementation(
-                                    datasource:
-                                        CreateCompanyDatasourceImplementation(
-                                      requester: AppRequesterImplementation(),
-                                    ),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (context) => CreateCompanyBloc(
+                              usecase: CreateCompanyUsecase(
+                                repository:
+                                    CreateCompanyRepositoryImplementation(
+                                  datasource:
+                                      CreateCompanyDatasourceImplementation(
+                                    requester: AppRequesterImplementation(),
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                          child: const CreateCompanyPage(),
-                        );
-                      },
-                    );
-                  },
+                          ),
+                          BlocProvider(
+                            create: (context) => ChangeImageBloc(
+                              usecase: ChangeImageUsecase(
+                                repository: ChangeImageRepositoryImplementation(
+                                  datasource:
+                                      ChangeImageDatasourceImplementation(
+                                    requester: AppRequesterImplementation(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                        child: const CreateCompanyPage(),
+                      );
+                    },
+                  ),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.greyBlue,
                       elevation: 5,

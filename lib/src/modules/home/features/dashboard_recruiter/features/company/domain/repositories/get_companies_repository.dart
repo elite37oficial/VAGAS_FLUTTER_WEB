@@ -3,5 +3,5 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 abstract class GetCompaniesRepository {
-  Future<Either<Failure, GetCompaniesEntity>> getCompanies();
+  Future<Either<Failure, GetCompaniesEntity>> getCompanies(int page);
 }

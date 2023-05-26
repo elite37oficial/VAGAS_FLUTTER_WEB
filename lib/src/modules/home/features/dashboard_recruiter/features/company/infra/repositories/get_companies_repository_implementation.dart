@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/entities/get_companies_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/domain/repositories/get_companies_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/datasources/get_companies_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/infra/models/get_companies_model.dart';
@@ -12,9 +13,9 @@ class GetCompaniesRepositoryImplementation implements GetCompaniesRepository {
   GetCompaniesRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, GetCompaniesModel>> getCompanies() async {
+  Future<Either<Failure, GetCompaniesEntity>> getCompanies(int page) async {
     try {
-      var result = await datasource.getCompanies();
+      GetCompaniesModel result = await datasource.getCompanies(page);
 
       return Right(result);
     } on DioError catch (e) {

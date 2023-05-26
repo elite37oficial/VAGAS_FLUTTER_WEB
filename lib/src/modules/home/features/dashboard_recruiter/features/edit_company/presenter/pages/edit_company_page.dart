@@ -195,6 +195,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
           message: message,
           function: () {
             context.pop();
+            context.pop();
           },
         );
       },
