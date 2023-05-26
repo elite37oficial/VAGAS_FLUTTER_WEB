@@ -10,7 +10,9 @@ import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/domain/usecases/create_company_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/datasources/create_company_datasource_implementation.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/infra/repositories/create_company_repository_implementation.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/change_image_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/create_company_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/events/change_image_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/events/create_company_event.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/states/create_company_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
@@ -109,7 +111,7 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
     });
   }
 
-  _validateForm(GlobalKey<FormState> formKey) {
+  _validateForm(GlobalKey<FormState> formKey) async {
     setState(() {
       nameError = nameController.text.isEmpty || nameController.text.length < 4;
       stateError = stateTextController.text.isEmpty;
@@ -131,9 +133,17 @@ class _CreateCompanyPageState extends State<CreateCompanyPage> {
               name: nameController.text,
               location: "$stateTextControllerText - $cityTextControllerText",
               description: descriptionController.text,
-              imageType: imageType.toString(),
-              image64: imageBase64.toString(),
             ));
+        await for (final state in context.read<CreateCompanyBloc>().stream) {
+          if (state is CreateCompanySuccessState) {
+            final companyId = state.company.id;
+            context.read<ChangeImageBloc>().add(DoChangeImageEvent(
+                  companyId: companyId,
+                  image64: "data:$imageType;base64,$imageBase64",
+                ));
+            break;
+          }
+        }
         return WidgetsBinding.instance.addPostFrameCallback((_) async {
           _showSuccessAlert(MessagesHelper.successRegisterMessage);
         });
