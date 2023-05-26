@@ -21,7 +21,7 @@ class GetCompaniesModel extends GetCompaniesEntity {
   factory GetCompaniesModel.fromMap(Map<String, dynamic> map) {
     return GetCompaniesModel(
       listCompanyModels: List<CompanyModel>.from(
-          map['listCompanyModels']?.map((x) => CompanyModel.fromMap(x))),
+          map['data']?.map((x) => CompanyModel.fromMap(x))),
       totalPages: map['totalPages'] ?? '',
       actualPage: map['actualPage'] ?? '',
     );

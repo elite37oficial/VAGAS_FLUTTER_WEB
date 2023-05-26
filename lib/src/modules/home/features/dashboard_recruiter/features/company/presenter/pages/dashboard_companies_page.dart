@@ -9,7 +9,6 @@ import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/components/company_page_buttons_component.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/components/company_top_buttons_component.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/components/list_companies_component.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/pages/create_company_page.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/company_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/logout_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
@@ -49,37 +48,6 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
     setState(() => actualPage = newPage);
   }
 
-  _showCreateCompanyPopup() async {
-    return await showDialog(
-      context: context,
-      barrierDismissible: false,
-      useSafeArea: true,
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          scrollable: true,
-          content: Container(
-            height: Sizer.calculateVertical(context, 800) >= 720
-                ? Sizer.calculateVertical(context, 800)
-                : 720,
-            width: Sizer.calculateHorizontal(context, 120) >= 300
-                ? Sizer.calculateHorizontal(context, 120)
-                : 300,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColors.transparent,
-            ),
-            child: const CreateCompanyPage(),
-          ),
-        );
-      },
-    );
-  }
-
   _setUsername() async {
     getCompaniesBloc = BlocProvider.of<GetCompaniesBloc>(context);
     context
@@ -112,10 +80,10 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
                   widthPopup: Sizer.calculateHorizontal(context, 70) >= 250
                       ? Sizer.calculateHorizontal(context, 70)
                       : 250,
-                  jobsFunction: () => context.push(RouteKeys.home),
-                  enterprisesFunction: () => context.push(RouteKeys.companies),
-                  logout: LogoutHelper.logout,
                   username: username,
+                  enterprisesFunction: () => context.push(RouteKeys.companies),
+                  jobsFunction: () => context.push(RouteKeys.home),
+                  logout: LogoutHelper.logout,
                   isMobile: true,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
@@ -143,9 +111,7 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
                           ),
                         ),
                       ),
-                      CompanyTopButtonsComponent(
-                        showCreateCompaniesPopup: _showCreateCompanyPopup(),
-                      ),
+                      const CompanyTopButtonsComponent(),
                       Padding(
                         padding: const EdgeInsets.only(top: 80, bottom: 50),
                         child: SizedBox(
@@ -209,10 +175,10 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
                   widthPopup: Sizer.calculateHorizontal(context, 60) >= 220
                       ? Sizer.calculateHorizontal(context, 60)
                       : 220,
+                  username: username,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
                   logout: LogoutHelper.logout,
-                  username: username,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
                       : Sizer.calculateVertical(context, 70),
@@ -239,9 +205,7 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
                           ),
                         ),
                       ),
-                      CompanyTopButtonsComponent(
-                        showCreateCompaniesPopup: _showCreateCompanyPopup(),
-                      ),
+                      const CompanyTopButtonsComponent(),
                       Padding(
                         padding: const EdgeInsets.only(top: 80, bottom: 50),
                         child: SizedBox(
