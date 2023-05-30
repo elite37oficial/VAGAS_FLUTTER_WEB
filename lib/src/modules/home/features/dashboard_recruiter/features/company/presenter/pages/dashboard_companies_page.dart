@@ -93,27 +93,9 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
                   width: size.width * 0.7,
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 40, top: 60),
-                          child: ResponsiveTextWidget(
-                            text: "Empresas cadastradas",
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(fontWeight: FontWeight.w700),
-                            hintSemantics: "empresas",
-                            tooltipSemantics: "empresas",
-                            maxLines: 1,
-                            maxFontSize: 32,
-                            minFontSize: 27,
-                          ),
-                        ),
-                      ),
                       const CompanyTopButtonsComponent(),
                       Padding(
-                        padding: const EdgeInsets.only(top: 80, bottom: 50),
+                        padding: const EdgeInsets.only(top: 50, bottom: 50),
                         child: SizedBox(
                           height: Sizer.calculateVertical(context, 450),
                           width: size.width * 0.7,
@@ -187,27 +169,9 @@ class _HomeCompaniesPageState extends State<HomeCompaniesPage> {
                   width: size.width * 0.7,
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 40, top: 60),
-                          child: ResponsiveTextWidget(
-                            text: "Empresas cadastradas",
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(fontWeight: FontWeight.w700),
-                            hintSemantics: "empresas",
-                            tooltipSemantics: "empresas",
-                            maxLines: 1,
-                            maxFontSize: 32,
-                            minFontSize: 27,
-                          ),
-                        ),
-                      ),
                       const CompanyTopButtonsComponent(),
                       Padding(
-                        padding: const EdgeInsets.only(top: 80, bottom: 50),
+                        padding: const EdgeInsets.only(top: 50, bottom: 50),
                         child: SizedBox(
                           height: Sizer.calculateVertical(context, 450),
                           width: size.width * 0.7,
