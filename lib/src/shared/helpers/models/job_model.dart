@@ -57,7 +57,7 @@ class JobModel extends JobEntity {
       city: map['city'] ?? '',
       modality: map['modality'] ?? '',
       regime: map['regime'] ?? '',
-      salary: map['salary'] ?? '',
+      salary: map['salary'] ?? 0.0,
       seniority: map['seniority'] ?? '',
       period: map['period'] ?? '',
       link: map['link'] ?? '',

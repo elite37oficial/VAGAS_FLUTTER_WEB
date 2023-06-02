@@ -7,7 +7,8 @@ abstract class Endpoints {
 
   static String users = "$baseURL/users";
   static String jobs = "$baseURL/jobs";
-  static String companies = "$baseURL/companies";
+  static String jobsById(String jobId) => "$baseURL/jobs/id/$jobId";
+  static String companies = "$baseURL/companies-list";
 
   static String forgotPassword = "$baseURL/reset-password-email";
   static String resetPassword = "$baseURL/reset-password";
@@ -15,7 +16,7 @@ abstract class Endpoints {
   static String getJobsByRecruiterId(String userId) =>
       "$baseURL/jobs?created_by=$userId";
   static String pageJobs(int page, String userId) =>
-      "$baseURL/jobs?page=$page&limit=10&created_by=$userId";
+      "$baseURL/jobs/v2?page=$page&limit=10&created_by=$userId";
   static String companyImage = "$baseURL/companies-image";
 
   static String pageCompanies(int page) =>

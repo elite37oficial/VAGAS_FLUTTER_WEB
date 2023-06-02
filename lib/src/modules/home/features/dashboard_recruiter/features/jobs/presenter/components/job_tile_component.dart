@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/edit_job/presenter/pages/edit_job_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/status_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/endpoints/endpoints.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
-import 'package:vagas_flutter_web/src/shared/requester/interceptors/header_interceptor.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
 class JobTileComponent extends StatelessWidget {
@@ -16,6 +16,39 @@ class JobTileComponent extends StatelessWidget {
       required this.jobTileData,
       required this.token})
       : super(key: key);
+
+  _showEditJobPopup(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      useSafeArea: true,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          scrollable: true,
+          content: Container(
+            height: Sizer.calculateVertical(context, 800) >= 550
+                ? Sizer.calculateVertical(context, 800)
+                : 550,
+            width: Sizer.calculateHorizontal(context, 120) >= 200
+                ? Sizer.calculateHorizontal(context, 120)
+                : 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.white,
+            ),
+            child: EditjobPage(
+              jobId: jobTileData.id,
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +197,7 @@ class JobTileComponent extends StatelessWidget {
                   highlightColor: AppColors.transparent,
                   hoverColor: AppColors.transparent,
                   splashColor: AppColors.transparent,
-                  onTap: () {},
+                  onTap: () => _showEditJobPopup(context),
                   child: SvgPicture.asset(
                     AppImages.editIcon,
                     package: "vagas_design_system",

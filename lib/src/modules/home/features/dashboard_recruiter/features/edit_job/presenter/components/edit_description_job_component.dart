@@ -3,24 +3,24 @@ import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
-class CreateDescriptionjobComponent extends StatefulWidget {
+class EditDescriptionjobComponent extends StatefulWidget {
   final Function changePage;
   final TextEditingController descriptionController;
-  final Function createJob;
-  const CreateDescriptionjobComponent({
+  final Function editJob;
+  const EditDescriptionjobComponent({
     Key? key,
     required this.changePage,
     required this.descriptionController,
-    required this.createJob,
+    required this.editJob,
   }) : super(key: key);
 
   @override
-  State<CreateDescriptionjobComponent> createState() =>
-      _CreateDescriptionjobComponentState();
+  State<EditDescriptionjobComponent> createState() =>
+      _EditDescriptionjobComponentState();
 }
 
-class _CreateDescriptionjobComponentState
-    extends State<CreateDescriptionjobComponent> {
+class _EditDescriptionjobComponentState
+    extends State<EditDescriptionjobComponent> {
   bool descriptionError = false;
 
   GlobalKey<FormState> formKey = GlobalKey();
@@ -33,7 +33,7 @@ class _CreateDescriptionjobComponentState
 
     if (formKey.currentState!.validate()) {
       if (!descriptionError) {
-        widget.createJob();
+        widget.editJob();
       }
     }
   }
@@ -43,7 +43,7 @@ class _CreateDescriptionjobComponentState
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: AppColors.transparent,
+      backgroundColor: AppColors.white,
       body: SizedBox(
         width: size.width,
         child: Padding(
@@ -163,17 +163,17 @@ class _CreateDescriptionjobComponentState
                             : 36,
                         width: Sizer.calculateHorizontal(context, 30),
                         onPressed: () => _validateForm(formKey),
-                        tooltip: "Publicar",
-                        hintSemantics: "Publicar",
+                        tooltip: "Salvar",
+                        hintSemantics: "Salvar",
                         child: ResponsiveTextWidget(
-                          text: "Publicar",
+                          text: "Salvar",
                           textStyle:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: AppColors.white,
                                     fontWeight: FontWeight.w700,
                                   ),
-                          hintSemantics: "Publicar",
-                          tooltipSemantics: "Publicar",
+                          hintSemantics: "Salvar",
+                          tooltipSemantics: "Salvar",
                           maxLines: 1,
                           maxFontSize: 22,
                           minFontSize: 18,
