@@ -13,6 +13,7 @@ import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dart';
 import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
+import 'package:vagas_flutter_web/src/shared/utils/routes/app_routes_implementation.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 class LoginPage extends StatefulWidget {
@@ -136,8 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                 await SecureStorageManager.saveData(
                     StorageKeys.accessToken, state.token);
 
-                await Future.delayed(const Duration(milliseconds: 100))
-                    .then((VALUE) => print(VALUE));
+                await Future.delayed(const Duration(milliseconds: 100));
 
                 _verifyLoaded(state.userId);
                 loginBloc.add(CleanStateEvent(state: LoginInitialState()));
@@ -149,10 +149,13 @@ class _LoginPageState extends State<LoginPage> {
             if (getState is GetMySelfStateSuccessState) {
               if (getState.role == UserRole.admin) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await authService.adminLoged();
                   context.pushReplacement(RouteKeys.homeAdmin);
                 });
               } else {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await authService.loged();
+
                   context.pushReplacement(RouteKeys.home);
                 });
               }
@@ -183,94 +186,107 @@ class _LoginPageState extends State<LoginPage> {
                     child: SizedBox(
                       height: size.height,
                       width: size.width,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: Sizer.calculateVertical(context, 70),
-                          bottom: Sizer.calculateVertical(context, 120),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: Sizer.calculateHorizontal(context, 250),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    ResponsiveTextWidget(
-                                      text: "Entrar",
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge!
-                                          .copyWith(
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                      maxLines: 1,
-                                      maxFontSize: 50,
-                                      minFontSize: 32,
-                                      textScaleFactor: 1.5,
-                                    ),
-                                  ],
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: Sizer.calculateVertical(context, 70),
+                            bottom: Sizer.calculateVertical(context, 20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Sizer.calculateHorizontal(context, 250),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      ResponsiveTextWidget(
+                                        text: "Entrar",
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .copyWith(
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                        maxLines: 1,
+                                        maxFontSize: 50,
+                                        minFontSize: 32,
+                                        textScaleFactor: 1.5,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            LoginFieldsComponent(
-                              formKey: formKey,
-                              emailError: emailError,
-                              passwordError: passwordError,
-                              emailController: emailController,
-                              passwordController: passwordController,
-                              width: 250,
-                            ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight: 35,
-                                maxHeight:
-                                    Sizer.calculateVertical(context, 55) >= 36
-                                        ? Sizer.calculateVertical(context, 55)
-                                        : 36,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: Sizer.calculateVertical(context, 60),
+                                  bottom: Sizer.calculateVertical(context, 50),
+                                ),
+                                child: LoginFieldsComponent(
+                                  formKey: formKey,
+                                  emailError: emailError,
+                                  passwordError: passwordError,
+                                  emailController: emailController,
+                                  passwordController: passwordController,
+                                  width: 250,
+                                ),
                               ),
-                              child: SizedBox(
-                                height:
-                                    Sizer.calculateVertical(context, 55) >= 36
-                                        ? Sizer.calculateVertical(context, 55)
-                                        : 36,
-                                width: Sizer.calculateHorizontal(context, 250),
-                                child: ElevatedButtonTheme(
-                                  data: ElevatedButtonThemeData(
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      backgroundColor: AppColors.greyBlue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: 35,
+                                  maxHeight:
+                                      Sizer.calculateVertical(context, 55) >= 36
+                                          ? Sizer.calculateVertical(context, 55)
+                                          : 36,
+                                ),
+                                child: SizedBox(
+                                  height:
+                                      Sizer.calculateVertical(context, 55) >= 36
+                                          ? Sizer.calculateVertical(context, 55)
+                                          : 36,
+                                  width:
+                                      Sizer.calculateHorizontal(context, 250),
+                                  child: ElevatedButtonTheme(
+                                    data: ElevatedButtonThemeData(
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 0,
+                                        backgroundColor: AppColors.greyBlue,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                    ),
+                                    child: ElevatedButton(
+                                      onPressed: () => _validateForm(formKey),
+                                      child: ResponsiveTextWidget(
+                                        text: "Entrar",
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              color: AppColors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 20,
+                                            ),
+                                        hintSemantics: "Login",
+                                        tooltipSemantics: "Login",
+                                        maxLines: 1,
                                       ),
                                     ),
                                   ),
-                                  child: ElevatedButton(
-                                    onPressed: () => _validateForm(formKey),
-                                    child: ResponsiveTextWidget(
-                                      text: "Entrar",
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                            color: AppColors.white,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 20,
-                                          ),
-                                      hintSemantics: "Login",
-                                      tooltipSemantics: "Login",
-                                      maxLines: 1,
-                                    ),
-                                  ),
                                 ),
                               ),
-                            ),
-                            const LoginRegisterButtonComponent(
-                              width: 250,
-                            ),
-                          ],
+                              SizedBox(
+                                  height:
+                                      Sizer.calculateVertical(context, 120)),
+                              const LoginRegisterButtonComponent(
+                                width: 250,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -288,96 +304,110 @@ class _LoginPageState extends State<LoginPage> {
                       SingleChildScrollView(
                         child: SizedBox(
                           height: returnHeight(),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              right: Sizer.calculateHorizontal(context, 10),
-                              top: Sizer.calculateVertical(context, 80),
-                              bottom: Sizer.calculateVertical(context, 120),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      Sizer.calculateHorizontal(context, 150),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Column(
-                                      children: [
-                                        ResponsiveTextWidget(
-                                          text: "Entrar",
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w900,
-                                              ),
-                                          maxLines: 1,
-                                          maxFontSize: 50,
-                                          minFontSize: 32,
-                                          textScaleFactor: 1.5,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                LoginFieldsComponent(
-                                  formKey: formKey,
-                                  emailError: emailError,
-                                  passwordError: passwordError,
-                                  emailController: emailController,
-                                  passwordController: passwordController,
-                                ),
-                                ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                    minHeight: 35,
-                                    maxHeight: Sizer.calculateVertical(
-                                                context, 55) >=
-                                            36
-                                        ? Sizer.calculateVertical(context, 55)
-                                        : 36,
-                                  ),
-                                  child: SizedBox(
-                                    height: Sizer.calculateVertical(
-                                                context, 55) >=
-                                            36
-                                        ? Sizer.calculateVertical(context, 55)
-                                        : 36,
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                right: Sizer.calculateHorizontal(context, 10),
+                                top: Sizer.calculateVertical(context, 80),
+                                bottom: Sizer.calculateVertical(context, 20),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
                                     width:
                                         Sizer.calculateHorizontal(context, 150),
-                                    child: ElevatedButtonTheme(
-                                      data: ElevatedButtonThemeData(
-                                        style: ElevatedButton.styleFrom(
-                                          elevation: 0,
-                                          backgroundColor: AppColors.greyBlue,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Column(
+                                        children: [
+                                          ResponsiveTextWidget(
+                                            text: "Entrar",
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w900,
+                                                ),
+                                            maxLines: 1,
+                                            maxFontSize: 50,
+                                            minFontSize: 32,
+                                            textScaleFactor: 1.5,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      top: Sizer.calculateVertical(context, 60),
+                                      bottom:
+                                          Sizer.calculateVertical(context, 50),
+                                    ),
+                                    child: LoginFieldsComponent(
+                                      formKey: formKey,
+                                      emailError: emailError,
+                                      passwordError: passwordError,
+                                      emailController: emailController,
+                                      passwordController: passwordController,
+                                    ),
+                                  ),
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      minHeight: 35,
+                                      maxHeight: Sizer.calculateVertical(
+                                                  context, 55) >=
+                                              36
+                                          ? Sizer.calculateVertical(context, 55)
+                                          : 36,
+                                    ),
+                                    child: SizedBox(
+                                      height: Sizer.calculateVertical(
+                                                  context, 55) >=
+                                              36
+                                          ? Sizer.calculateVertical(context, 55)
+                                          : 36,
+                                      width: Sizer.calculateHorizontal(
+                                          context, 150),
+                                      child: ElevatedButtonTheme(
+                                        data: ElevatedButtonThemeData(
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            backgroundColor: AppColors.greyBlue,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                          ),
+                                        ),
+                                        child: ElevatedButton(
+                                          onPressed: () =>
+                                              _validateForm(formKey),
+                                          child: ResponsiveTextWidget(
+                                            text: "Entrar",
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  color: AppColors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20,
+                                                ),
+                                            hintSemantics: "Login",
+                                            tooltipSemantics: "Login",
+                                            maxLines: 1,
                                           ),
                                         ),
                                       ),
-                                      child: ElevatedButton(
-                                        onPressed: () => _validateForm(formKey),
-                                        child: ResponsiveTextWidget(
-                                          text: "Entrar",
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                color: AppColors.white,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 20,
-                                              ),
-                                          hintSemantics: "Login",
-                                          tooltipSemantics: "Login",
-                                          maxLines: 1,
-                                        ),
-                                      ),
                                     ),
                                   ),
-                                ),
-                                const LoginRegisterButtonComponent(),
-                              ],
+                                  SizedBox(
+                                      height: Sizer.calculateVertical(
+                                          context, 120)),
+                                  const LoginRegisterButtonComponent(),
+                                ],
+                              ),
                             ),
                           ),
                         ),

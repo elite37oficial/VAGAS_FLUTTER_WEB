@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/domain/entities/get_job_response_entity.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/domain/repositories/get_job_repository.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/datasources/get_job_datasource.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/models/get_job_responde_model.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
+import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/infra/models/get_job_response_model.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/messages_helper.dart';
 
 class GetJobRepositoryImplementation implements GetJobRepository {
@@ -14,10 +13,10 @@ class GetJobRepositoryImplementation implements GetJobRepository {
   GetJobRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, List<JobEntity>>> getJob() async {
+  Future<Either<Failure, GetJobResponseEntity>> getJob(int page) async {
     try {
-      GetJobResponseModel result = await datasource.getJob();
-      return Right(result.listJobs);
+      GetJobResponseModel result = await datasource.getJob(page);
+      return Right(result);
     } on DioError catch (e) {
       if (e.response!.statusCode == 500) {
         return Left(ServerFailure(MessagesHelper.serverMessage));

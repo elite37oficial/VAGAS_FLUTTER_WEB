@@ -1,0 +1,1 @@
+enum StatusCompany { active, inactive }

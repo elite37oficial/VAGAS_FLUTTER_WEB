@@ -13,40 +13,53 @@ class RegisterLogoBackgroundComponent extends StatelessWidget {
       color: AppColors.greyBlue,
       height: size.height,
       width: Sizer.calculateHorizontal(context, 240),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ResponsiveTextWidget(
-            text: "Bem-vindo anunciante!",
-            textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-            maxLines: 1,
-            maxFontSize: 48,
-            minFontSize: 34,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: Sizer.calculateVertical(context, 20),
-              bottom: Sizer.calculateVertical(context, 80),
-            ),
-            child: ResponsiveTextWidget(
-              text: "Anuncie vagas de Flutter aqui!",
-              textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w400,
+      child: Center(
+        child: SizedBox(
+          height: 350,
+          child: ScrollConfiguration(
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ResponsiveTextWidget(
+                    text: "Bem-vindo anunciante!",
+                    textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                    maxLines: 1,
+                    maxFontSize: 48,
+                    minFontSize: 34,
                   ),
-              maxLines: 1,
-              maxFontSize: 32,
-              minFontSize: 24,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: Sizer.calculateVertical(context, 20),
+                      bottom: Sizer.calculateVertical(context, 80),
+                    ),
+                    child: ResponsiveTextWidget(
+                      text: "Anuncie vagas de Flutter aqui!",
+                      textStyle:
+                          Theme.of(context).textTheme.titleLarge!.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                      maxLines: 1,
+                      maxFontSize: 32,
+                      minFontSize: 24,
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    AppImages.logoVagas,
+                    package: "vagas_design_system",
+                  )
+                ],
+              ),
             ),
           ),
-          SvgPicture.asset(
-            AppImages.logoVagas,
-            package: "vagas_design_system",
-          )
-        ],
+        ),
       ),
     );
   }

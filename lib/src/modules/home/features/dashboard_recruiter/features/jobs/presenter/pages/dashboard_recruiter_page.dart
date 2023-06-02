@@ -26,11 +26,30 @@ class HomeRecruiterPage extends StatefulWidget {
 }
 
 class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
+  int actualPage = 1;
+  int totalPages = 1;
   String username = "";
   String token = "";
   bool isLoaded = false;
   List<JobEntity> listJobs = [];
   late GetJobBloc getjobBloc;
+
+  _setJobsInfo(GetJobSuccessState state) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        listJobs = state.listJobs.listJobs;
+        actualPage = int.parse(state.listJobs.actualPage);
+        totalPages = int.parse(state.listJobs.totalPages);
+      });
+    });
+    log(listJobs.length.toString());
+  }
+
+  changePage(newPage) {
+    getjobBloc.add(GetJobListEvent(page: newPage));
+
+    setState(() => actualPage = newPage);
+  }
 
   _showCreateJobPopup() async {
     return await showDialog(
@@ -40,15 +59,15 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
       builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(20),
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           elevation: 0,
           scrollable: true,
           content: Container(
-            height: Sizer.calculateVertical(context, 800) >= 550
+            height: Sizer.calculateVertical(context, 800) >= 720
                 ? Sizer.calculateVertical(context, 800)
-                : 550,
+                : 720,
             width: Sizer.calculateHorizontal(context, 120) >= 300
                 ? Sizer.calculateHorizontal(context, 120)
                 : 300,
@@ -65,7 +84,7 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
 
   _setUsername() async {
     getjobBloc = BlocProvider.of<GetJobBloc>(context);
-    context.read<GetJobBloc>().add(GetJobListEvent());
+    context.read<GetJobBloc>().add(GetJobListEvent(page: actualPage));
     username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
     token = await SecureStorageManager.readData(StorageKeys.accessToken) ?? "";
 
@@ -92,12 +111,13 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 70) >= 250
+                      ? Sizer.calculateHorizontal(context, 70)
+                      : 250,
                   username: username,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
-                  logout: () async => await LogoutHelper.logout()
-                      ? context.pushReplacement(RouteKeys.auth)
-                      : null,
+                  logout: LogoutHelper.logout,
                   isMobile: true,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
@@ -142,8 +162,6 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                   child: BlocBuilder<GetJobBloc, GetJobStates>(
                                     bloc: getjobBloc,
                                     builder: (context, state) {
-                                      log(state.toString());
-
                                       if (state is GetJobLoadingState) {
                                         return const Center(
                                             child: CircularProgressIndicator(
@@ -153,15 +171,20 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                         log(state.message);
                                       }
                                       if (state is GetJobSuccessState) {
-                                        listJobs = state.listJobs;
-                                        log(listJobs.length.toString());
+                                        _setJobsInfo(state);
+                                        getjobBloc.add(CleanGetJobStateEvent(
+                                            state: GetJobInitialState()));
                                       }
                                       return ListJobsComponent(
                                           token: token, listJobs: listJobs);
                                     },
                                   ),
                                 ),
-                                const PageButtonsComponent(),
+                                PageButtonsComponent(
+                                  actualPage: actualPage,
+                                  totalPages: totalPages,
+                                  changePage: changePage,
+                                ),
                               ],
                             ),
                           ),
@@ -183,12 +206,13 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
             child: Column(
               children: [
                 TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 60) >= 220
+                      ? Sizer.calculateHorizontal(context, 60)
+                      : 220,
                   username: username,
                   enterprisesFunction: () => context.push(RouteKeys.companies),
                   jobsFunction: () => context.push(RouteKeys.home),
-                  logout: () async => await LogoutHelper.logout()
-                      ? context.pushReplacement(RouteKeys.auth)
-                      : null,
+                  logout: LogoutHelper.logout,
                   height: Sizer.calculateVertical(context, 70) <= 35
                       ? 35
                       : Sizer.calculateVertical(context, 70),
@@ -243,15 +267,21 @@ class _HomeRecruiterPageState extends State<HomeRecruiterPage> {
                                         log(state.message);
                                       }
                                       if (state is GetJobSuccessState) {
-                                        listJobs = state.listJobs;
-                                        log(listJobs.length.toString());
+                                        _setJobsInfo(state);
+                                        context.read<GetJobBloc>().add(
+                                            CleanGetJobStateEvent(
+                                                state: GetJobInitialState()));
                                       }
                                       return ListJobsComponent(
                                           token: token, listJobs: listJobs);
                                     },
                                   ),
                                 ),
-                                const PageButtonsComponent(),
+                                PageButtonsComponent(
+                                  actualPage: actualPage,
+                                  totalPages: totalPages,
+                                  changePage: changePage,
+                                ),
                               ],
                             ),
                           ),

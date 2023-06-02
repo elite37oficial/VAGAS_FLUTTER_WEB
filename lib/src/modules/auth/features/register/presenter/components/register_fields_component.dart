@@ -35,10 +35,21 @@ class RegisterFieldsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double returnHeight() {
-      if (Sizer.calculateVertical(context, 60) > 35) {
+      if (Sizer.calculateVertical(context, 60) > 45) {
         return Sizer.calculateVertical(context, 60);
       } else {
-        return 35;
+        return 45;
+      }
+    }
+
+    double returnMaxHeight() {
+      if (Sizer.calculateVertical(context, 100) <= 50 &&
+          Sizer.calculateVertical(context, 100) > 45) {
+        return Sizer.calculateVertical(context, 100);
+      } else if (Sizer.calculateVertical(context, 100) >= 50) {
+        return 50;
+      } else {
+        return 46;
       }
     }
 
@@ -51,9 +62,7 @@ class RegisterFieldsComponent extends StatelessWidget {
             AppWebFieldWidget(
               constraints: BoxConstraints(
                 minHeight: 35,
-                maxHeight: Sizer.calculateVertical(context, 100) >= 36
-                    ? Sizer.calculateVertical(context, 100)
-                    : 36,
+                maxHeight: returnMaxHeight(),
               ),
               fieldSemantic: "Campo de texto do nome.",
               hintSemantic: "name",
@@ -70,9 +79,7 @@ class RegisterFieldsComponent extends StatelessWidget {
             AppWebFieldWidget(
               constraints: BoxConstraints(
                 minHeight: 35,
-                maxHeight: Sizer.calculateVertical(context, 100) >= 36
-                    ? Sizer.calculateVertical(context, 100)
-                    : 36,
+                maxHeight: returnMaxHeight(),
               ),
               fieldSemantic: "Campo de texto do telefone.",
               hintSemantic: "phone",
@@ -90,9 +97,7 @@ class RegisterFieldsComponent extends StatelessWidget {
             AppWebFieldWidget(
               constraints: BoxConstraints(
                 minHeight: 35,
-                maxHeight: Sizer.calculateVertical(context, 100) >= 36
-                    ? Sizer.calculateVertical(context, 100)
-                    : 36,
+                maxHeight: returnMaxHeight(),
               ),
               fieldSemantic: "Campo de texto do email.",
               hintSemantic: "email",
@@ -109,9 +114,7 @@ class RegisterFieldsComponent extends StatelessWidget {
             AppWebFieldWidget(
               constraints: BoxConstraints(
                 minHeight: 35,
-                maxHeight: Sizer.calculateVertical(context, 100) >= 36
-                    ? Sizer.calculateVertical(context, 100)
-                    : 36,
+                maxHeight: returnMaxHeight(),
               ),
               fieldSemantic: "Campo de texto do senha.",
               hintSemantic: "password",
@@ -129,9 +132,7 @@ class RegisterFieldsComponent extends StatelessWidget {
             AppWebFieldWidget(
               constraints: BoxConstraints(
                 minHeight: 35,
-                maxHeight: Sizer.calculateVertical(context, 100) >= 36
-                    ? Sizer.calculateVertical(context, 100)
-                    : 36,
+                maxHeight: returnMaxHeight(),
               ),
               fieldSemantic: "Campo de texto de repertir a senha.",
               hintSemantic: "password",

@@ -1,3 +1,3 @@
 abstract class GetJobDatasource {
-  Future getJob();
+  Future getJob(int page);
 }

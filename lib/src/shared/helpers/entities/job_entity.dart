@@ -11,12 +11,13 @@ class JobEntity extends Equatable {
   final String city;
   final String modality;
   final String regime;
-  final String salary;
+  final double salary;
   final String seniority;
   final String period;
   final String link;
   final String whatsapp;
   final String email;
+  final String status;
   final int createdDate;
 
   const JobEntity({
@@ -36,6 +37,7 @@ class JobEntity extends Equatable {
     required this.regime,
     required this.salary,
     required this.seniority,
+    required this.status,
     required this.createdDate,
   });
 
@@ -53,6 +55,7 @@ class JobEntity extends Equatable {
         state,
         city,
         description,
+        status,
         modality,
         regime,
         salary,
