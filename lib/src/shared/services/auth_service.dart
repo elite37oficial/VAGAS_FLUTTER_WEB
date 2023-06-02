@@ -19,6 +19,7 @@ class AuthService extends ChangeNotifier {
 
   logouted() async {
     isAuthenticated = false;
+    isAdminAuthenticated = false;
     await SecureStorageManager.deleteData(StorageKeys.loged);
     notifyListeners();
   }
