@@ -36,7 +36,8 @@ class GetMySelfBloc extends Bloc<GetMySelfEvent, GetMySelfState> {
         SecureStorageManager.saveData(StorageKeys.name, success.name);
         SecureStorageManager.saveData(StorageKeys.phone, success.phone);
         SecureStorageManager.saveData(StorageKeys.role, success.profileId);
-        UserRole role = success.profileId == UserRole.admin.name
+        UserRole role = success.profileId == UserRole.admin.name ||
+                success.profileId == "Admin"
             ? UserRole.admin
             : UserRole.recrutador;
         return emitter(GetMySelfStateSuccessState(role: role));

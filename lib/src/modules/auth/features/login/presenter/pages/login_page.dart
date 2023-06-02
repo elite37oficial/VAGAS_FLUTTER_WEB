@@ -149,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
             if (getState is GetMySelfStateSuccessState) {
               if (getState.role == UserRole.admin) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await authService.adminLoged();
                   context.pushReplacement(RouteKeys.homeAdmin);
                 });
               } else {
