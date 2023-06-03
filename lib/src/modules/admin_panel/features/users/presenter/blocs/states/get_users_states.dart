@@ -1,5 +1,4 @@
-
-
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/entities/get_users_response_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 
 abstract class GetUsersStates {}
@@ -9,7 +8,7 @@ class GetUsersInitialState extends GetUsersStates {}
 class GetUsersLoadingState extends GetUsersStates {}
 
 class GetUsersSuccessState extends GetUsersStates {
-  final List<UserEntity> listUsers;
+  final GetUsersResponseEntity listUsers;
 
   GetUsersSuccessState({required this.listUsers});
 }

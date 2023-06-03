@@ -83,11 +83,11 @@ class HeaderFilterComponent extends StatelessWidget {
               child: SizedBox(
                 width: size.width * 0.7,
                 child: ResponsiveTextWidget(
-                  text: "Sobre",
+                  text: "Email",
                   textStyle: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 1,
-                  hintSemantics: "sobre",
-                  tooltipSemantics: "sobre",
+                  hintSemantics: "email",
+                  tooltipSemantics: "email",
                 ),
               ),
             ),

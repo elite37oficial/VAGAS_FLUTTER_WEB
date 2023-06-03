@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/entities/get_users_response_entity.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/repositories/get_users_repository.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/infra/datasources/get_users_datasource.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/infra/models/get_users_response_model.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/exceptions/request_exception.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
@@ -12,10 +12,10 @@ class GetUsersRepositoryImplementation implements GetUsersRepository {
   GetUsersRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, List<UserEntity>>> getUsers() async {
+  Future<Either<Failure, GetUsersResponseEntity>> getUsers() async {
     try {
       GetUsersResponseModel result = await datasource.getUsers();
-      return Right(result.listUsers);
+      return Right(GetUsersResponseEntity(listUsers: result.listUsersModel));
     } on InvalidCredentialsException catch (e) {
       return Left(InvalidCredentialsFailure(e.message.toString()));
     } on BadRequestException catch (e) {

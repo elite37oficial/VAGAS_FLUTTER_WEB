@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/components/status_component.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/status_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/sizer.dart';
 
@@ -13,6 +13,11 @@ class UserTileComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime date =
+        DateTime.fromMillisecondsSinceEpoch(userTileData.createdDate);
+    String datePaserd =
+        "${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}/${date.year}";
+
     Size size = MediaQuery.of(context).size;
     return Container(
       height: Sizer.calculateVertical(context, 55) <= 40
@@ -37,21 +42,11 @@ class UserTileComponent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ResponsiveTextWidget(
-                          text: userTileData.profession ?? "",
+                          text: userTileData.name,
                           textStyle: Theme.of(context).textTheme.bodyMedium,
                           maxLines: 1,
-                          hintSemantics: "titulo",
-                          tooltipSemantics: "titulo",
-                        ),
-                        ResponsiveTextWidget(
-                          text: userTileData.username,
-                          textStyle:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: AppColors.lightGrey,
-                                  ),
-                          maxLines: 1,
-                          hintSemantics: "empresa",
-                          tooltipSemantics: "empresa",
+                          hintSemantics: "nome",
+                          tooltipSemantics: "nome",
                         ),
                       ],
                     ),
@@ -66,7 +61,7 @@ class UserTileComponent extends StatelessWidget {
               width: size.width * 0.7,
               child: Center(
                   child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.center,
                 child:
                     StatusComponent(status: userTileData.status ?? "Fechada"),
               )),
@@ -78,7 +73,7 @@ class UserTileComponent extends StatelessWidget {
               width: size.width * 0.7,
               child: Center(
                 child: ResponsiveTextWidget(
-                  text: userTileData.createdAt,
+                  text: datePaserd,
                   textStyle: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 1,
                   hintSemantics: "data de criação",
@@ -92,11 +87,11 @@ class UserTileComponent extends StatelessWidget {
             child: SizedBox(
               width: size.width * 0.7,
               child: ResponsiveTextWidget(
-                text: userTileData.about ?? "",
+                text: userTileData.email,
                 textStyle: Theme.of(context).textTheme.bodyMedium,
                 maxLines: 3,
-                hintSemantics: "sobre",
-                tooltipSemantics: "sobre",
+                hintSemantics: "email",
+                tooltipSemantics: "email",
               ),
             ),
           ),

@@ -28,221 +28,200 @@ class HomeAdminPanelPage extends StatefulWidget {
 
 class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
   String username = "";
+  String token = "";
+  List<UserEntity> listUsers = [];
+  late GetUsersBloc getUsersBloc;
 
-  _setUsername() async {
-    username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+  _setUsersInfo(GetUsersSuccessState state) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        listUsers = state.listUsers.listUsers;
+      });
+    });
+    log(listUsers.length.toString());
   }
 
-  List<UserEntity> listUsers = [
-    UserEntity(
-      userId: "0",
-      isAdmin: false,
-      username: "username",
-      email: "user@email.com",
-      createdAt: "27/03/2023",
-      listJobs: [],
-      about: "Lorem Ipslum",
-      profession: "Recrutador",
-      status: "Em Aberto",
-      listEnterprises: [],
-      updatedAt: "27/04/2023",
-    ),
-    UserEntity(
-      userId: "0",
-      isAdmin: false,
-      username: "username",
-      email: "user@email.com",
-      createdAt: "27/03/2023",
-      listJobs: [],
-      about: "Lorem Ipslum",
-      profession: "Recrutador",
-      status: "Fechada",
-      listEnterprises: [],
-      updatedAt: "27/04/2023",
-    ),
-    UserEntity(
-      userId: "0",
-      isAdmin: false,
-      username: "username",
-      email: "user@email.com",
-      createdAt: "27/03/2023",
-      listJobs: [],
-      about:
-          "Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem IpslumLorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem Ipslum Lorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem IpslumLorem Ipslum ",
-      profession: "Recrutador",
-      status: "Cancelada",
-      listEnterprises: [],
-      updatedAt: "27/04/2023",
-    ),
-  ];
+  _setUsername() async {
+    getUsersBloc = BlocProvider.of<GetUsersBloc>(context);
+    username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
+    token = await SecureStorageManager.readData(StorageKeys.accessToken) ?? "";
+    setState(() {});
+  }
+
   @override
   void initState() {
-    context.read<GetUsersBloc>().add(GetEvent());
-    _setUsername();
     super.initState();
+    getUsersBloc = BlocProvider.of<GetUsersBloc>(context);
+    getUsersBloc.add(GetEvent());
+    _setUsername();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocBuilder<GetUsersBloc, GetUsersStates>(builder: (context, state) {
-      if (state is GetUsersLoadingState) {
-        return const LoadingPage();
-      }
-      if (state is GetUsersErrorState) {
-        log(state.message);
-      }
-      if (state is GetUsersSuccessState) {
-        listUsers = state.listUsers;
-        log(listUsers.length.toString());
-      }
-      return ResponsiveLayout(
-        mobile: Scaffold(
-          body: SizedBox(
-            height: size.height,
-            width: size.width,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TopBarWebWidget(
-                    widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
-                        ? Sizer.calculateHorizontal(context, 40)
-                        : 180,
-                    enterprisesFunction: () =>
-                        context.push(RouteKeys.companies),
-                    jobsFunction: () => context.push(RouteKeys.home),
-                    logout: LogoutHelper.logout,
-                    username: username,
-                    isMobile: true,
-                    height: Sizer.calculateVertical(context, 70) <= 35
-                        ? 35
-                        : Sizer.calculateVertical(context, 70),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.7,
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 40, top: 60),
-                            child: ResponsiveTextWidget(
-                              text: "Usuários",
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(fontWeight: FontWeight.w700),
-                              hintSemantics: "usuários",
-                              tooltipSemantics: "usuários",
-                              maxLines: 1,
-                              maxFontSize: 32,
-                              minFontSize: 27,
-                            ),
+    return ResponsiveLayout(
+      mobile: Scaffold(
+        body: SizedBox(
+          height: size.height,
+          width: size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                      ? Sizer.calculateHorizontal(context, 40)
+                      : 180,
+                  enterprisesFunction: () =>
+                      context.push(RouteKeys.companiesAdmin),
+                  jobsFunction: () => context.push(RouteKeys.homeAdmin),
+                  logout: LogoutHelper.logout,
+                  username: username,
+                  isMobile: true,
+                  height: Sizer.calculateVertical(context, 70) <= 35
+                      ? 35
+                      : Sizer.calculateVertical(context, 70),
+                ),
+                SizedBox(
+                  width: size.width * 0.7,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40, top: 60),
+                          child: ResponsiveTextWidget(
+                            text: "Usuários",
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.w700),
+                            hintSemantics: "usuários",
+                            tooltipSemantics: "usuários",
+                            maxLines: 1,
+                            maxFontSize: 32,
+                            minFontSize: 27,
                           ),
                         ),
-                        const TopButtonsComponent(),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 80, bottom: 50),
-                          child: SizedBox(
-                            height: Sizer.calculateVertical(context, 450),
-                            width: size.width * 0.7,
-                            child: Material(
-                              borderRadius: BorderRadius.circular(10),
-                              elevation: 5,
-                              child: Column(
-                                children: [
-                                  HeaderFilterComponent(size: size),
-                                  Expanded(
-                                    child: ListUsersComponent(
-                                        listUsers: listUsers),
+                      ),
+                      const TopButtonsComponent(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50, bottom: 50),
+                        child: SizedBox(
+                          height: Sizer.calculateVertical(context, 450),
+                          width: size.width * 0.7,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            elevation: 5,
+                            child: Column(
+                              children: [
+                                HeaderFilterComponent(size: size),
+                                Expanded(
+                                  child:
+                                      BlocBuilder<GetUsersBloc, GetUsersStates>(
+                                    bloc: getUsersBloc,
+                                    builder: (context, state) {
+                                      if (state is GetUsersLoadingState) {
+                                        return const Center(
+                                            child: CircularProgressIndicator(
+                                                color: AppColors.greyBlue));
+                                      }
+                                      if (state is GetUsersErrorState) {
+                                        log(state.message);
+                                      }
+                                      if (state is GetUsersSuccessState) {
+                                        _setUsersInfo(state);
+                                        log(listUsers.length.toString());
+                                      }
+                                      return ListUsersComponent(
+                                          listUsers: listUsers);
+                                    },
                                   ),
-                                  const PageButtonsComponent(),
-                                ],
-                              ),
+                                ),
+                                const PageButtonsComponent(),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
-        desktop: Scaffold(
-          body: SizedBox(
-            height: size.height,
-            width: size.width,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TopBarWebWidget(
-                    widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
-                        ? Sizer.calculateHorizontal(context, 40)
-                        : 180,
-                    enterprisesFunction: () =>
-                        context.push(RouteKeys.companies),
-                    jobsFunction: () => context.push(RouteKeys.home),
-                    logout: LogoutHelper.logout,
-                    username: username,
-                    height: Sizer.calculateVertical(context, 70) <= 35
-                        ? 35
-                        : Sizer.calculateVertical(context, 70),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.7,
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 40, top: 60),
-                            child: ResponsiveTextWidget(
-                              text: "Usuários",
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(fontWeight: FontWeight.w700),
-                              hintSemantics: "usuários",
-                              tooltipSemantics: "usuários",
-                              maxLines: 1,
-                              maxFontSize: 32,
-                              minFontSize: 27,
-                            ),
-                          ),
-                        ),
-                        const TopButtonsComponent(),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 80, bottom: 50),
-                          child: SizedBox(
-                            height: Sizer.calculateVertical(context, 450),
-                            width: size.width * 0.7,
-                            child: Material(
-                              borderRadius: BorderRadius.circular(10),
-                              elevation: 5,
-                              child: Column(
-                                children: [
-                                  HeaderFilterComponent(size: size),
-                                  Expanded(
-                                    child: ListUsersComponent(
-                                        listUsers: listUsers),
+      ),
+      desktop: Scaffold(
+        body: SizedBox(
+          height: size.height,
+          width: size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TopBarWebWidget(
+                  widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
+                      ? Sizer.calculateHorizontal(context, 40)
+                      : 180,
+                  enterprisesFunction: () =>
+                      context.push(RouteKeys.companiesAdmin),
+                  jobsFunction: () => context.push(RouteKeys.homeAdmin),
+                  logout: LogoutHelper.logout,
+                  username: username,
+                  height: Sizer.calculateVertical(context, 70) <= 35
+                      ? 35
+                      : Sizer.calculateVertical(context, 70),
+                ),
+                SizedBox(
+                  width: size.width * 0.7,
+                  child: Column(
+                    children: [
+                      const TopButtonsComponent(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50, bottom: 50),
+                        child: SizedBox(
+                          height: Sizer.calculateVertical(context, 450),
+                          width: size.width * 0.7,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            elevation: 5,
+                            child: Column(
+                              children: [
+                                HeaderFilterComponent(size: size),
+                                Expanded(
+                                  child:
+                                      BlocBuilder<GetUsersBloc, GetUsersStates>(
+                                    bloc: getUsersBloc,
+                                    builder: (context, state) {
+                                      if (state is GetUsersLoadingState) {
+                                        return const Center(
+                                            child: CircularProgressIndicator(
+                                                color: AppColors.greyBlue));
+                                      }
+                                      if (state is GetUsersErrorState) {
+                                        log(state.message);
+                                      }
+                                      if (state is GetUsersSuccessState) {
+                                        _setUsersInfo(state);
+                                      }
+                                      return ListUsersComponent(
+                                          listUsers: listUsers);
+                                    },
                                   ),
-                                  const PageButtonsComponent(),
-                                ],
-                              ),
+                                ),
+                                const PageButtonsComponent(),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 }

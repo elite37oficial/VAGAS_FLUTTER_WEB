@@ -25,9 +25,9 @@ class StatusComponent extends StatelessWidget {
 }
 
 Color _getStatusColor(String status) {
-  if (status == "Em Aberto") {
+  if (status == "active") {
     return AppColors.darkBlue.withOpacity(0.1);
-  } else if (status == "Fechada") {
+  } else if (status == "inactive") {
     return AppColors.lightGrey.withOpacity(0.1);
   } else if (status == "Cancelada") {
     return AppColors.red.withOpacity(0.1);
@@ -38,9 +38,9 @@ Color _getStatusColor(String status) {
 
 ResponsiveTextWidget _getLabel(
     {required String status, required BuildContext context}) {
-  if (status == "Em Aberto") {
+  if (status == "active") {
     return ResponsiveTextWidget(
-      text: "Em Aberto",
+      text: "Ativa",
       textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(
             color: AppColors.darkBlue,
             fontWeight: FontWeight.w700,
@@ -49,7 +49,7 @@ ResponsiveTextWidget _getLabel(
       minFontSize: 7,
       maxLines: 1,
     );
-  } else if (status == "Fechada") {
+  } else if (status == "inactive") {
     return ResponsiveTextWidget(
       text: "Fechada",
       textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(

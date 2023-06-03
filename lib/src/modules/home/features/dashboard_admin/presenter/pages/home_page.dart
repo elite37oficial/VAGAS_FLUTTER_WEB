@@ -66,8 +66,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             const Text("Infos"),
             Text(userEntity?.email ?? ""),
-            Text(userEntity?.username ?? ""),
-            Text(userEntity?.userId ?? ""),
+            Text(userEntity?.name ?? ""),
+            Text(userEntity?.id ?? ""),
           ],
         ),
       ),
