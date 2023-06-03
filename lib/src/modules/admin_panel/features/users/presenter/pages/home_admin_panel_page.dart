@@ -67,10 +67,11 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TopBarWebWidget(
+                AdminTopBarWebWidget(
                   widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
                       ? Sizer.calculateHorizontal(context, 40)
                       : 180,
+                  usersFunction: () => context.push(RouteKeys.homeAdmin),
                   enterprisesFunction: () =>
                       context.push(RouteKeys.companiesAdmin),
                   jobsFunction: () => context.push(RouteKeys.homeAdmin),
@@ -158,10 +159,11 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TopBarWebWidget(
+                AdminTopBarWebWidget(
                   widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
                       ? Sizer.calculateHorizontal(context, 40)
                       : 180,
+                  usersFunction: () => context.push(RouteKeys.homeAdmin),
                   enterprisesFunction: () =>
                       context.push(RouteKeys.companiesAdmin),
                   jobsFunction: () => context.push(RouteKeys.homeAdmin),
