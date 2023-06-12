@@ -3,5 +3,5 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
 
 abstract class GetUsersRepository {
-  Future<Either<Failure, GetUsersResponseEntity>> getUsers();
+  Future<Either<Failure, GetUsersResponseEntity>> adminGetUsers(int page);
 }

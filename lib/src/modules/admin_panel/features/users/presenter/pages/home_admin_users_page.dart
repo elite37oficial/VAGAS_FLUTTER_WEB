@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/components/admin_page_buttons_component.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/blocs/get_users_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/events/get_users_event.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/states/get_users_states.dart';
@@ -27,6 +28,8 @@ class HomeAdminUsersPage extends StatefulWidget {
 }
 
 class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
+  int actualPage = 1;
+  int totalPages = 1;
   String username = "";
   String token = "";
   List<UserEntity> listUsers = [];
@@ -36,9 +39,17 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       setState(() {
         listUsers = state.listUsers.listUsers;
+        actualPage = int.parse(state.listUsers.actualPage);
+        totalPages = int.parse(state.listUsers.totalPages);
       });
     });
     log(listUsers.length.toString());
+  }
+
+  changePage(newPage) {
+    getUsersBloc.add(DoGetUsersEvent(page: newPage));
+
+    setState(() => actualPage = newPage);
   }
 
   _setUsername() async {
@@ -52,7 +63,7 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
   void initState() {
     super.initState();
     getUsersBloc = BlocProvider.of<GetUsersBloc>(context);
-    getUsersBloc.add(GetEvent());
+    getUsersBloc.add(DoGetUsersEvent(page: totalPages));
     _setUsername();
   }
 
@@ -131,14 +142,20 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
                                       }
                                       if (state is GetUsersSuccessState) {
                                         _setUsersInfo(state);
-                                        log(listUsers.length.toString());
+                                        getUsersBloc.add(
+                                            CleanGetUsersStateEvent(
+                                                state: GetUsersInitialState()));
                                       }
                                       return ListUsersComponent(
                                           listUsers: listUsers);
                                     },
                                   ),
                                 ),
-                                const PageButtonsComponent(),
+                                AdminPageButtonsComponent(
+                                  actualPage: actualPage,
+                                  totalPages: totalPages,
+                                  changePage: changePage,
+                                ),
                               ],
                             ),
                           ),
@@ -205,13 +222,20 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
                                       }
                                       if (state is GetUsersSuccessState) {
                                         _setUsersInfo(state);
+                                        getUsersBloc.add(
+                                            CleanGetUsersStateEvent(
+                                                state: GetUsersInitialState()));
                                       }
                                       return ListUsersComponent(
                                           listUsers: listUsers);
                                     },
                                   ),
                                 ),
-                                const PageButtonsComponent(),
+                                AdminPageButtonsComponent(
+                                  actualPage: actualPage,
+                                  totalPages: totalPages,
+                                  changePage: changePage,
+                                ),
                               ],
                             ),
                           ),

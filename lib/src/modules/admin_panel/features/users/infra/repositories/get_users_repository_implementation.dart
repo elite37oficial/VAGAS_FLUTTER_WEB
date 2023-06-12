@@ -12,10 +12,11 @@ class GetUsersRepositoryImplementation implements GetUsersRepository {
   GetUsersRepositoryImplementation({required this.datasource});
 
   @override
-  Future<Either<Failure, GetUsersResponseEntity>> getUsers() async {
+  Future<Either<Failure, GetUsersResponseEntity>> adminGetUsers(
+      int page) async {
     try {
-      GetUsersResponseModel result = await datasource.getUsers();
-      return Right(GetUsersResponseEntity(listUsers: result.listUsersModel));
+      GetUsersResponseModel result = await datasource.adminGetUsers(page);
+      return Right(result);
     } on InvalidCredentialsException catch (e) {
       return Left(InvalidCredentialsFailure(e.message.toString()));
     } on BadRequestException catch (e) {

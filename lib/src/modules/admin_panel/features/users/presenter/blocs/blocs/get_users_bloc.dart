@@ -4,21 +4,21 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/events/get_users_event.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/states/get_users_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
-import 'package:vagas_flutter_web/src/shared/helpers/generics/usecase.dart';
 
 class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersStates> {
   final GetUsersUsecase usecase;
   GetUsersBloc({required this.usecase}) : super(GetUsersInitialState()) {
-    on<GetEvent>(getUsers);
+    on<DoGetUsersEvent>(adminGetUsers);
+    on<CleanGetUsersStateEvent>(cleanState);
   }
 
-  void getUsers(
-    GetUsersEvent event,
+  void adminGetUsers(
+    DoGetUsersEvent event,
     Emitter<GetUsersStates> emitter,
   ) async {
     emitter(GetUsersLoadingState());
 
-    var result = await usecase(NoParams());
+    var result = await usecase(event.page);
 
     result.fold(
       (Failure failure) =>
@@ -27,4 +27,10 @@ class GetUsersBloc extends Bloc<GetUsersEvent, GetUsersStates> {
           emitter(GetUsersSuccessState(listUsers: success)),
     );
   }
+
+  Future<void> cleanState(
+    CleanGetUsersStateEvent event,
+    Emitter<GetUsersStates> emitter,
+  ) async =>
+      emitter(event.state);
 }

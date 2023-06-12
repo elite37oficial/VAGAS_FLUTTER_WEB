@@ -13,6 +13,9 @@ abstract class Endpoints {
   static String forgotPassword = "$baseURL/reset-password-email";
   static String resetPassword = "$baseURL/reset-password";
 
+  static String pageUsersAdmin(int page) =>
+      "$baseURL/users?page=$page&limit=10";
+
   static String getJobsByRecruiterId(String userId) =>
       "$baseURL/jobs?created_by=$userId";
   static String pageJobs(int page, String userId) =>

@@ -9,9 +9,9 @@ class GetUsersDatasourceImplementation implements GetUsersDatasource {
   GetUsersDatasourceImplementation({required this.requester});
 
   @override
-  Future<GetUsersResponseModel> getUsers() async {
+  Future adminGetUsers(int page) async {
     return await requester.get(
-      url: Endpoints.users,
+      url: Endpoints.pageUsersAdmin(page),
       fromJson: (value) => GetUsersResponseModel.fromMap(value),
     );
   }
