@@ -150,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
               if (getState.role == UserRole.admin) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
                   await authService.adminLoged();
-                  context.pushReplacement(RouteKeys.homeAdmin);
+                  context.pushReplacement(RouteKeys.usersAdmin);
                 });
               } else {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {

@@ -17,6 +17,8 @@ abstract class Endpoints {
       "$baseURL/jobs?created_by=$userId";
   static String pageJobs(int page, String userId) =>
       "$baseURL/jobs/v2?page=$page&limit=10&created_by=$userId";
+  static String pageJobsAdmin(int page) =>
+      "$baseURL/jobs/v2?page=$page&limit=10";
   static String companyImage = "$baseURL/companies-image";
 
   static String pageCompanies(int page) =>

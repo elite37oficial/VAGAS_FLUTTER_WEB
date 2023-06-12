@@ -19,14 +19,14 @@ import 'package:vagas_flutter_web/src/shared/storages/secure_storage_manager.dar
 import 'package:vagas_flutter_web/src/shared/storages/storage_keys.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
-class HomeAdminPanelPage extends StatefulWidget {
-  const HomeAdminPanelPage({Key? key}) : super(key: key);
+class HomeAdminUsersPage extends StatefulWidget {
+  const HomeAdminUsersPage({Key? key}) : super(key: key);
 
   @override
-  State<HomeAdminPanelPage> createState() => _HomeAdminPanelPageState();
+  State<HomeAdminUsersPage> createState() => _HomeAdminUsersPageState();
 }
 
-class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
+class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
   String username = "";
   String token = "";
   List<UserEntity> listUsers = [];
@@ -71,10 +71,10 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
                   widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
                       ? Sizer.calculateHorizontal(context, 40)
                       : 180,
-                  usersFunction: () => context.push(RouteKeys.homeAdmin),
+                  usersFunction: () => context.push(RouteKeys.usersAdmin),
                   enterprisesFunction: () =>
                       context.push(RouteKeys.companiesAdmin),
-                  jobsFunction: () => context.push(RouteKeys.homeAdmin),
+                  jobsFunction: () => context.push(RouteKeys.jobsAdmin),
                   logout: LogoutHelper.logout,
                   username: username,
                   isMobile: true,
@@ -163,10 +163,11 @@ class _HomeAdminPanelPageState extends State<HomeAdminPanelPage> {
                   widthPopup: Sizer.calculateHorizontal(context, 40) >= 180
                       ? Sizer.calculateHorizontal(context, 40)
                       : 180,
-                  usersFunction: () => context.push(RouteKeys.homeAdmin),
+                  usersFunction: () => context.push(RouteKeys.usersAdmin),
                   enterprisesFunction: () =>
                       context.push(RouteKeys.companiesAdmin),
-                  jobsFunction: () => context.push(RouteKeys.homeAdmin),
+                  jobsFunction: () =>
+                      context.pushReplacement(RouteKeys.jobsAdmin),
                   logout: LogoutHelper.logout,
                   username: username,
                   height: Sizer.calculateVertical(context, 70) <= 35

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/pages/home_admin_panel_page.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/pages/dashboard_admin_jobs_page.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/pages/home_admin_users_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/forgot_password/presenter/pages/forgot_password_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/pages/login_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/pages/register_page.dart';
@@ -88,7 +89,7 @@ final appRoutesConfig = GoRouter(
         } else if (authService.isAuthenticated) {
           return RouteKeys.home;
         } else if (authService.isAdminAuthenticated) {
-          return RouteKeys.homeAdmin;
+          return RouteKeys.usersAdmin;
         } else if (state.subloc == "${RouteKeys.auth}${RouteKeys.login}") {
           return "${RouteKeys.auth}${RouteKeys.login}";
         } else {
@@ -147,14 +148,26 @@ final appRoutesConfig = GoRouter(
       ],
     ),
     GoRoute(
-      path: RouteKeys.homeAdmin,
-      name: RouteKeys.homeAdmin.replaceAll("/", ""),
+      path: RouteKeys.usersAdmin,
+      name: RouteKeys.usersAdmin.replaceAll("/", ""),
       redirect: (_, __) => !authService.isAdminAuthenticated
           ? "${RouteKeys.auth}${RouteKeys.login}"
           : null,
       pageBuilder: (context, state) {
         return const NoTransitionPage(
-          child: HomeAdminPanelPage(),
+          child: HomeAdminUsersPage(),
+        );
+      },
+    ),
+    GoRoute(
+      path: RouteKeys.jobsAdmin,
+      name: RouteKeys.jobsAdmin.replaceAll("/", ""),
+      redirect: (_, __) => !authService.isAdminAuthenticated
+          ? "${RouteKeys.auth}${RouteKeys.login}"
+          : null,
+      pageBuilder: (context, state) {
+        return const NoTransitionPage(
+          child: HomeAdminJobsPage(),
         );
       },
     ),

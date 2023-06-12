@@ -2,7 +2,8 @@ abstract class RouteKeys {
   static const String init = "/";
   static const String initial = "/initial";
   static const String admin = "/admin";
-  static const String homeAdmin = "/homeAdmin";
+  static const String usersAdmin = "/usersAdmin";
+  static const String jobsAdmin = "/jobsAdmin";
   static const String companiesAdmin = "/companiesAdmin";
   static const String splash = "/splash";
   static const String auth = "/auth";
