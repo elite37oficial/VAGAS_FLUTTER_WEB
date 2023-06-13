@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/company/presenter/pages/dashboard_admin_companies_page.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/pages/dashboard_admin_jobs_page.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/pages/home_admin_users_page.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/forgot_password/presenter/pages/forgot_password_page.dart';
@@ -10,7 +11,6 @@ import 'package:vagas_flutter_web/src/modules/auth/features/reset_password/prese
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/pages/dashboard_companies_page.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/jobs/presenter/pages/dashboard_recruiter_page.dart';
 import 'package:vagas_flutter_web/src/shared/services/auth_service.dart';
-import 'package:vagas_flutter_web/src/shared/utils/routes/redirect_page_route.dart';
 import 'package:vagas_flutter_web/src/shared/utils/routes/route_keys.dart';
 
 final authService = AuthService();
@@ -168,6 +168,18 @@ final appRoutesConfig = GoRouter(
       pageBuilder: (context, state) {
         return const NoTransitionPage(
           child: HomeAdminJobsPage(),
+        );
+      },
+    ),
+    GoRoute(
+      path: RouteKeys.companiesAdmin,
+      name: RouteKeys.companiesAdmin.replaceAll("/", ""),
+      redirect: (_, __) => !authService.isAdminAuthenticated
+          ? "${RouteKeys.auth}${RouteKeys.login}"
+          : null,
+      pageBuilder: (context, state) {
+        return const NoTransitionPage(
+          child: HomeAdminCompaniesPage(),
         );
       },
     ),

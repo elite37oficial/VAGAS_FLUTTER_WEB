@@ -1,4 +1,5 @@
-part of '../blocs/get_job_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/blocs/states/admin_get_job_states.dart';
 
 abstract class AdminGetJobEvent extends Equatable {
   const AdminGetJobEvent();

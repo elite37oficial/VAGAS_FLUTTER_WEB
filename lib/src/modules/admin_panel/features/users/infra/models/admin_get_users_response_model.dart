@@ -1,10 +1,11 @@
-import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/entities/get_users_response_entity.dart';
+
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/entities/admin_get_users_response_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/models/user_model.dart';
 
-class GetUsersResponseModel extends GetUsersResponseEntity {
+class AdminGetUsersResponseModel extends AdminGetUsersResponseEntity {
   final List<UserModel> listUsersModel;
 
-  const GetUsersResponseModel(
+  const AdminGetUsersResponseModel(
       {required this.listUsersModel,
       required super.actualPage,
       required super.totalPages})
@@ -18,8 +19,8 @@ class GetUsersResponseModel extends GetUsersResponseEntity {
     };
   }
 
-  factory GetUsersResponseModel.fromMap(Map<String, dynamic> map) {
-    return GetUsersResponseModel(
+  factory AdminGetUsersResponseModel.fromMap(Map<String, dynamic> map) {
+    return AdminGetUsersResponseModel(
       listUsersModel:
           List<UserModel>.from(map['data']?.map((x) => UserModel.fromMap(x))),
       totalPages: map['totalPages'] ?? '',

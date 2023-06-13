@@ -1,26 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/states/get_users_states.dart';
 
-abstract class GetUsersEvent extends Equatable {
-  const GetUsersEvent();
+abstract class AdminGetUsersEvent extends Equatable {
+  const AdminGetUsersEvent();
 }
 
-class DoGetUsersEvent extends GetUsersEvent {
+class AdminDoGetUsersEvent extends AdminGetUsersEvent {
   final int page;
 
-  const DoGetUsersEvent({required this.page});
+  const AdminDoGetUsersEvent({required this.page});
 
   @override
   List<Object> get props => [page];
 }
 
-class CleanGetUsersStateEvent extends GetUsersEvent {
-  final GetUsersStates state;
+class AdminCleanGetUsersStateEvent extends AdminGetUsersEvent {
+  final AdminGetUsersStates state;
 
-  const CleanGetUsersStateEvent({
+  const AdminCleanGetUsersStateEvent({
     required this.state,
   });
 
   @override
-  List<GetUsersStates> get props => [state];
+  List<AdminGetUsersStates> get props => [state];
 }

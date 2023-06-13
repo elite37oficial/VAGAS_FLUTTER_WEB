@@ -1,19 +1,19 @@
-import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/entities/get_users_response_entity.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/domain/entities/admin_get_users_response_entity.dart';
 
-abstract class GetUsersStates {}
+abstract class AdminGetUsersStates {}
 
-class GetUsersInitialState extends GetUsersStates {}
+class AdminGetUsersInitialState extends AdminGetUsersStates {}
 
-class GetUsersLoadingState extends GetUsersStates {}
+class AdminGetUsersLoadingState extends AdminGetUsersStates {}
 
-class GetUsersSuccessState extends GetUsersStates {
-  final GetUsersResponseEntity listUsers;
+class AdminGetUsersSuccessState extends AdminGetUsersStates {
+  final AdminGetUsersResponseEntity listUsers;
 
-  GetUsersSuccessState({required this.listUsers});
+  AdminGetUsersSuccessState({required this.listUsers});
 }
 
-class GetUsersErrorState extends GetUsersStates {
+class AdminGetUsersErrorState extends AdminGetUsersStates {
   final String message;
 
-  GetUsersErrorState({required this.message});
+  AdminGetUsersErrorState({required this.message});
 }

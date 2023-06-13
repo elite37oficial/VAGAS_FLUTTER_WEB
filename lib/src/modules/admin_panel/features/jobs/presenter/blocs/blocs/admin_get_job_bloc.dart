@@ -1,11 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/domain/entities/admin_get_job_response_entity.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/domain/usecases/admin_get_job_usecase.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/blocs/events/admin_get_job_event.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/blocs/states/admin_get_job_states.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/failures/failures.dart';
-
-part '../events/get_job_event.dart';
-part '../states/get_job_states.dart';
 
 class AdminGetJobBloc extends Bloc<AdminGetJobEvent, AdminGetJobStates> {
   final AdminGetJobUsecase usecase;

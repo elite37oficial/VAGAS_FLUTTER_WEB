@@ -10,7 +10,6 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/present
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/blocs/states/get_users_states.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/header_filter_component.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/list_users_component.dart';
-import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/page_buttons_component.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/users/presenter/components/top_buttons_component.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/logout_helper.dart';
@@ -33,9 +32,9 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
   String username = "";
   String token = "";
   List<UserEntity> listUsers = [];
-  late GetUsersBloc getUsersBloc;
+  late AdminGetUsersBloc getUsersBloc;
 
-  _setUsersInfo(GetUsersSuccessState state) {
+  _setUsersInfo(AdminGetUsersSuccessState state) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       setState(() {
         listUsers = state.listUsers.listUsers;
@@ -47,13 +46,13 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
   }
 
   changePage(newPage) {
-    getUsersBloc.add(DoGetUsersEvent(page: newPage));
+    getUsersBloc.add(AdminDoGetUsersEvent(page: newPage));
 
     setState(() => actualPage = newPage);
   }
 
   _setUsername() async {
-    getUsersBloc = BlocProvider.of<GetUsersBloc>(context);
+    getUsersBloc = BlocProvider.of<AdminGetUsersBloc>(context);
     username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
     token = await SecureStorageManager.readData(StorageKeys.accessToken) ?? "";
     setState(() {});
@@ -62,8 +61,8 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
   @override
   void initState() {
     super.initState();
-    getUsersBloc = BlocProvider.of<GetUsersBloc>(context);
-    getUsersBloc.add(DoGetUsersEvent(page: totalPages));
+    getUsersBloc = BlocProvider.of<AdminGetUsersBloc>(context);
+    getUsersBloc.add(AdminDoGetUsersEvent(page: totalPages));
     _setUsername();
   }
 
@@ -128,23 +127,24 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
                               children: [
                                 HeaderFilterComponent(size: size),
                                 Expanded(
-                                  child:
-                                      BlocBuilder<GetUsersBloc, GetUsersStates>(
+                                  child: BlocBuilder<AdminGetUsersBloc,
+                                      AdminGetUsersStates>(
                                     bloc: getUsersBloc,
                                     builder: (context, state) {
-                                      if (state is GetUsersLoadingState) {
+                                      if (state is AdminGetUsersLoadingState) {
                                         return const Center(
                                             child: CircularProgressIndicator(
                                                 color: AppColors.greyBlue));
                                       }
-                                      if (state is GetUsersErrorState) {
+                                      if (state is AdminGetUsersErrorState) {
                                         log(state.message);
                                       }
-                                      if (state is GetUsersSuccessState) {
+                                      if (state is AdminGetUsersSuccessState) {
                                         _setUsersInfo(state);
                                         getUsersBloc.add(
-                                            CleanGetUsersStateEvent(
-                                                state: GetUsersInitialState()));
+                                            AdminCleanGetUsersStateEvent(
+                                                state:
+                                                    AdminGetUsersInitialState()));
                                       }
                                       return ListUsersComponent(
                                           listUsers: listUsers);
@@ -208,23 +208,24 @@ class _HomeAdminUsersPageState extends State<HomeAdminUsersPage> {
                               children: [
                                 HeaderFilterComponent(size: size),
                                 Expanded(
-                                  child:
-                                      BlocBuilder<GetUsersBloc, GetUsersStates>(
+                                  child: BlocBuilder<AdminGetUsersBloc,
+                                      AdminGetUsersStates>(
                                     bloc: getUsersBloc,
                                     builder: (context, state) {
-                                      if (state is GetUsersLoadingState) {
+                                      if (state is AdminGetUsersLoadingState) {
                                         return const Center(
                                             child: CircularProgressIndicator(
                                                 color: AppColors.greyBlue));
                                       }
-                                      if (state is GetUsersErrorState) {
+                                      if (state is AdminGetUsersErrorState) {
                                         log(state.message);
                                       }
-                                      if (state is GetUsersSuccessState) {
+                                      if (state is AdminGetUsersSuccessState) {
                                         _setUsersInfo(state);
                                         getUsersBloc.add(
-                                            CleanGetUsersStateEvent(
-                                                state: GetUsersInitialState()));
+                                            AdminCleanGetUsersStateEvent(
+                                                state:
+                                                    AdminGetUsersInitialState()));
                                       }
                                       return ListUsersComponent(
                                           listUsers: listUsers);

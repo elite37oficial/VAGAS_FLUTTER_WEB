@@ -1,4 +1,4 @@
-part of '../blocs/get_job_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/domain/entities/admin_get_job_response_entity.dart';
 
 abstract class AdminGetJobStates {}
 

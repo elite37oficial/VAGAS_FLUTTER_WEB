@@ -1,4 +1,3 @@
-
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/domain/repositories/admin_get_job_repository.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/domain/usecases/admin_get_job_usecase.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/infra/datasources/admin_get_job_datasouce_implementation.dart';
@@ -8,7 +7,7 @@ import 'package:vagas_flutter_web/src/shared/requester/app_requester_implementat
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator_config.dart';
 import 'package:vagas_flutter_web/src/shared/service_locator/service_locator_wrapper.dart';
 
-import 'presenter/blocs/blocs/get_job_bloc.dart';
+import 'presenter/blocs/blocs/admin_get_job_bloc.dart';
 
 class AdminJobsServiceLocatorConfig
     implements ServiceLocatorConfigInternals, ServiceLocatorConfig {
