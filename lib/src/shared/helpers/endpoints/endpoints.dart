@@ -26,7 +26,6 @@ abstract class Endpoints {
 
   static String pageCompanies(int page) =>
       "$baseURL/companies?page=$page&limit=10";
-  static String pageCompaniesAdmin() => "$baseURL/companies";
 
   static String getJobById(String jobId) => "$baseURL/jobs/id/$jobId";
   static String getUserById(String userId) => "$baseURL/users/id/$userId";

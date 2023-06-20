@@ -52,9 +52,6 @@ class HomeAdminCompaniesPageState extends State<HomeAdminCompaniesPage> {
 
   _setUsername() async {
     adminGetCompaniesBloc = BlocProvider.of<AdminGetCompaniesBloc>(context);
-    context
-        .read<AdminGetCompaniesBloc>()
-        .add(AdminGetCompaniesListEvent(page: actualPage));
     username = await SecureStorageManager.readData(StorageKeys.name) ?? "";
 
     setState(() {});

@@ -10,9 +10,9 @@ class AdminGetCompaniesDatasourceImplementation
   AdminGetCompaniesDatasourceImplementation({required this.requester});
 
   @override
-  Future adminGetCompanies() async {
+  Future adminGetCompanies(int page) async {
     return await requester.get(
-      url: Endpoints.pageCompaniesAdmin(),
+      url: Endpoints.pageCompanies(page),
       fromJson: (value) => AdminGetCompaniesModel.fromMap(value),
     );
   }

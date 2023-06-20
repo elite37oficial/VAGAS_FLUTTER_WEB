@@ -1,3 +1,3 @@
 abstract class AdminGetCompaniesDatasource {
-  Future adminGetCompanies();
+  Future adminGetCompanies(int page);
 }

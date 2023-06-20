@@ -17,7 +17,7 @@ class AdminGetCompaniesRepositoryImplementation
   Future<Either<Failure, AdminGetCompaniesEntity>> adminGetCompanies(
       int page) async {
     try {
-      AdminGetCompaniesModel result = await datasource.adminGetCompanies();
+      AdminGetCompaniesModel result = await datasource.adminGetCompanies(page);
 
       return Right(result);
     } on DioError catch (e) {
