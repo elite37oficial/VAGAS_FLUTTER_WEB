@@ -95,19 +95,6 @@ class UserTileComponent extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
-            flex: 4,
-            child: SizedBox(
-                width: size.width * 0.7,
-                child: Center(
-                    child: GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    AppImages.editIcon,
-                    package: "vagas_design_system",
-                  ),
-                ))),
-          ),
         ],
       ),
     );

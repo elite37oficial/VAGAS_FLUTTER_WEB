@@ -91,21 +91,6 @@ class HeaderFilterComponent extends StatelessWidget {
                 ),
               ),
             ),
-            Flexible(
-              flex: 4,
-              child: SizedBox(
-                width: size.width * 0.7,
-                child: Center(
-                  child: ResponsiveTextWidget(
-                    text: "Ações",
-                    textStyle: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 1,
-                    hintSemantics: "ações",
-                    tooltipSemantics: "ações",
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

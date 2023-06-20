@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/user_entity.dart';
 
