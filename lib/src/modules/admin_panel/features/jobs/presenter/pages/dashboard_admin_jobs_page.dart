@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vagas_design_system/vagas_design_system.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/create_job/presenter/pages/admin_create_job_page.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/blocs/blocs/admin_get_job_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/blocs/events/admin_get_job_event.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/blocs/states/admin_get_job_states.dart';
@@ -11,7 +12,6 @@ import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presente
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/components/admin_list_jobs_component.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/components/admin_page_buttons_component.dart';
 import 'package:vagas_flutter_web/src/modules/admin_panel/features/jobs/presenter/components/admin_top_buttons_component.dart';
-import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/pages/create_job_page.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/entities/job_entity.dart';
 import 'package:vagas_flutter_web/src/shared/helpers/generics/logout_helper.dart';
 import 'package:vagas_flutter_web/src/shared/responsive/responsive_layout.dart';
@@ -77,7 +77,7 @@ class _HomeAdminJobsPageState extends State<HomeAdminJobsPage> {
               borderRadius: BorderRadius.circular(10),
               color: AppColors.white,
             ),
-            child: const CreatejobPage(),
+            child: const AdminCreatejobPage(),
           ),
         );
       },
@@ -137,31 +137,12 @@ class _HomeAdminJobsPageState extends State<HomeAdminJobsPage> {
                         width: size.width * 0.7,
                         child: Column(
                           children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 40, top: 60),
-                                child: ResponsiveTextWidget(
-                                  text: "Vagas publicadas",
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(fontWeight: FontWeight.w700),
-                                  hintSemantics: "vagas",
-                                  tooltipSemantics: "vagas",
-                                  maxLines: 1,
-                                  maxFontSize: 32,
-                                  minFontSize: 27,
-                                ),
-                              ),
-                            ),
                             AdminTopButtonsComponent(
                                 showCreatejobPopup: () =>
                                     _showCreateJobPopup()),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 80, bottom: 50),
+                                  const EdgeInsets.only(top: 50, bottom: 50),
                               child: SizedBox(
                                 height: Sizer.calculateVertical(context, 450),
                                 width: size.width * 0.7,
@@ -250,29 +231,10 @@ class _HomeAdminJobsPageState extends State<HomeAdminJobsPage> {
                       width: size.width * 0.7,
                       child: Column(
                         children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 40, top: 60),
-                              child: ResponsiveTextWidget(
-                                text: "Vagas publicadas",
-                                textStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(fontWeight: FontWeight.w700),
-                                hintSemantics: "vagas",
-                                tooltipSemantics: "vagas",
-                                maxLines: 1,
-                                maxFontSize: 32,
-                                minFontSize: 27,
-                              ),
-                            ),
-                          ),
                           AdminTopButtonsComponent(
                               showCreatejobPopup: () => _showCreateJobPopup()),
                           Padding(
-                            padding: const EdgeInsets.only(top: 80, bottom: 50),
+                            padding: const EdgeInsets.only(top: 50, bottom: 50),
                             child: SizedBox(
                               height: Sizer.calculateVertical(context, 450),
                               width: size.width * 0.7,
