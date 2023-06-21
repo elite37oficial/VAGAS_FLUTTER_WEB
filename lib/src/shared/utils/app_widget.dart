@@ -10,6 +10,7 @@ import 'package:vagas_flutter_web/src/modules/auth/features/login/presenter/bloc
 import 'package:vagas_flutter_web/src/modules/auth/features/register/presenter/blocs/blocs/register_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/auth/features/reset_password/presenter/blocs/blocs/reset_password_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/company/presenter/bloc/bloc/get_companies_bloc.dart';
+import 'package:vagas_flutter_web/src/modules/admin_panel/features/create_company/presenter/blocs/blocs/admin_create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_company/presenter/blocs/blocs/create_company_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/create_job_bloc.dart';
 import 'package:vagas_flutter_web/src/modules/home/features/dashboard_recruiter/features/create_job/presenter/blocs/blocs/get_all_companies_bloc.dart';
@@ -42,6 +43,8 @@ class AppWidget extends StatelessWidget {
             create: (_) => sl<AdminCreateJobBloc>()),
         BlocProvider<AdminGetCompaniesBloc>(
             create: (_) => sl<AdminGetCompaniesBloc>()),
+        BlocProvider<AdminCreateCompanyBloc>(
+            create: (_) => sl<AdminCreateCompanyBloc>()),
         BlocProvider<GetCompaniesBloc>(create: (_) => sl<GetCompaniesBloc>()),
         BlocProvider<CreateCompanyBloc>(create: (_) => sl<CreateCompanyBloc>()),
         BlocProvider<GetJobBloc>(create: (_) => sl<GetJobBloc>()),
